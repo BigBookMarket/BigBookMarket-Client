@@ -1,5 +1,5 @@
-import React from 'react';
-import Styled from 'styled-components';
+import React from "react";
+import Styled from "styled-components";
 
 const MainWrapper = Styled.div`
 margin-top: 110px;
@@ -12,6 +12,7 @@ text-align: center;
   padding: 16px;
   width: 460px;
 }
+
 
 .wrapper p:nth-child(1){
   font-size: 36px;
