@@ -38,7 +38,9 @@ const NavWrapper = Styled.div`
 const Navbar = () => {
   return (
     <NavWrapper>
-      <div className="logo">대책마켓</div>
+      <Link to="/">
+        <div className="logo">대책마켓</div>
+      </Link>
       <div className="buttons">
         <Link to="/login">
           <button className="login-btn">로그인</button>
