@@ -1,7 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
 
-const MainWrapper = Styled.div`
+const SignupWrapper = Styled.div`
 margin-top: 110px;
 display: flex;
 justify-content: center;
@@ -47,7 +47,7 @@ button{
 
 const Signup = () => {
   return (
-    <MainWrapper>
+    <SignupWrapper>
       <div className="wrapper">
         <p>회원가입</p>
         <div className="input-form">
@@ -58,7 +58,7 @@ const Signup = () => {
           <button>가입하기</button>
         </div>
       </div>
-    </MainWrapper>
+    </SignupWrapper>
   );
 };
 

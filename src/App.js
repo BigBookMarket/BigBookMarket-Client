@@ -7,6 +7,10 @@ import Navbar from "./components/Navbar";
 import Community from "./pages/Community";
 import Market from "./pages/Market";
 import Mypage from "./pages/Mypage";
+import Product from "./pages/Product";
+import Sell from "./pages/Sell";
+import Post from "./pages/Post";
+import Post_detail from "./pages/Post_detail";
 
 const App = () => {
   return (
@@ -22,6 +26,8 @@ const App = () => {
           <Route path="/mypage" exact component={Mypage} />
           <Route path="/product" exact component={Product} />
           <Route path="/sell" exact component={Sell} />
+          <Route path="/post" exact component={Post} />
+          <Route path="/post/detail" exact component={Post_detail} />
           <Route component={() => <div>Page Not Found</div>} />
         </Switch>
       </div>
