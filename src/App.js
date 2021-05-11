@@ -7,6 +7,8 @@ import Navbar from "./components/Navbar";
 import Community from "./pages/Community";
 import Market from "./pages/Market";
 import Mypage from "./pages/Mypage";
+import Product from "./pages/Product";
+import Sell from "./pages/Sell";
 
 const App = () => {
   return (
