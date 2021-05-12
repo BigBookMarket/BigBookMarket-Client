@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
+import { withRouter } from "react-router-dom";
 
 const ProductWrapper = Styled.div`
     display: flex;
@@ -123,7 +124,7 @@ const ProductWrapper = Styled.div`
     }
 `;
 
-const Product = () => {
+const Product = ({ history }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleBuyClick = () => {
@@ -134,13 +135,19 @@ const Product = () => {
     setIsModalOpen(false);
   };
 
+  const handleMessageClick = () => {
+    history.push("/message");
+  };
+
   return (
     <ProductWrapper>
       {isModalOpen ? (
         <div className="modal__bg">
           <div className="modal">
             <h1>구매신청이 완료되었습니다</h1>
-            <button className="modal__message-btn">판매자와 쪽지하기</button>
+            <button onClick={handleMessageClick} className="modal__message-btn">
+              판매자와 쪽지하기
+            </button>
             <div onClick={handleExitClick} className="modal__exit-btn">
               X
             </div>
@@ -178,4 +185,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default withRouter(Product);
