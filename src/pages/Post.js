@@ -67,10 +67,6 @@ const PostWrapper = Styled.div`
     margin-top: 20px;
   }
 
-  .information__publisher{
-
-  }
-
   .information__date{
     margin-top: 10px;
     width: 100px;
@@ -95,36 +91,35 @@ const PostWrapper = Styled.div`
     padding: 10px;
     background-color: #3c64b1;
     color: white;
+    cursor: pointer;
   }
 `;
 
 const Post = () => {
   return (
-    <>
-      <PostWrapper>
-        <div className="book-search">
-          <input className="book-search__input" placeholder="도서 검색" />
-          <button className="book-search__btn">검색</button>
+    <PostWrapper>
+      <div className="book-search">
+        <input className="book-search__input" placeholder="도서 검색" />
+        <button className="book-search__btn">검색</button>
+      </div>
+      <div className="book-wrapper">
+        <div className="img"></div>
+        <div className="book-information">
+          <p className="information__category">[카테고리]</p>
+          <p className="information__title">도서명</p>
+          <p className="information__author">저자</p>
+          <p className="information__publisher">출판사, 출판일</p>
         </div>
-        <div className="book-wrapper">
-          <div className="img"></div>
-          <div className="book-information">
-            <p className="information__category">[카테고리]</p>
-            <p className="information__title">도서명</p>
-            <p className="information__author">저자</p>
-            <p className="information__publisher">출판사, 출판일</p>
-          </div>
-          <p className="information__date">작성일자</p>
-          <button className="post__btn">게시글 작성하기</button>
-        </div>
-        <div className="post-wrapper">
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-        </div>
-      </PostWrapper>
-    </>
+        <p className="information__date">작성일자</p>
+        <button className="post__btn">게시글 작성하기</button>
+      </div>
+      <div className="post-wrapper">
+        <PostCard />
+        <PostCard />
+        <PostCard />
+        <PostCard />
+      </div>
+    </PostWrapper>
   );
 };
 

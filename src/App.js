@@ -10,7 +10,7 @@ import Mypage from "./pages/Mypage";
 import Product from "./pages/Product";
 import Sell from "./pages/Sell";
 import Post from "./pages/Post";
-import Post_detail from "./pages/Post_detail";
+import PostDetail from "./pages/PostDetail";
 
 const App = () => {
   return (
@@ -27,7 +27,7 @@ const App = () => {
           <Route path="/product" exact component={Product} />
           <Route path="/sell" exact component={Sell} />
           <Route path="/post" exact component={Post} />
-          <Route path="/post/detail" exact component={Post_detail} />
+          <Route path="/post/detail" exact component={PostDetail} />
           <Route component={() => <div>Page Not Found</div>} />
         </Switch>
       </div>

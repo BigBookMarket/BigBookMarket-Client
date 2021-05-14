@@ -49,7 +49,7 @@ const CommentWrapper = Styled.div`
     word-break:break-all;
   }
 
-  .circle{
+  .profile{
     background: #C4C4C4;
     width: 35px;
     height: 35px;
@@ -69,7 +69,7 @@ const CommentCard = () => {
       <div className="card">
         <div className="card__content">
           <div className="comment-writer">
-            <div className="circle"></div>
+            <div className="profile"></div>
             <p className="card__content_writerid">작성자 ID</p>
           </div>
           <p className="card__content_comment">
