@@ -1,7 +1,7 @@
-import React from 'react';
-import CommunityCard from '../components/CommunityCard';
-import Sidebar from '../components/Sidebar';
-import Styled from 'styled-components';
+import React from "react";
+import CommunityCard from "../components/CommunityCard";
+import Sidebar from "../components/Sidebar";
+import Styled from "styled-components";
 
 const CommunityWrapper = Styled.div`
   display: flex;

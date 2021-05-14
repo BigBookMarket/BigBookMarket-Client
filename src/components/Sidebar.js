@@ -1,5 +1,6 @@
-import React from 'react';
-import Styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import Styled from "styled-components";
+import axios from "axios";
 
 const SidebarWrapper = Styled.div`
   width: 240px;
@@ -14,7 +15,7 @@ const SidebarWrapper = Styled.div`
   .sidebar{
     display: flex;
     flex-direction: column;
-    margin-top: 60px;
+    margin-top: 80px;
   }
 
   .sidebar__title p {
@@ -23,42 +24,46 @@ const SidebarWrapper = Styled.div`
     margin-bottom: 40px;
   }
   
-  .sidebar__list{
+  .sidebar__list {
+    font-size: 14px;
     margin-bottom: 16px;
   } 
 `;
 
-const categories = [
-  {
-    id: 1,
-    content: 'content 1',
-  },
-  {
-    id: 2,
-    content: 'content 2',
-  },
-  {
-    id: 3,
-    content: 'content 3',
-  },
-  {
-    id: 4,
-    content: 'content 4',
-  },
-];
+const getCategories = async () => {
+  try {
+    const data = await axios.get(
+      "http://bigbookmarket.kro.kr:8080/book/category"
+    );
+    console.log("[SUCCESS] GET category data");
+    return data.data;
+  } catch (e) {
+    console.log("[FAIL] GET category data");
+    return null;
+  }
+};
 
 const Sidebar = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getCategories();
+      setCategories(data);
+    })();
+  }, []);
+
   return (
     <SidebarWrapper>
       <ul className="sidebar">
         <li className="sidebar__title">
           <p>대학생 전공도서</p>
         </li>
-        {categories.map((category) => {
+        {categories.map((category, idx) => {
           return (
-            <div className="sidebar__list" key={category.id}>
-              <li>{category.content}</li>
-            </div>
+            <li className="sidebar__list" key={idx}>
+              <p>{category}</p>
+            </li>
           );
         })}
       </ul>

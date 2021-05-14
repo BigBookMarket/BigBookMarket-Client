@@ -1,5 +1,10 @@
-import React from 'react';
-import Styled from 'styled-components';
+import React, { useState } from "react";
+import Styled from "styled-components";
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 const SellWrapper = Styled.div`
   display: flex;
@@ -13,7 +18,7 @@ const SellWrapper = Styled.div`
     font-size: 28px;
   }
 
-  .form{
+  form{
     margin-top: 28px;
     width: 900px;
     height: 540px;
@@ -24,7 +29,7 @@ const SellWrapper = Styled.div`
     position: relative;
   }
 
-  .form input {
+  form input {
     padding: 10px;
     width: 280px;
     height: 42px;
@@ -33,7 +38,7 @@ const SellWrapper = Styled.div`
     margin-right: 12px;
   }
 
-  .form button {
+  form button {
     border: none;
     padding: 10px;
     width: 64px;
@@ -104,11 +109,58 @@ const SellWrapper = Styled.div`
   }
 `;
 
+const useStyles = makeStyles(() => ({
+  formControl: {
+    minWidth: 280,
+    backgroundColor: "#fff",
+    marginTop: "20px",
+  },
+}));
+
 const Sell = () => {
+  const classes = useStyles();
+
+  const [inputs, setInputs] = useState({
+    category: "",
+    title: "",
+    standardPrice: "",
+    author: "",
+    publisher: "",
+    sellPrice: "",
+    method: "",
+    status: "",
+    detail: "",
+  });
+
+  const {
+    category,
+    title,
+    standardPrice,
+    author,
+    publisher,
+    sellPrice,
+    method,
+    status,
+    detail,
+  } = inputs;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputs);
+  };
+
   return (
     <SellWrapper>
       <div className="page-title">판매글 작성하기</div>
-      <div className="form">
+      <form onSubmit={handleSubmit}>
         <div className="product-form">
           <div className="product-form__img"></div>
           <div className="product-form__info">
@@ -116,26 +168,105 @@ const Sell = () => {
               <input placeholder="도서 검색" />
               <button>검색</button>
             </div>
-            <input className="info__category" placeholder="카테고리" />
-            <input className="info__title" placeholder="도서명" />
-            <input className="info__price" placeholder="정가정보" />
-            <input className="info__author" placeholder="저자" />
-            <input className="info__publisher" placeholder="출판사/ 출판일" />
+            <input
+              onChange={handleInputChange}
+              name="category"
+              value={category}
+              className="info__category"
+              placeholder="카테고리"
+            />
+            <input
+              name="title"
+              onChange={handleInputChange}
+              value={title}
+              className="info__title"
+              placeholder="도서명"
+            />
+            <input
+              onChange={handleInputChange}
+              value={standardPrice}
+              name="standardPrice"
+              className="info__price"
+              placeholder="정가정보"
+            />
+            <input
+              name="author"
+              onChange={handleInputChange}
+              value={author}
+              className="info__author"
+              placeholder="저자"
+            />
+            <input
+              onChange={handleInputChange}
+              value={publisher}
+              name="publisher"
+              className="info__publisher"
+              placeholder="출판사/ 출판일"
+            />
           </div>
         </div>
         <div className="deal-form">
           <div className="deal-form__info">
-            <input placeholder="판매가" />
-            <input placeholder="거래방법" />
-            <input placeholder="거래상태" />
+            <input
+              onChange={handleInputChange}
+              value={sellPrice}
+              className="info__sellPrice"
+              name="sellPrice"
+              placeholder="판매가"
+            />
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel id="demo-simple-select-outlined-label">
+                거래방법
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                name="method"
+                value={method}
+                onChange={handleInputChange}
+                label="거래방법"
+              >
+                <MenuItem value="택배">
+                  <em>택배</em>
+                </MenuItem>
+                <MenuItem value="직거래">
+                  <em>직거래</em>
+                </MenuItem>
+                <MenuItem value="둘다가능">
+                  <em>둘다가능</em>
+                </MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel id="demo-simple-select-outlined-label">
+                거래상태
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                name="status"
+                value={status}
+                onChange={handleInputChange}
+                label="거래상태"
+              >
+                <MenuItem value="판매중">
+                  <em>판매중</em>
+                </MenuItem>
+              </Select>
+            </FormControl>
           </div>
           <div className="deal-form__detail">
             <p>상품 상세 내용을 입력해주세요. 상품 상태도 기입해주세요</p>
-            <textarea placeholder="설명" />
+            <textarea
+              name="detail"
+              value={detail}
+              onChange={handleInputChange}
+              placeholder="설명"
+            />
           </div>
         </div>
         <button className="form-submit-btn">완료</button>
-      </div>
+      </form>
     </SellWrapper>
   );
 };
