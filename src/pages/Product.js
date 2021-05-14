@@ -172,7 +172,9 @@ const Product = ({ history }) => {
               <p className="product__info_price">정가정보</p>
               <p className="product__info_deal">거래상태: 판매중</p>
               <p className="product__info_detail">
-                상품설명: 상품설명상품설명상품설명
+                상품설명:
+                상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명
+                상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명
               </p>
             </div>
             <button onClick={handleBuyClick} className="product__btn--buy">

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
-import Styled from 'styled-components';
-import ProductCard from '../components/ProductCard';
-import { withRouter } from 'react-router-dom';
+import React, { useState } from "react";
+import Sidebar from "../components/Sidebar";
+import Styled from "styled-components";
+import ProductCard from "../components/ProductCard";
+import { withRouter } from "react-router-dom";
 
 const MarketWrapper = Styled.div`
   display: flex;
@@ -51,7 +51,7 @@ const MarketWrapper = Styled.div`
 `;
 
 const Market = ({ history }) => {
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
 
   const handleChange = (e) => {
     setSearchInput(e.target.value);
@@ -60,7 +60,7 @@ const Market = ({ history }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(searchInput);
-    setSearchInput('');
+    setSearchInput("");
   };
 
   return (
@@ -68,15 +68,15 @@ const Market = ({ history }) => {
       <Sidebar />
       <MarketWrapper>
         <div className="product-search">
-          <input
-            value={searchInput}
-            onChange={handleChange}
-            placeholder="도서 검색"
-          ></input>
-          <button className="search-btn" onClick={handleSubmit}>
-            검색
-          </button>
-          <button className="sell-btn" onClick={() => history.push('/sell')}>
+          <form onSubmit={handleSubmit}>
+            <input
+              value={searchInput}
+              onChange={handleChange}
+              placeholder="도서 검색"
+            ></input>
+            <button className="search-btn">검색</button>
+          </form>
+          <button className="sell-btn" onClick={() => history.push("/sell")}>
             판매하기
           </button>
         </div>

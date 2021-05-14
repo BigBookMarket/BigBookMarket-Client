@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Styled from "styled-components";
 
 const MessageWrapper = Styled.div`
@@ -12,6 +12,53 @@ const MessageWrapper = Styled.div`
     font-weight: bold;
     font-size: 28px;
   }
+
+  button {
+    border: none;
+    padding: 10px;
+    width: 80px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .modal__bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal {
+      position: relative;
+      background-color: #fff;
+      width: 60%;
+      height: 60%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      border-radius: 0.5rem;
+    }
+
+    .modal__exit-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal__message-btn{
+      width: 150px;
+    }
 
   .message__form {
     margin-top: 28px;
@@ -48,43 +95,53 @@ const MessageWrapper = Styled.div`
   }
 
   .message__form button {
-    border: none;
-    padding: 10px;
-    width: 80px;
-    height: 40px;
-    background-color: var(--primary-color);
-    color: #fff;
-    cursor: pointer;
     position: absolute;
     right: 50px;
     bottom: 16px;
   }
 `;
 
-const Message = () => {
-  const handleMessageSubmit = (e) => {
-    e.preventDefault();
+const Message = ({ history }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleMessageSubmit = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmClick = () => {
+    history.push("/product");
   };
 
   return (
     <MessageWrapper>
       <div className="page-title">쪽지 보내기</div>
-      <form onSubmit={handleMessageSubmit} className="message__form">
-        <div className="message__header">
-          <input
-            name="sellerId"
-            className="message__seller-id"
-            placeholder="판매자 ID"
-          />
-          <input
-            name="bookInfo"
-            className="message__book-info"
-            placeholder="도서정보"
-          />
+      {isModalOpen ? (
+        <div className="modal__bg">
+          <div className="modal">
+            <h1>쪽지가 전송되었습니다</h1>
+            <button onClick={handleConfirmClick} className="modal__message-btn">
+              확인
+            </button>
+          </div>
         </div>
-        <textarea className="message__content" />
-        <button>보내기</button>
-      </form>
+      ) : (
+        <form onSubmit={handleMessageSubmit} className="message__form">
+          <div className="message__header">
+            <input
+              name="sellerId"
+              className="message__seller-id"
+              placeholder="판매자 ID"
+            />
+            <input
+              name="bookInfo"
+              className="message__book-info"
+              placeholder="도서정보"
+            />
+          </div>
+          <textarea className="message__content" />
+          <button type="submit">보내기</button>
+        </form>
+      )}
     </MessageWrapper>
   );
 };
