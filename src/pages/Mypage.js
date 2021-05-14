@@ -1,7 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
 
-const MainWrapper = Styled.div`
+const MypageWrapper = Styled.div`
 margin: 110px;
 display: flex;
 justify-content: center;
@@ -92,7 +92,7 @@ button{
 const Mypage = () => {
   return (
     <>
-      <MainWrapper>
+      <MypageWrapper>
         <div className="wrapper">
           <p className="bold">마이페이지</p>
           <div className="user-information">
@@ -123,7 +123,7 @@ const Mypage = () => {
             </div>
           </div>
         </div>
-      </MainWrapper>
+      </MypageWrapper>
     </>
   );
 };

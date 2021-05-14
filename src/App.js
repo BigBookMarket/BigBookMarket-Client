@@ -9,6 +9,8 @@ import Market from "./pages/Market";
 import Mypage from "./pages/Mypage";
 import Product from "./pages/Product";
 import Sell from "./pages/Sell";
+import Post from "./pages/Post";
+import PostDetail from "./pages/PostDetail";
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
           <Route path="/mypage" exact component={Mypage} />
           <Route path="/product" exact component={Product} />
           <Route path="/sell" exact component={Sell} />
+          <Route path="/post" exact component={Post} />
+          <Route path="/post/detail" exact component={PostDetail} />
           <Route component={() => <div>Page Not Found</div>} />
         </Switch>
       </div>

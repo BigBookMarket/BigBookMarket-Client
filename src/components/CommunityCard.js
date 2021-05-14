@@ -1,5 +1,6 @@
-import React from 'react';
-import Styled from 'styled-components';
+import React from "react";
+import Styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const CardWrapper = Styled.div`
   .card{
@@ -68,7 +69,9 @@ const CommunityCard = () => {
           <p className="card__content_title"> 도서명</p>
           <p className="card__content_author">저자</p>
           <p className="card__content_publisher">출판사, 출판일</p>
-          <button>게시글보기</button>
+          <Link to="/post">
+            <button>게시글보기</button>
+          </Link>
         </div>
       </div>
     </CardWrapper>
