@@ -1,7 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
 
-const MainWrapper = Styled.div`
+const LoginWrapper = Styled.div`
 margin-top: 110px;
 display: flex;
 justify-content: center;
@@ -49,7 +49,7 @@ button{
 
 const Login = () => {
   return (
-    <MainWrapper>
+    <LoginWrapper>
       <div className="wrapper">
         <p>로그인</p>
         <div className="input-form">
@@ -58,7 +58,7 @@ const Login = () => {
           <button>로그인</button>
         </div>
       </div>
-    </MainWrapper>
+    </LoginWrapper>
   );
 };
 
