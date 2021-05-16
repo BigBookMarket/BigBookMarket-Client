@@ -12,6 +12,7 @@ import Sell from "./pages/Sell";
 import Message from "./pages/Message";
 import Post from "./pages/Post";
 import PostDetail from "./pages/PostDetail";
+import PostWrite from "./pages/PostWrite";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/message" exact component={Message} />
           <Route path="/post" exact component={Post} />
           <Route path="/post/detail" exact component={PostDetail} />
+          <Route path="/post-write" exact component={PostWrite} />
           <Route component={() => <div>Page Not Found</div>} />
         </Switch>
       </div>
