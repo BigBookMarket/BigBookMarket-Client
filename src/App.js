@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/community" exact component={Community} />
           <Route path="/market" exact component={Market} />
           <Route path="/mypage" exact component={Mypage} />
-          <Route path="/product" exact component={Product} />
+          <Route path="/product/:productid" component={Product}></Route>
           <Route path="/sell" exact component={Sell} />
           <Route path="/message" exact component={Message} />
           <Route path="/post" exact component={Post} />

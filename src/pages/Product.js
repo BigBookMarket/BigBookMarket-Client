@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 const ProductWrapper = Styled.div`
     display: flex;
@@ -65,15 +66,16 @@ const ProductWrapper = Styled.div`
       width: 800px;
       height: 540px;
       background-color: var(--theme-color);
-      display: flex;
       position: relative;
     }
     
     .product__img{
-      width: 260px;
-      height: 260px;
+      width: 300px;
+      height: 300px;
       background-color: lightgrey;
-      margin: 70px;
+      position: absolute;
+      left: 30px;
+      top: 70px;
     }
 
     .product__btn{
@@ -96,9 +98,12 @@ const ProductWrapper = Styled.div`
 
     .product__info{
       margin-top: 40px;
-      width: 360px;
+      width: 430px;
       height: 380px;
       font-size: 20px;
+      position: absolute;
+      right: 15px;
+      top: 30px;
     }
 
     .product__info_date{
@@ -124,8 +129,18 @@ const ProductWrapper = Styled.div`
     }
 `;
 
-const Product = ({ history }) => {
+const Product = ({ history, location }) => {
+  const itemId = location.state.productinfo.itemId;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [product, setProduct] = useState({
+    book: [],
+    createdDate: "",
+    detail: "",
+    method: "",
+    price: 0,
+    status: "",
+    userId: 0,
+  });
 
   const handleBuyClick = () => {
     setIsModalOpen(true);
@@ -138,6 +153,34 @@ const Product = ({ history }) => {
   const handleMessageClick = () => {
     history.push("/message");
   };
+
+  const getProductInfo = async () => {
+    try {
+      const data = await axios.get(
+        `https://bigbookmarket.kro.kr/item/${itemId}`
+      );
+      console.log("[SUCCESS] GET product data", data.data);
+      return data.data;
+    } catch (e) {
+      console.log("[FAIL] GET product data");
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      const data = await getProductInfo();
+      setProduct({
+        book: data.book,
+        createdDate: data.createdDate,
+        detail: data.detail,
+        method: data.method,
+        price: data.price,
+        status: data.status,
+        userId: data.userId,
+      });
+    })();
+  }, []);
 
   return (
     <ProductWrapper>
@@ -157,24 +200,31 @@ const Product = ({ history }) => {
         <>
           <div className="page-title">상품 정보</div>
           <div className="product">
-            <div className="product__img"></div>
+            <img className="product__img" src={product.book.image} alt="" />
             <div className="product__btn">
               <div className="product__btn--edit">수정하기</div>
               <div className="product__btn--delete">삭제하기</div>
             </div>
             <div className="product__info">
-              <p className="product__info_date">작성일자</p>
-              <p className="product__info_category">[카테고리]</p>
-              <p className="product__info_title">도서명</p>
-              <p className="product__info_author">저자</p>
-              <p className="product__info_publisher">출판사, 출판일</p>
-              <p className="product__info_seller">판매자 ID</p>
-              <p className="product__info_price">정가정보</p>
-              <p className="product__info_deal">거래상태: 판매중</p>
+              <p className="product__info_date">{product.createdDate}</p>
+              <p className="product__info_category">
+                [{product.book.category}]
+              </p>
+              <p className="product__info_title">{product.book.title}</p>
+              <p className="product__info_author">{product.book.author}</p>
+              <p className="product__info_publisher">
+                {product.book.publisher}, {product.book.pubDate}
+              </p>
+              <p className="product__info_seller">판매자: {product.userId}</p>
+              <p className="product__info_price">
+                정가: {product.book.priceStandard} 원 <br />
+                판매가: {product.price} 원
+              </p>
+              <p className="product__info_deal">거래상태: {product.status}</p>
               <p className="product__info_detail">
                 상품설명:
-                상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명
-                상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명상품설명
+                <br />
+                {product.detail}
               </p>
             </div>
             <button onClick={handleBuyClick} className="product__btn--buy">
