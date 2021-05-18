@@ -11,6 +11,10 @@ import Product from "./pages/Product";
 import Sell from "./pages/Sell";
 import Post from "./pages/Post";
 import PostDetail from "./pages/PostDetail";
+import MarketHistory from "./pages/MarketHistory";
+import PostHistory from "./pages/PostHistory";
+import CommentHistory from "./pages/CommentHistory";
+import MessageHistory from "./pages/MessageHistory";
 
 const App = () => {
   return (
@@ -28,6 +32,10 @@ const App = () => {
           <Route path="/sell" exact component={Sell} />
           <Route path="/post" exact component={Post} />
           <Route path="/post/detail" exact component={PostDetail} />
+          <Route path="/market/history" exact component={MarketHistory} />
+          <Route path="/post/history" exact component={PostHistory} />
+          <Route path="/comment/history" exact component={CommentHistory} />
+          <Route path="/message/history" exact component={MessageHistory} />
           <Route component={() => <div>Page Not Found</div>} />
         </Switch>
       </div>
