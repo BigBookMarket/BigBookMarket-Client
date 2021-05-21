@@ -192,7 +192,32 @@ const Sell = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
+    const postData = {
+      book: {
+        bookId: selectedBook.isbn,
+        title: selectedBook.title,
+        author: selectedBook.author,
+        category: selectedBook.categoryName.split(">")[2],
+        publisher: selectedBook.publisher,
+        pubDate: selectedBook.pubDate,
+        priceStandard: selectedBook.priceStandard,
+        image: selectedBook.cover,
+      },
+      detail: inputs.detail,
+      method: inputs.method,
+      price: parseInt(inputs.sellPrice),
+      sellerId: 1,
+    };
+    console.log(postData);
+    (async () => {
+      await axios
+        .post("https://bigbookmarket.kro.kr/item", postData)
+        .then((res) => console.log(res))
+        .catch((err) => {
+          console.log(err);
+          alert("입력을 확인해주세요");
+        });
+    })();
   };
 
   const getBooks = async (title) => {
