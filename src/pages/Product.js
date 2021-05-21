@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
-import { withRouter } from "react-router-dom";
 import axios from "axios";
 
 const ProductWrapper = Styled.div`
@@ -82,18 +81,6 @@ const ProductWrapper = Styled.div`
       color: var(--primary-color);
       font-weight: bold;
       cursor: pointer;
-    }
-    
-    .product__btn--edit{
-      position: absolute;
-      right: 120px;
-      top: 36px;
-    }
-
-    .product__btn--delete{
-      position: absolute;
-      right: 40px;
-      top: 36px;
     }
 
     .product__info{
@@ -177,7 +164,7 @@ const Product = ({ history, location }) => {
         method: data.method,
         price: data.price,
         status: data.status,
-        userId: data.userId,
+        sellerNickname: data.sellerNickname,
       });
     })();
   }, []);
@@ -201,12 +188,10 @@ const Product = ({ history, location }) => {
           <div className="page-title">상품 정보</div>
           <div className="product">
             <img className="product__img" src={product.book.image} alt="" />
-            <div className="product__btn">
-              <div className="product__btn--edit">수정하기</div>
-              <div className="product__btn--delete">삭제하기</div>
-            </div>
             <div className="product__info">
-              <p className="product__info_date">{product.createdDate}</p>
+              <p className="product__info_date">
+                작성일: {product.createdDate}
+              </p>
               <p className="product__info_category">
                 [{product.book.category}]
               </p>
@@ -215,7 +200,9 @@ const Product = ({ history, location }) => {
               <p className="product__info_publisher">
                 {product.book.publisher}, {product.book.pubDate}
               </p>
-              <p className="product__info_seller">판매자: {product.userId}</p>
+              <p className="product__info_seller">
+                판매자: {product.sellerNickname}
+              </p>
               <p className="product__info_price">
                 정가: {product.book.priceStandard} 원 <br />
                 판매가: {product.price} 원
@@ -237,4 +224,4 @@ const Product = ({ history, location }) => {
   );
 };
 
-export default withRouter(Product);
+export default Product;
