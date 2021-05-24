@@ -59,12 +59,12 @@ const MessageHistory = () => {
   const [receiveClicked, setReceiveClicked] = useState(false);
   const [sendClicked, setSendClicked] = useState(false);
 
-  const handleReceiveSwitch = (e) => {
+  const handleReceiveSwitch = () => {
     setSendClicked(false);
     setReceiveClicked(true);
   };
 
-  const handleSendSwitch = (e) => {
+  const handleSendSwitch = () => {
     setReceiveClicked(false);
     setSendClicked(true);
   };

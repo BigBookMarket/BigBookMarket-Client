@@ -60,12 +60,12 @@ const MarketHistory = () => {
   const [sellClicked, setSellClicked] = useState(false);
   const [buyClicked, setBuyClicked] = useState(false);
 
-  const handleSellSwitch = (e) => {
+  const handleSellSwitch = () => {
     setBuyClicked(false);
     setSellClicked(true);
   };
 
-  const handleBuySwitch = (e) => {
+  const handleBuySwitch = () => {
     setSellClicked(false);
     setBuyClicked(true);
   };
