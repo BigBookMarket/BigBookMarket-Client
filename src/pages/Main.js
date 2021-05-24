@@ -44,6 +44,8 @@ const MainWrapper = Styled.div`
 
   button:hover{
     cursor: pointer;
+    background-color: var(--primary-color);
+    color: #fff;
   }
 
   .buttons{

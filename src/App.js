@@ -12,6 +12,7 @@ import Sell from "./pages/Sell";
 import Message from "./pages/Message";
 import Post from "./pages/Post";
 import PostDetail from "./pages/PostDetail";
+import PostWrite from "./pages/PostWrite";
 import MarketHistory from "./pages/MarketHistory";
 import PostHistory from "./pages/PostHistory";
 import CommentHistory from "./pages/CommentHistory";
@@ -29,11 +30,12 @@ const App = () => {
           <Route path="/community" exact component={Community} />
           <Route path="/market" exact component={Market} />
           <Route path="/mypage" exact component={Mypage} />
-          <Route path="/product" exact component={Product} />
+          <Route path="/product/:productid" component={Product}></Route>
           <Route path="/sell" exact component={Sell} />
           <Route path="/message" exact component={Message} />
           <Route path="/post" exact component={Post} />
           <Route path="/post/detail" exact component={PostDetail} />
+          <Route path="/post-write" exact component={PostWrite} />
           <Route path="/mypage/market" exact component={MarketHistory} />
           <Route path="/mypage/post" exact component={PostHistory} />
           <Route path="/mypage/comment" exact component={CommentHistory} />

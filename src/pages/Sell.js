@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import axios from "axios";
+import SearchDropdown from "../components/SearchDropdown";
 
 const SellWrapper = Styled.div`
   display: flex;
@@ -36,6 +38,24 @@ const SellWrapper = Styled.div`
     border: none;
     margin-top: 18px;
     margin-right: 12px;
+
+    &.info__category {
+      width: 140px;
+    }
+
+    &.info__price {
+      width: 100px;
+    }
+
+    &.info__publisher {
+      width: 250px;
+    }
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 
   form button {
@@ -51,34 +71,33 @@ const SellWrapper = Styled.div`
   .product-form {
     display: flex;
     margin-top: 40px;
-  }
 
-  .product-form__img{
-    width: 200px;
-    height: 200px;
+    &__img {
+      width: 200px;
+      height: 200px;
+      background-color: lightgrey;  
     background-color: lightgrey;
-  }
-  
-  .product-form__info{
-    width: 580px;
-    height: 200px;
+      background-color: lightgrey;  
+    }
+
+    &__info{
+      width: 580px;
+      height: 200px;
+      padding-left: 20px; 
     padding-left: 20px;
+      padding-left: 20px; 
+    }
   }
 
-  input.info__category {
-    width: 140px;
-  }
+  .info__search {
+    display: flex;
+    position: relative;
 
-  input.info__price{
-    width: 100px;
-  }
-
-  input.info__publisher{
-    width: 250px;
-  }
-
-  .info__search button{
-    margin-left: 20px;
+    & button{
+      position: absolute;
+      bottom: 0;
+      left: 300px; 
+    }
   }
 
   .deal-form{
@@ -87,21 +106,22 @@ const SellWrapper = Styled.div`
     padding: 10px;
     display: flex;
     align-items: center;
-  }
 
-  .deal-form__detail > p{
-    font-size : 14px;
-  }
+    &__detail > p{
+      font-size : 14px;
+    }
 
-  .deal-form textarea{
-    margin-top: 8px;
-    width: 400px;
-    height: 180px;
-    padding: 10px;
-    resize: none;
+    & textarea {
+      margin-top: 8px;
+      width: 400px;
+      height: 180px;
+      padding: 10px;
+      resize: none;
+      border: none; 
     border: none;
+      border: none; 
+    }
   }
-
   .form-submit-btn {
     position: absolute;
     right: 70px;
@@ -118,7 +138,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Sell = () => {
+  const apiKey = process.env.REACT_APP_API_KEY;
   const classes = useStyles();
+  const [searchInput, setSearchInput] = useState("");
+  const [options, setOptions] = useState(null);
+  const [selectedBook, setSelectedBook] = useState(null);
 
   const [inputs, setInputs] = useState({
     category: "",
@@ -130,6 +154,7 @@ const Sell = () => {
     method: "",
     status: "",
     detail: "",
+    coverImage: "",
   });
 
   const {
@@ -142,6 +167,7 @@ const Sell = () => {
     method,
     status,
     detail,
+    coverImage,
   } = inputs;
 
   const handleInputChange = (e) => {
@@ -152,28 +178,100 @@ const Sell = () => {
     });
   };
 
+  const handleSearchInput = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const handleSearchButton = (e) => {
+    e.preventDefault();
+    (async () => {
+      const bookInfo = await getBooks(searchInput);
+      setOptions(bookInfo.item);
+    })();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
+    const postData = {
+      book: {
+        bookId: selectedBook.isbn,
+        title: selectedBook.title,
+        author: selectedBook.author,
+        category: selectedBook.categoryName.split(">")[2],
+        publisher: selectedBook.publisher,
+        pubDate: selectedBook.pubDate,
+        priceStandard: selectedBook.priceStandard,
+        image: selectedBook.cover,
+      },
+      detail: inputs.detail,
+      method: inputs.method,
+      price: parseInt(inputs.sellPrice),
+      sellerId: 1,
+    };
+    console.log(postData);
+    (async () => {
+      await axios
+        .post("https://bigbookmarket.kro.kr/item", postData)
+        .then((res) => console.log(res))
+        .catch((err) => {
+          console.log(err);
+          alert("입력을 확인해주세요");
+        });
+    })();
   };
+
+  const getBooks = async (title) => {
+    try {
+      const data = await axios.get(
+        `/api/?ttbkey=${apiKey}&Query=${title}&QueryType=Keyword&MaxResults=100&start=1&SearchTarget=Book&CategoryId=8257&output=js&Version=20131101`
+      );
+      console.log("[SUCCESS] GET books data");
+      return data.data;
+    } catch (e) {
+      console.log("[FAIL] GET books data");
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    if (selectedBook) {
+      setInputs({
+        ...inputs,
+        category: selectedBook.categoryName.split(">")[2],
+        title: selectedBook.title,
+        standardPrice: selectedBook.priceStandard,
+        author: selectedBook.author,
+        publisher: selectedBook.publisher,
+        coverImage: selectedBook.cover,
+      });
+    }
+  }, [options, selectedBook]);
 
   return (
     <SellWrapper>
       <div className="page-title">판매글 작성하기</div>
       <form onSubmit={handleSubmit}>
         <div className="product-form">
-          <div className="product-form__img"></div>
+          <img className="product-form__img" src={coverImage} alt="" />
           <div className="product-form__info">
             <div className="info__search">
-              <input placeholder="도서 검색" />
-              <button>검색</button>
+              <SearchDropdown
+                handleSearchInput={handleSearchInput}
+                searchInput={searchInput}
+                options={options}
+                onChange={(val) => setSearchInput(val)}
+                setSelectedBook={setSelectedBook}
+              />
+              <button onClick={handleSearchButton}>검색</button>
             </div>
+
             <input
               onChange={handleInputChange}
               name="category"
               value={category}
               className="info__category"
               placeholder="카테고리"
+              readOnly
             />
             <input
               name="title"
@@ -181,6 +279,7 @@ const Sell = () => {
               value={title}
               className="info__title"
               placeholder="도서명"
+              readOnly
             />
             <input
               onChange={handleInputChange}
@@ -188,6 +287,7 @@ const Sell = () => {
               name="standardPrice"
               className="info__price"
               placeholder="정가정보"
+              readOnly
             />
             <input
               name="author"
@@ -195,6 +295,7 @@ const Sell = () => {
               value={author}
               className="info__author"
               placeholder="저자"
+              readOnly
             />
             <input
               onChange={handleInputChange}
@@ -202,17 +303,19 @@ const Sell = () => {
               name="publisher"
               className="info__publisher"
               placeholder="출판사/ 출판일"
+              readOnly
             />
           </div>
         </div>
         <div className="deal-form">
           <div className="deal-form__info">
             <input
+              type="number"
               onChange={handleInputChange}
               value={sellPrice}
               className="info__sellPrice"
               name="sellPrice"
-              placeholder="판매가"
+              placeholder="판매가 (원)"
             />
             <FormControl variant="outlined" className={classes.formControl}>
               <InputLabel id="demo-simple-select-outlined-label">
@@ -226,13 +329,13 @@ const Sell = () => {
                 onChange={handleInputChange}
                 label="거래방법"
               >
-                <MenuItem value="택배">
+                <MenuItem value="DELIVERY">
                   <em>택배</em>
                 </MenuItem>
-                <MenuItem value="직거래">
+                <MenuItem value="DIRECT">
                   <em>직거래</em>
                 </MenuItem>
-                <MenuItem value="둘다가능">
+                <MenuItem value="BOTH">
                   <em>둘다가능</em>
                 </MenuItem>
               </Select>
@@ -249,7 +352,7 @@ const Sell = () => {
                 onChange={handleInputChange}
                 label="거래상태"
               >
-                <MenuItem value="판매중">
+                <MenuItem value="SALE">
                   <em>판매중</em>
                 </MenuItem>
               </Select>
@@ -265,7 +368,9 @@ const Sell = () => {
             />
           </div>
         </div>
-        <button className="form-submit-btn">완료</button>
+        <button type="submit" className="form-submit-btn">
+          완료
+        </button>
       </form>
     </SellWrapper>
   );

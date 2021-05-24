@@ -109,7 +109,7 @@ const Message = ({ history }) => {
   };
 
   const handleConfirmClick = () => {
-    history.push("/product");
+    history.push("/market");
   };
 
   return (

@@ -1,10 +1,10 @@
-import React from 'react';
-import Styled from 'styled-components';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import Styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const ProductWrapper = Styled.div`
   width: 850px;
-  height: 216px;
+  height: 250px;
   background-color: var(--theme-color);
   margin-bottom: 60px;
   display: flex;
@@ -13,8 +13,8 @@ const ProductWrapper = Styled.div`
   cursor: pointer;
 
   .product__img{
-    width: 176px;
-    height: 176px;
+    width: 180px;
+    height: 200px;
     background-color: lightgrey;
     position: absolute;
     left: 50px;
@@ -23,8 +23,13 @@ const ProductWrapper = Styled.div`
   .product__info{
     display: flex;
     flex-direction: column;
+    width: 480px;
     position: absolute;
-    right: 400px;
+    right: 110px;
+
+    &_created-date{
+      color: var(--primary-color);
+    }
   }
 
   .product__info_title{
@@ -38,24 +43,48 @@ const ProductWrapper = Styled.div`
     right: 40px;
     top: 20px;
   }
+
+  .product__info_price span:first-child{
+    text-decoration: line-through;
+  }
 `;
 
-const ProductCard = ({ history }) => {
+const ProductCard = ({ product }) => {
   return (
-    <ProductWrapper onClick={() => history.push('/product')}>
-      <div className="product__img"></div>
-      <div className="product__info">
-        <p className="product__info_title">[카테고리] 도서명</p>
-        <p className="product__info_author">저자</p>
-        <p className="product__info_publisher">출판사, 출판일</p>
-        <p className="product__info_price">정가정보</p>
-        <p className="product__info_method">거래방법: 택배</p>
-        <p className="product__info_status">거래상태: 판매중</p>
-        <p className="product__info_date">작성일자</p>
-      </div>
-      <div className="product__seller">판매자 ID</div>
-    </ProductWrapper>
+    <Link
+      style={{ textDecoration: "none", color: "inherit" }}
+      to={{
+        pathname: `/product/${product.itemId}`,
+        state: {
+          productinfo: product,
+        },
+      }}
+    >
+      <ProductWrapper>
+        <img className="product__img" src={product.book.image} alt="" />
+        <div className="product__info">
+          <p className="product__info_created-date">
+            작성일: {product.createdDate}
+          </p>
+          <p className="product__info_title">
+            [{product.book.category}] {product.book.title}
+          </p>
+          <p className="product__info_author">{product.book.author}</p>
+          <p className="product__info_publisher">
+            {product.book.publisher}, {product.book.pubDate}
+          </p>
+          <p className="product__info_price">
+            <span>{product.book.priceStandard}원</span>
+            <span> &gt; {product.price}원</span>
+          </p>
+          <p className="product__info_method">거래방법: {product.method}</p>
+          <p className="product__info_status">거래상태: {product.status}</p>
+          <p className="product__info_date">판매자: {product.sellerNickname}</p>
+        </div>
+        <div className="product__seller">{product.userId}</div>
+      </ProductWrapper>
+    </Link>
   );
 };
 
-export default withRouter(ProductCard);
+export default ProductCard;

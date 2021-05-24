@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Styled from "styled-components";
 import ProductCard from "../components/ProductCard";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 const MarketWrapper = Styled.div`
   display: flex;
@@ -50,8 +51,20 @@ const MarketWrapper = Styled.div`
   }
 `;
 
+const getProductList = async () => {
+  try {
+    const data = await axios.get("https://bigbookmarket.kro.kr/item/list");
+    console.log("[SUCCESS] GET product list data", data.data);
+    return data.data;
+  } catch (e) {
+    console.log("[FAIL] GET product list data");
+    return null;
+  }
+};
+
 const Market = ({ history }) => {
   const [searchInput, setSearchInput] = useState("");
+  const [productList, setProductList] = useState([]);
 
   const handleChange = (e) => {
     setSearchInput(e.target.value);
@@ -62,6 +75,13 @@ const Market = ({ history }) => {
     console.log(searchInput);
     setSearchInput("");
   };
+
+  useEffect(() => {
+    (async () => {
+      const data = await getProductList();
+      setProductList(data);
+    })();
+  }, []);
 
   return (
     <>
@@ -80,8 +100,9 @@ const Market = ({ history }) => {
             판매하기
           </button>
         </div>
-        <ProductCard />
-        <ProductCard />
+        {productList.map((product) => {
+          return <ProductCard key={product.itemId} product={product} />;
+        })}
       </MarketWrapper>
     </>
   );
