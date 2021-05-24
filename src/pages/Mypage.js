@@ -109,25 +109,25 @@ const Mypage = () => {
           <div className="block-wrapper">
             <div className="block">
               <p>거래내역</p>
-              <Link to="/market/history">
+              <Link to="/mypage/market">
                 <button>조회하기</button>
               </Link>
             </div>
             <div className="block">
               <p>내가 쓴 게시물</p>
-              <Link to="/post/history">
+              <Link to="/mypage/post">
                 <button>조회하기</button>
               </Link>
             </div>
             <div className="block">
               <p>내가 쓴 댓글</p>
-              <Link to="/comment/history">
+              <Link to="/mypage/comment">
                 <button>조회하기</button>
               </Link>
             </div>
             <div className="block">
               <p>쪽지함</p>
-              <Link to="/message/history">
+              <Link to="/mypage/message">
                 <button>조회하기</button>
               </Link>
             </div>

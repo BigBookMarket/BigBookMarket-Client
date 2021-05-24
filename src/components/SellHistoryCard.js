@@ -1,7 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
 
-const PurchaseCardWrapper = Styled.div`
+const SellCardWrapper = Styled.div`
 width: 850px;
 height: 216px;
 background-color: var(--theme-color);
@@ -50,25 +50,20 @@ button{
   cursor: pointer;
 }
 
-.purchase_completed_btn{
+.purchase_sale_btn{
     position: absolute;
     right: 40px;
     bottom: 20px;
-}
-
-.purchase_cancel_btn{
-    position: absolute;
-    right: 123px;
-    bottom: 20px;
+    padding: 0 9px;
 }
 
 .btn{
   cursor: pointer;
 }
 `;
-const PurchaseHistoryCard = () => {
+const SellHistoryCard = () => {
   return (
-    <PurchaseCardWrapper>
+    <SellCardWrapper>
       <div className="card__img"></div>
       <div className="card__info">
         <p className="card__info_date">작성일자</p>
@@ -78,15 +73,19 @@ const PurchaseHistoryCard = () => {
         <p className="card__info_price">판매가</p>
         <p className="card__info_method">거래방법</p>
         <p className="card__info_status">거래상태</p>
-        <p className="card__info_seller">판매자ID</p>
       </div>
       <div className="card_modify_btn">
         <p className="btn">쪽지하기</p>
+        <p>&nbsp;|&nbsp;</p>
+        <p className="btn">수정하기</p>
+        <p>&nbsp;|&nbsp;</p>
+        <p className="btn">삭제하기</p>
       </div>
-      <button className="purchase_completed_btn">구매완료</button>
-      <button className="purchase_cancel_btn">구매취소</button>
-    </PurchaseCardWrapper>
+      <button className="purchase_sale_btn">
+        판매중으로<br></br>전환
+      </button>
+    </SellCardWrapper>
   );
 };
 
-export default PurchaseHistoryCard;
+export default SellHistoryCard;

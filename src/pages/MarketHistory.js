@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Styled from "styled-components";
 import PurchaseHistoryCard from "../components/PurchaseHistoryCard";
-import SalesHistoryCard from "../components/SalesHistoryCard";
+import SellHistoryCard from "../components/SellHistoryCard";
 
 const MarketHistoryWrapper = Styled.div`
   margin: 110px;
@@ -16,69 +16,79 @@ const MarketHistoryWrapper = Styled.div`
       font-weight: bold;
   }
 
-  input {display: none;}
-
-  input:checked + label:before {
-      -webkit-transform: translateX(52px);
-      -ms-transform: translateX(52px);
-      transform: translateX(52px);
-  }
-
-  label{
-      display: inline-block;
-      width: 110px;
-      height: 44px;
-      cursor: pointer;
-      position: relative;
-  }
-
-  label::before {
-      content: '';
-      display: block;
-      width: 50px;
-      height: 36px;
-      left: 4px;
-      bottom: 4px;
-      position: absolute;
-      background-color: #3C64B1;
-      transition: all .4s ease;
-  }
-
-  .switch_wrapper{
+  .toggle-buttons{
       position: relative;
       left: 400px;
       margin: 40px;
+      margin-bottom: 80px;
   }
 
-  .switch_sell {
+  .sell-btn {
+      background: none;
       font-size: 14px;
-      font-weight: bold;
       position: absolute;
       top: 12px;
-      left: 15px;
+      left: -130px;
+      width: 70px;
+      height: 44px;
+      cursor: pointer;
+  }
+
+  .sell-btn.clicked {
+    background: #3C64B1;
+    color: white;
   }
   
-  .switch_buy {
+  .buy-btn {
+    background: none;
     font-size: 14px;
-    font-weight: bold;
     position: absolute;
     top: 12px;
-    right: 15px;
+    left: -50px;
+    width: 70px;
+    height: 44px;
+    cursor: pointer;
+}
+
+.buy-btn.clicked {
+  background: #3C64B1;
+  color: white;
 }
 `;
 
 const MarketHistory = () => {
+  const [sellClicked, setSellClicked] = useState(false);
+  const [buyClicked, setBuyClicked] = useState(false);
+
+  const handleSellSwitch = (e) => {
+    setBuyClicked(false);
+    setSellClicked(true);
+  };
+
+  const handleBuySwitch = (e) => {
+    setSellClicked(false);
+    setBuyClicked(true);
+  };
+
   return (
     <MarketHistoryWrapper>
       <p className="title">거래 내역</p>
-      <div class="switch_wrapper">
-        <input type="checkbox" id="switch"></input>
-        <label for="switch"></label>
-        <p className="switch_sell">판매</p>
-        <p className="switch_buy">구매</p>
+      <div className="toggle-buttons">
+        <button
+          className={`sell-btn ${sellClicked ? "clicked" : null}`}
+          onClick={handleSellSwitch}
+        >
+          판매
+        </button>
+        <button
+          className={`buy-btn ${buyClicked ? "clicked" : null}`}
+          onClick={handleBuySwitch}
+        >
+          구매
+        </button>
       </div>
       <PurchaseHistoryCard />
-      <SalesHistoryCard />
+      <SellHistoryCard />
     </MarketHistoryWrapper>
   );
 };

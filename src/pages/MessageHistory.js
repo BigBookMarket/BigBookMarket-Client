@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Styled from "styled-components";
 import MessageHistoryCard from "../components/MessageHistoryCard";
 
@@ -15,66 +15,76 @@ const MessageHistoryWrapper = Styled.div`
       font-weight: bold;
   }
 
-  input {display: none;}
+  .toggle-buttons{
+    position: relative;
+    left: 400px;
+    margin: 40px;
+    margin-bottom: 80px;
+}
 
-  input:checked + label:before {
-      -webkit-transform: translateX(52px);
-      -ms-transform: translateX(52px);
-      transform: translateX(52px);
-  }
-
-  label{
-      display: inline-block;
-      width: 110px;
-      height: 44px;
-      cursor: pointer;
-      position: relative;
-  }
-
-  label::before {
-      content: '';
-      display: block;
-      width: 50px;
-      height: 36px;
-      left: 4px;
-      bottom: 4px;
-      position: absolute;
-      background-color: #3C64B1;
-      transition: all .4s ease;
-  }
-
-  .switch_wrapper{
-      position: relative;
-      left: 400px;
-      margin: 40px;
-  }
-
-  .switch_sell {
-      font-size: 14px;
-      font-weight: bold;
-      position: absolute;
-      top: 12px;
-      left: 8px;
-  }
-  
-  .switch_buy {
+  .receive-btn {
+    background: none;
     font-size: 14px;
-    font-weight: bold;
     position: absolute;
     top: 12px;
-    right: 8px;
+    left: -130px;
+    width: 70px;
+    height: 44px;
+    cursor: pointer;
+}
+
+.receive-btn.clicked {
+  background: #3C64B1;
+  color: white;
+}
+
+.send-btn {
+  background: none;
+  font-size: 14px;
+  position: absolute;
+  top: 12px;
+  left: -50px;
+  width: 70px;
+  height: 44px;
+  cursor: pointer;
+}
+
+.send-btn.clicked {
+background: #3C64B1;
+color: white;
 }
 `;
 
 const MessageHistory = () => {
+  const [receiveClicked, setReceiveClicked] = useState(false);
+  const [sendClicked, setSendClicked] = useState(false);
+
+  const handleReceiveSwitch = (e) => {
+    setSendClicked(false);
+    setReceiveClicked(true);
+  };
+
+  const handleSendSwitch = (e) => {
+    setReceiveClicked(false);
+    setSendClicked(true);
+  };
+
   return (
     <MessageHistoryWrapper>
       <p className="title">쪽지함</p>
-      <div class="switch_wrapper">
-        <input type="checkbox" id="switch"></input>
-        <label for="switch"></label>
-        <p className="switch_sell">수신함</p>
-        <p className="switch_buy">발신함</p>
+      <div className="toggle-buttons">
+        <button
+          className={`receive-btn ${receiveClicked ? "clicked" : null}`}
+          onClick={handleReceiveSwitch}
+        >
+          수신함
+        </button>
+        <button
+          className={`send-btn ${sendClicked ? "clicked" : null}`}
+          onClick={handleSendSwitch}
+        >
+          발신함
+        </button>
       </div>
       <MessageHistoryCard />
       <MessageHistoryCard />

@@ -32,10 +32,10 @@ const App = () => {
           <Route path="/sell" exact component={Sell} />
           <Route path="/post" exact component={Post} />
           <Route path="/post/detail" exact component={PostDetail} />
-          <Route path="/market/history" exact component={MarketHistory} />
-          <Route path="/post/history" exact component={PostHistory} />
-          <Route path="/comment/history" exact component={CommentHistory} />
-          <Route path="/message/history" exact component={MessageHistory} />
+          <Route path="/mypage/market" exact component={MarketHistory} />
+          <Route path="/mypage/post" exact component={PostHistory} />
+          <Route path="/mypage/comment" exact component={CommentHistory} />
+          <Route path="/mypage/message" exact component={MessageHistory} />
           <Route component={() => <div>Page Not Found</div>} />
         </Switch>
       </div>
