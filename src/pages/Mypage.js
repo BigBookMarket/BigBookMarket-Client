@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 
 const MypageWrapper = Styled.div`
 margin: 110px;
@@ -55,6 +56,7 @@ button{
   border: 1px solid var(--primary-color);
   background-color: #3c64b1;
   color: #fff;
+  cursor: pointer;
 }
 
 .block-wrapper{
@@ -109,19 +111,27 @@ const Mypage = () => {
           <div className="block-wrapper">
             <div className="block">
               <p>거래내역</p>
-              <button>조회하기</button>
+              <Link to="/mypage/market">
+                <button>조회하기</button>
+              </Link>
             </div>
             <div className="block">
               <p>내가 쓴 게시물</p>
-              <button>조회하기</button>
+              <Link to="/mypage/post">
+                <button>조회하기</button>
+              </Link>
             </div>
             <div className="block">
               <p>내가 쓴 댓글</p>
-              <button>조회하기</button>
+              <Link to="/mypage/comment">
+                <button>조회하기</button>
+              </Link>
             </div>
             <div className="block">
               <p>쪽지함</p>
-              <button>조회하기</button>
+              <Link to="/mypage/message">
+                <button>조회하기</button>
+              </Link>
             </div>
           </div>
         </div>
