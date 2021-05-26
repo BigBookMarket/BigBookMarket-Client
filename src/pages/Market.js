@@ -4,6 +4,7 @@ import Styled from "styled-components";
 import ProductCard from "../components/ProductCard";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 
 const MarketWrapper = Styled.div`
   display: flex;
@@ -72,7 +73,13 @@ const Market = ({ history }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(searchInput);
+    (async () => {
+      const products = await getProductList();
+      const searchedProducts = products.filter((product) =>
+        product.book.title.includes(searchInput)
+      );
+      setProductList(searchedProducts);
+    })();
     setSearchInput("");
   };
 
@@ -85,7 +92,8 @@ const Market = ({ history }) => {
 
   return (
     <>
-      <Sidebar />
+      <Navbar />
+      <Sidebar setProductList={setProductList} />
       <MarketWrapper>
         <div className="product-search">
           <form onSubmit={handleSubmit}>
