@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 
 const ProductWrapper = Styled.div`
     display: flex;
@@ -126,7 +127,8 @@ const Product = ({ history, location }) => {
     method: "",
     price: 0,
     status: "",
-    userId: 0,
+    sellerNickname: "",
+    sellerId: "",
   });
 
   const handleBuyClick = () => {
@@ -138,7 +140,13 @@ const Product = ({ history, location }) => {
   };
 
   const handleMessageClick = () => {
-    history.push("/message");
+    history.push({
+      pathname: "/message",
+      state: {
+        product: product,
+        itemId: itemId,
+      },
+    });
   };
 
   const getProductInfo = async () => {
@@ -165,62 +173,69 @@ const Product = ({ history, location }) => {
         price: data.price,
         status: data.status,
         sellerNickname: data.sellerNickname,
+        sellerId: data.sellerId,
       });
     })();
   }, []);
 
   return (
-    <ProductWrapper>
-      {isModalOpen ? (
-        <div className="modal__bg">
-          <div className="modal">
-            <h1>구매신청이 완료되었습니다</h1>
-            <button onClick={handleMessageClick} className="modal__message-btn">
-              판매자와 쪽지하기
-            </button>
-            <div onClick={handleExitClick} className="modal__exit-btn">
-              X
+    <>
+      <Navbar />
+      <ProductWrapper>
+        {isModalOpen ? (
+          <div className="modal__bg">
+            <div className="modal">
+              <h1>구매신청이 완료되었습니다</h1>
+              <button
+                onClick={handleMessageClick}
+                className="modal__message-btn"
+              >
+                판매자와 쪽지하기
+              </button>
+              <div onClick={handleExitClick} className="modal__exit-btn">
+                X
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <>
-          <div className="page-title">상품 정보</div>
-          <div className="product">
-            <img className="product__img" src={product.book.image} alt="" />
-            <div className="product__info">
-              <p className="product__info_date">
-                작성일: {product.createdDate}
-              </p>
-              <p className="product__info_category">
-                [{product.book.category}]
-              </p>
-              <p className="product__info_title">{product.book.title}</p>
-              <p className="product__info_author">{product.book.author}</p>
-              <p className="product__info_publisher">
-                {product.book.publisher}, {product.book.pubDate}
-              </p>
-              <p className="product__info_seller">
-                판매자: {product.sellerNickname}
-              </p>
-              <p className="product__info_price">
-                정가: {product.book.priceStandard} 원 <br />
-                판매가: {product.price} 원
-              </p>
-              <p className="product__info_deal">거래상태: {product.status}</p>
-              <p className="product__info_detail">
-                상품설명:
-                <br />
-                {product.detail}
-              </p>
+        ) : (
+          <>
+            <div className="page-title">상품 정보</div>
+            <div className="product">
+              <img className="product__img" src={product.book.image} alt="" />
+              <div className="product__info">
+                <p className="product__info_date">
+                  작성일: {product.createdDate}
+                </p>
+                <p className="product__info_category">
+                  [{product.book.category}]
+                </p>
+                <p className="product__info_title">{product.book.title}</p>
+                <p className="product__info_author">{product.book.author}</p>
+                <p className="product__info_publisher">
+                  {product.book.publisher}, {product.book.pubDate}
+                </p>
+                <p className="product__info_seller">
+                  판매자: {product.sellerNickname}
+                </p>
+                <p className="product__info_price">
+                  정가: {product.book.priceStandard} 원 <br />
+                  판매가: {product.price} 원
+                </p>
+                <p className="product__info_deal">거래상태: {product.status}</p>
+                <p className="product__info_detail">
+                  상품설명:
+                  <br />
+                  {product.detail}
+                </p>
+              </div>
+              <button onClick={handleBuyClick} className="product__btn--buy">
+                구매하기
+              </button>
             </div>
-            <button onClick={handleBuyClick} className="product__btn--buy">
-              구매하기
-            </button>
-          </div>
-        </>
-      )}
-    </ProductWrapper>
+          </>
+        )}
+      </ProductWrapper>
+    </>
   );
 };
 

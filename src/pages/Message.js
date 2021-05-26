@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
+import Navbar from "../components/Navbar";
 
 const MessageWrapper = Styled.div`
   display: flex;
@@ -101,48 +103,91 @@ const MessageWrapper = Styled.div`
   }
 `;
 
-const Message = ({ history }) => {
+const Message = ({ history, location }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [bookInfo, setBookInfo] = useState(location.state.product.book.title);
+  const [receiverNickname, setReceiverNickname] = useState(
+    location.state.product.sellerNickname
+  );
+  const [message, setMessage] = useState({
+    itemId: location.state.itemId,
+    content: "",
+    senderId: localStorage.getItem("userId"),
+    receiverId: location.state.product.sellerId,
+  });
 
-  const handleMessageSubmit = () => {
+  const { itemId, content, senderId, receiverId } = message;
+
+  const handleMessageSubmit = (e) => {
     setIsModalOpen(true);
+    e.preventDefault();
+    axios
+      .post("https://bigbookmarket.kro.kr/message", message)
+      .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleConfirmClick = () => {
     history.push("/market");
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setMessage({
+      ...message,
+      [name]: value,
+    });
+  };
+
   return (
-    <MessageWrapper>
-      <div className="page-title">쪽지 보내기</div>
-      {isModalOpen ? (
-        <div className="modal__bg">
-          <div className="modal">
-            <h1>쪽지가 전송되었습니다</h1>
-            <button onClick={handleConfirmClick} className="modal__message-btn">
-              확인
-            </button>
+    <>
+      <Navbar />
+      <MessageWrapper>
+        <div className="page-title">쪽지 보내기</div>
+        {isModalOpen ? (
+          <div className="modal__bg">
+            <div className="modal">
+              <h1>쪽지가 전송되었습니다</h1>
+              <button
+                onClick={handleConfirmClick}
+                className="modal__message-btn"
+              >
+                확인
+              </button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <form onSubmit={handleMessageSubmit} className="message__form">
-          <div className="message__header">
-            <input
-              name="sellerId"
-              className="message__seller-id"
-              placeholder="판매자 ID"
+        ) : (
+          <form onSubmit={handleMessageSubmit} className="message__form">
+            <div className="message__header">
+              <input
+                name="sellerId"
+                className="message__seller-id"
+                value={`수신자: ${receiverNickname}님`}
+                onChange={handleInputChange}
+                readOnly
+              />
+              <input
+                name="bookInfo"
+                className="message__book-info"
+                placeholder="도서정보"
+                value={bookInfo}
+                onChange={handleInputChange}
+                readOnly
+              />
+            </div>
+            <textarea
+              name="content"
+              className="message__content"
+              value={content}
+              onChange={handleInputChange}
             />
-            <input
-              name="bookInfo"
-              className="message__book-info"
-              placeholder="도서정보"
-            />
-          </div>
-          <textarea className="message__content" />
-          <button type="submit">보내기</button>
-        </form>
-      )}
-    </MessageWrapper>
+            <button type="submit">보내기</button>
+          </form>
+        )}
+      </MessageWrapper>
+    </>
   );
 };
 
