@@ -1,6 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const MainWrapper = Styled.div`
   display: flex;
@@ -60,6 +61,7 @@ const MainWrapper = Styled.div`
 const Main = () => {
   return (
     <>
+      <Navbar />
       <MainWrapper>
         <div className="img"></div>
         <div className="intro">

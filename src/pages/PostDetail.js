@@ -1,6 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
 import CommentCard from "../components/CommentCard";
+import Navbar from "../components/Navbar";
 
 const PostDetailWrapper = Styled.div`
     margin: 50px;
@@ -118,37 +119,40 @@ const PostDetailWrapper = Styled.div`
 
 const PostDetail = () => {
   return (
-    <PostDetailWrapper>
-      <div className="book-search">
-        <input className="book-search__input" placeholder="도서 검색" />
-        <button className="book-search__btn">검색</button>
-      </div>
-      <div className="post-wrapper">
-        <div className="post-information">
-          <p className="post-information__category">[카테고리]</p>
-          <p className="post-information__book">
-            도서명 - 저자 - 출판사, 출판일
-          </p>
-          <p className="post-information__detail">
-            작성자 ID | 작성일자 | 댓글 수 0
-          </p>
-          <p className="post-information__title">게시글 제목</p>
-          <p className="post-information__content">
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-          </p>
+    <>
+      <Navbar />
+      <PostDetailWrapper>
+        <div className="book-search">
+          <input className="book-search__input" placeholder="도서 검색" />
+          <button className="book-search__btn">검색</button>
         </div>
-      </div>
-      <div className="write-wrapper">
-        <textarea></textarea>
-        <button className="comment-btn">등록</button>
-      </div>
-      <div className="comment-wrapper">
-        <CommentCard />
-        <CommentCard />
-        <CommentCard />
-        <CommentCard />
-      </div>
-    </PostDetailWrapper>
+        <div className="post-wrapper">
+          <div className="post-information">
+            <p className="post-information__category">[카테고리]</p>
+            <p className="post-information__book">
+              도서명 - 저자 - 출판사, 출판일
+            </p>
+            <p className="post-information__detail">
+              작성자 ID | 작성일자 | 댓글 수 0
+            </p>
+            <p className="post-information__title">게시글 제목</p>
+            <p className="post-information__content">
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            </p>
+          </div>
+        </div>
+        <div className="write-wrapper">
+          <textarea></textarea>
+          <button className="comment-btn">등록</button>
+        </div>
+        <div className="comment-wrapper">
+          <CommentCard />
+          <CommentCard />
+          <CommentCard />
+          <CommentCard />
+        </div>
+      </PostDetailWrapper>
+    </>
   );
 };
 

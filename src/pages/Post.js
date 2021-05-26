@@ -2,6 +2,7 @@ import React from "react";
 import Styled from "styled-components";
 import PostCard from "../components/PostCard";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const PostWrapper = Styled.div`
     margin: 50px;
@@ -98,36 +99,39 @@ const PostWrapper = Styled.div`
 
 const Post = () => {
   return (
-    <Link
-      style={{ textDecoration: "none", color: "inherit" }}
-      to={{
-        pathname: "post-write",
-      }}
-    >
-      <PostWrapper>
-        <div className="book-search">
-          <input className="book-search__input" placeholder="도서 검색" />
-          <button className="book-search__btn">검색</button>
-        </div>
-        <div className="book-wrapper">
-          <div className="img"></div>
-          <div className="book-information">
-            <p className="information__category">[카테고리]</p>
-            <p className="information__title">도서명</p>
-            <p className="information__author">저자</p>
-            <p className="information__publisher">출판사, 출판일</p>
+    <>
+      <Navbar />
+      <Link
+        style={{ textDecoration: "none", color: "inherit" }}
+        to={{
+          pathname: "post-write",
+        }}
+      >
+        <PostWrapper>
+          <div className="book-search">
+            <input className="book-search__input" placeholder="도서 검색" />
+            <button className="book-search__btn">검색</button>
           </div>
-          <p className="information__date">작성일자</p>
-          <button className="post__btn">게시글 작성하기</button>
-        </div>
-        <div className="post-wrapper">
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-        </div>
-      </PostWrapper>
-    </Link>
+          <div className="book-wrapper">
+            <div className="img"></div>
+            <div className="book-information">
+              <p className="information__category">[카테고리]</p>
+              <p className="information__title">도서명</p>
+              <p className="information__author">저자</p>
+              <p className="information__publisher">출판사, 출판일</p>
+            </div>
+            <p className="information__date">작성일자</p>
+            <button className="post__btn">게시글 작성하기</button>
+          </div>
+          <div className="post-wrapper">
+            <PostCard />
+            <PostCard />
+            <PostCard />
+            <PostCard />
+          </div>
+        </PostWrapper>
+      </Link>
+    </>
   );
 };
 

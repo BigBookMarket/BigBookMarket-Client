@@ -2,6 +2,7 @@ import React from "react";
 import CommunityCard from "../components/CommunityCard";
 import Sidebar from "../components/Sidebar";
 import Styled from "styled-components";
+import Navbar from "../components/Navbar";
 
 const CommunityWrapper = Styled.div`
   display: flex;
@@ -51,6 +52,7 @@ const CommunityWrapper = Styled.div`
 const Community = () => {
   return (
     <>
+      <Navbar />
       <Sidebar />
       <CommunityWrapper>
         <div className="book-search">

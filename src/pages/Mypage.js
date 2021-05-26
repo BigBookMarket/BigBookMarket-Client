@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Styled from "styled-components";
+import Navbar from "../components/Navbar";
 
 const MypageWrapper = Styled.div`
 margin: 110px;
@@ -92,6 +93,7 @@ button{
 const Mypage = () => {
   return (
     <>
+      <Navbar />
       <MypageWrapper>
         <div className="wrapper">
           <p className="bold">마이페이지</p>
