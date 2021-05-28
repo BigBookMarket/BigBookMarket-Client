@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
-import MessageHistoryCard from "../components/MessageHistoryCard";
+import InboxContainer from "../components/InboxContainer";
+import Navbar from "../components/Navbar";
+import OutboxContainer from "../components/OutboxContainer";
 
 const MessageHistoryWrapper = Styled.div`
   margin: 110px;
@@ -56,40 +58,44 @@ color: white;
 `;
 
 const MessageHistory = () => {
-  const [receiveClicked, setReceiveClicked] = useState(false);
+  const [receiveClicked, setReceiveClicked] = useState(true);
   const [sendClicked, setSendClicked] = useState(false);
+  const [isReceived, setIsReceived] = useState(true);
 
   const handleReceiveSwitch = () => {
     setSendClicked(false);
     setReceiveClicked(true);
+    setIsReceived(true);
   };
 
   const handleSendSwitch = () => {
     setReceiveClicked(false);
     setSendClicked(true);
+    setIsReceived(false);
   };
 
   return (
-    <MessageHistoryWrapper>
-      <p className="title">쪽지함</p>
-      <div className="toggle-buttons">
-        <button
-          className={`receive-btn ${receiveClicked ? "clicked" : null}`}
-          onClick={handleReceiveSwitch}
-        >
-          수신함
-        </button>
-        <button
-          className={`send-btn ${sendClicked ? "clicked" : null}`}
-          onClick={handleSendSwitch}
-        >
-          발신함
-        </button>
-      </div>
-      <MessageHistoryCard />
-      <MessageHistoryCard />
-      <MessageHistoryCard />
-    </MessageHistoryWrapper>
+    <>
+      <Navbar />
+      <MessageHistoryWrapper>
+        <p className="title">쪽지함</p>
+        <div className="toggle-buttons">
+          <button
+            className={`receive-btn ${receiveClicked ? "clicked" : null}`}
+            onClick={handleReceiveSwitch}
+          >
+            수신함
+          </button>
+          <button
+            className={`send-btn ${sendClicked ? "clicked" : null}`}
+            onClick={handleSendSwitch}
+          >
+            발신함
+          </button>
+        </div>
+        {isReceived ? <InboxContainer /> : <OutboxContainer />}
+      </MessageHistoryWrapper>
+    </>
   );
 };
 
