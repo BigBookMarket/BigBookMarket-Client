@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
@@ -37,9 +37,10 @@ text-align: center;
 
 .text-information{
   width: 300px;
-  font-size: 13px;
+  font-size: 16px;
   color: #737B7D;
-  margin-left: 90px;
+  margin-left: 70px;
+  margin-top: 10px;
   text-align: left;
 }
 
@@ -93,6 +94,10 @@ button{
 `;
 
 const Mypage = () => {
+  const myId = localStorage.getItem("userId");
+  const myNickname = localStorage.getItem("userNickname");
+  const myPhone = localStorage.getItem("phone");
+
   return (
     <>
       <Navbar />
@@ -102,9 +107,9 @@ const Mypage = () => {
           <div className="user-information">
             <div className="img"></div>
             <div className="text-information">
-              <p>닉네임</p>
-              <p>회원아이디</p>
-              <p>전화번호</p>
+              <p>닉네임: {myNickname}</p>
+              <p>아이디: {myId} </p>
+              <p>전화번호: {myPhone} </p>
             </div>
             <button>수정하기</button>
           </div>
