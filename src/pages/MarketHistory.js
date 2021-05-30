@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
-import SellHistoryContainer from "../components/mypage/deal/SellHistoryContainer";
-import PurchaseHistoryContainer from "../components/mypage/deal/PurchaseHistoryContainer";
+import SellHistoryContainer from "../components/mypage/market/SellHistoryContainer";
+import PurchaseHistoryContainer from "../components/mypage/market/PurchaseHistoryContainer";
 import Navbar from "../components/Navbar";
 
 const MarketHistoryWrapper = Styled.div`
