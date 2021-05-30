@@ -1,6 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
-import PostHistoryCard from "../components/PostHistoryCard";
+import PostHistoryCard from "../components/mypage/community/PostHistoryCard";
+import Navbar from "../components/Navbar";
 
 const PostHistoryWrapper = Styled.div`
   margin: 110px;
@@ -19,12 +20,15 @@ const PostHistoryWrapper = Styled.div`
 
 const PostHistory = () => {
   return (
-    <PostHistoryWrapper>
-      <p className="title">내가 쓴 게시글</p>
-      <PostHistoryCard />
-      <PostHistoryCard />
-      <PostHistoryCard />
-    </PostHistoryWrapper>
+    <>
+      <Navbar />
+      <PostHistoryWrapper>
+        <p className="title">내가 쓴 게시글</p>
+        <PostHistoryCard />
+        <PostHistoryCard />
+        <PostHistoryCard />
+      </PostHistoryWrapper>
+    </>
   );
 };
 

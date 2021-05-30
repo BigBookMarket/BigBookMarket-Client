@@ -1,6 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
-import CommentHistoryCard from "../components/CommentHistoryCard";
+import CommentHistoryCard from "../components/mypage/community/CommentHistoryCard";
+import Navbar from "../components/Navbar";
 
 const CommentHistoryWrapper = Styled.div`
   margin: 110px;
@@ -19,12 +20,15 @@ const CommentHistoryWrapper = Styled.div`
 
 const CommentHistory = () => {
   return (
-    <CommentHistoryWrapper>
-      <p className="title">내가 쓴 댓글</p>
-      <CommentHistoryCard />
-      <CommentHistoryCard />
-      <CommentHistoryCard />
-    </CommentHistoryWrapper>
+    <>
+      <Navbar />
+      <CommentHistoryWrapper>
+        <p className="title">내가 쓴 댓글</p>
+        <CommentHistoryCard />
+        <CommentHistoryCard />
+        <CommentHistoryCard />
+      </CommentHistoryWrapper>
+    </>
   );
 };
 
