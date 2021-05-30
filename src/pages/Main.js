@@ -2,6 +2,7 @@ import React from "react";
 import Styled from "styled-components";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import MainImage from "../assets/MainImage.jpg";
 
 const MainWrapper = Styled.div`
   display: flex;
@@ -17,10 +18,9 @@ const MainWrapper = Styled.div`
     justify-content: center;
   }
 
-  .img{
+  .main-img{
     width: 600px;
-    height: 400px;
-    background-color: lightgrey;
+    height: 380px;
   }
 
   .intro p:nth-child(1){
@@ -63,7 +63,7 @@ const Main = () => {
     <>
       <Navbar />
       <MainWrapper>
-        <div className="img"></div>
+        <img src={MainImage} alt="" className="main-img" />
         <div className="intro">
           <p>
             대학생들을 위한 <br />
