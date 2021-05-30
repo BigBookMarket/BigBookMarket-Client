@@ -2,6 +2,7 @@ import React from "react";
 import Styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import ProfileImg from "../assets/ProfileImg.png";
 
 const MypageWrapper = Styled.div`
 margin: 110px;
@@ -73,7 +74,7 @@ button{
   margin: 10px 0;
   height: 270px;
   width: 370px;
-  background: lightgrey;
+  background: var(--theme-color);
   border-radius: 25px;
 }
 
@@ -105,7 +106,7 @@ const Mypage = () => {
         <div className="wrapper">
           <p className="bold">마이페이지</p>
           <div className="user-information">
-            <div className="img"></div>
+            <img className="profile-img" src={ProfileImg} alt="" />
             <div className="text-information">
               <p>닉네임: {myNickname}</p>
               <p>아이디: {myId} </p>
