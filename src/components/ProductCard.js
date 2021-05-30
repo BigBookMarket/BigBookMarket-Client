@@ -50,6 +50,31 @@ const ProductWrapper = Styled.div`
 `;
 
 const ProductCard = ({ product }) => {
+  const showStatus = () => {
+    switch (product.status) {
+      case "SALE":
+        return "판매중";
+      case "DEAL":
+        return "거래중";
+      case "SOLD":
+        return "판매완료";
+      default:
+        return;
+    }
+  };
+  const showMethod = () => {
+    switch (product.method) {
+      case "DELIVERY":
+        return "택배";
+      case "DIRECT":
+        return "직거래";
+      case "BOTH":
+        return "택배,직거래";
+      default:
+        return;
+    }
+  };
+
   return (
     <Link
       style={{ textDecoration: "none", color: "inherit" }}
@@ -77,9 +102,11 @@ const ProductCard = ({ product }) => {
             <span>{product.book.priceStandard}원</span>
             <span> &gt; {product.price}원</span>
           </p>
-          <p className="product__info_method">거래방법: {product.method}</p>
-          <p className="product__info_status">거래상태: {product.status}</p>
-          <p className="product__info_date">판매자: {product.sellerNickname}</p>
+          <p className="product__info_method">거래방법: {showMethod()}</p>
+          <p className="product__info_status">거래상태: {showStatus()}</p>
+          <p className="product__info_date">
+            판매자: {product.sellerNickname}님
+          </p>
         </div>
         <div className="product__seller">{product.userId}</div>
       </ProductWrapper>

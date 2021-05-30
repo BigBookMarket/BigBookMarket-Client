@@ -1,8 +1,8 @@
 import instance from "./instance";
 
-export const writeProductSell = async () => {
+export const writeProductSell = async (product) => {
   try {
-    const data = await instance.post("/item");
+    const data = await instance.post("/item", product);
     console.log("[SUCCESS] POST WRITE PRODUCT SELL", data.data);
     return data.data;
   } catch (error) {

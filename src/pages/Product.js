@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
-import axios from "axios";
 import Navbar from "../components/Navbar";
-import { dealPurchase } from "../lib/api/item";
+import { getProductInfo, dealPurchase } from "../lib/api/item";
 
 const ProductWrapper = Styled.div`
     display: flex;
@@ -65,7 +64,7 @@ const ProductWrapper = Styled.div`
     .product {
       margin-top: 40px;
       width: 800px;
-      height: 540px;
+      height: 520px;
       background-color: var(--theme-color);
       position: relative;
     }
@@ -75,8 +74,8 @@ const ProductWrapper = Styled.div`
       height: 300px;
       background-color: lightgrey;
       position: absolute;
-      left: 30px;
-      top: 70px;
+      left: 50px;
+      top: 80px;
     }
 
     .product__btn{
@@ -86,28 +85,35 @@ const ProductWrapper = Styled.div`
     }
 
     .product__info{
-      margin-top: 40px;
       width: 430px;
       height: 380px;
-      font-size: 20px;
+      font-size: 18px;
       position: absolute;
-      right: 15px;
-      top: 30px;
-    }
+      right: 0;
+      top: 50px;
 
-    .product__info_date{
-      font-size: 16px;
-      margin-bottom: 18px;
-    }
+      &_date {
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
 
-    .product__info_title, 
-    .product__info_category{
-      font-weight: bold;
-    }
+      &_title, &_category {
+        font-weight: bold; 
+      }
 
-    .product__info_publisher,
-    .product__info_deal{
-      margin-bottom: 15px;
+      &_author{
+        font-size: 16px;
+      }
+
+      &_publisher{
+        margin-bottom: 15px;
+        font-size: 16px;
+      } 
+      
+      &_status{
+        margin-bottom: 15px;
+      }
+
     }
 
     .product__btn--buy {
@@ -133,6 +139,31 @@ const Product = ({ history, location }) => {
     sellerId: "",
   });
 
+  const showStatus = () => {
+    switch (product.status) {
+      case "SALE":
+        return "판매중";
+      case "DEAL":
+        return "거래중";
+      case "SOLD":
+        return "판매완료";
+      default:
+        return;
+    }
+  };
+  const showMethod = () => {
+    switch (product.method) {
+      case "DELIVERY":
+        return "택배";
+      case "DIRECT":
+        return "직거래";
+      case "BOTH":
+        return "택배,직거래";
+      default:
+        return;
+    }
+  };
+
   const handleBuyClick = async () => {
     await dealPurchase(itemId, buyerId);
     setIsModalOpen(true);
@@ -152,22 +183,9 @@ const Product = ({ history, location }) => {
     });
   };
 
-  const getProductInfo = async () => {
-    try {
-      const data = await axios.get(
-        `https://bigbookmarket.kro.kr/item/${itemId}`
-      );
-      console.log("[SUCCESS] GET product data", data.data);
-      return data.data;
-    } catch (e) {
-      console.log("[FAIL] GET product data");
-      return null;
-    }
-  };
-
   useEffect(() => {
     (async () => {
-      const data = await getProductInfo();
+      const data = await getProductInfo(itemId);
       setProduct({
         book: data.book,
         createdDate: data.createdDate,
@@ -218,22 +236,25 @@ const Product = ({ history, location }) => {
                   {product.book.publisher}, {product.book.pubDate}
                 </p>
                 <p className="product__info_seller">
-                  판매자: {product.sellerNickname}
+                  판매자: {product.sellerNickname}님
                 </p>
                 <p className="product__info_price">
                   정가: {product.book.priceStandard} 원 <br />
                   판매가: {product.price} 원
                 </p>
-                <p className="product__info_deal">거래상태: {product.status}</p>
+                <p className="product__info_method">거래방법: {showMethod()}</p>
+                <p className="product__info_status">거래상태: {showStatus()}</p>
                 <p className="product__info_detail">
                   상품설명:
                   <br />
                   {product.detail}
                 </p>
               </div>
-              <button onClick={handleBuyClick} className="product__btn--buy">
-                구매하기
-              </button>
+              {product.status === "SOLD" ? null : (
+                <button onClick={handleBuyClick} className="product__btn--buy">
+                  구매하기
+                </button>
+              )}
             </div>
           </>
         )}

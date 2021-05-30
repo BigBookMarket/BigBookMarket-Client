@@ -8,6 +8,7 @@ import Select from "@material-ui/core/Select";
 import axios from "axios";
 import SearchDropdown from "../components/SearchDropdown";
 import Navbar from "../components/Navbar";
+import { writeProductSell } from "../lib/api/item";
 
 const SellWrapper = Styled.div`
   display: flex;
@@ -191,7 +192,7 @@ const Sell = () => {
     })();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const postData = {
       book: {
@@ -209,16 +210,7 @@ const Sell = () => {
       price: parseInt(inputs.sellPrice),
       id: localStorage.getItem("userId"),
     };
-    console.log(postData);
-    (async () => {
-      await axios
-        .post("https://bigbookmarket.kro.kr/item", postData)
-        .then((res) => console.log(res))
-        .catch((err) => {
-          console.log(err);
-          alert("입력을 확인해주세요");
-        });
-    })();
+    await writeProductSell(postData);
   };
 
   const getBooks = async (title) => {
