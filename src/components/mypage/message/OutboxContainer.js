@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getOutboxMessage } from "../lib/api/user";
+import { getOutboxMessage } from "../../../lib/api/user";
 import MessageHistoryCard from "./MessageHistoryCard";
 
 const OutboxContainer = () => {

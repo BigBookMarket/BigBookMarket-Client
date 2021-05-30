@@ -59,7 +59,7 @@ button{
 }
 `;
 
-const MessageHistoryCard = ({ message, nickname, isInbox }) => {
+const MessageHistoryCard = ({ message, nickname, receiveClicked }) => {
   return (
     <MessageCardWrapper>
       <div className="card__info">
@@ -68,12 +68,12 @@ const MessageHistoryCard = ({ message, nickname, isInbox }) => {
           | {message.book.publisher}
         </p>
         <p className="card__msg_title">
-          {`${isInbox ? "발신자: " : "수신자: "} ${nickname}님 `}{" "}
+          {`${receiveClicked ? "발신자: " : "수신자: "} ${nickname}님 `}{" "}
         </p>
         <p className="card__msg_content">{message.content}</p>
       </div>
       <div className="card_msg_date">{message.createdDate}</div>
-      {isInbox && <button className="reply-btn">답장하기</button>}
+      {receiveClicked && <button className="reply-btn">답장하기</button>}
     </MessageCardWrapper>
   );
 };

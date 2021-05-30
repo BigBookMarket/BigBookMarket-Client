@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { getInboxMessage } from "../lib/api/user";
+import { getInboxMessage } from "../../../lib/api/user";
 import MessageHistoryCard from "./MessageHistoryCard";
 
-const InboxContainer = () => {
+const InboxContainer = ({ receiveClicked }) => {
   const userId = localStorage.getItem("userId");
-  const [isInbox, setIsInbox] = useState(true);
   const [inboxMessages, setInboxMessages] = useState([]);
 
   useEffect(() => {
@@ -19,7 +18,7 @@ const InboxContainer = () => {
       key={message.messageId}
       message={message}
       nickname={message.senderNickname}
-      isInbox={isInbox}
+      receiveClicked={receiveClicked}
     />
   ));
 };
