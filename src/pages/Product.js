@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import { dealPurchase } from "../lib/api/item";
 
 const ProductWrapper = Styled.div`
     display: flex;
@@ -119,6 +120,7 @@ const ProductWrapper = Styled.div`
 
 const Product = ({ history, location }) => {
   const itemId = location.state.productinfo.itemId;
+  const buyerId = localStorage.getItem("userId");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [product, setProduct] = useState({
     book: [],
@@ -131,7 +133,8 @@ const Product = ({ history, location }) => {
     sellerId: "",
   });
 
-  const handleBuyClick = () => {
+  const handleBuyClick = async () => {
+    await dealPurchase(itemId, buyerId);
     setIsModalOpen(true);
   };
 
