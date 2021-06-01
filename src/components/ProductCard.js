@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 const ProductWrapper = Styled.div`
   width: 850px;
   height: 250px;
-  background-color: var(--theme-color);
+  background-color: ${(props) =>
+    props.isSold ? "#DDDDDD" : "var(--theme-color)"};
   margin-bottom: 60px;
   display: flex;
   align-items: center;
   position: relative;
-  cursor: pointer;
+  cursor: ${(props) => (props.isSold ? "default" : "pointer")};
 
   .product__img{
     width: 180px;
@@ -85,7 +86,7 @@ const ProductCard = ({ product }) => {
         },
       }}
     >
-      <ProductWrapper>
+      <ProductWrapper isSold={product.status === "SOLD"}>
         <img className="product__img" src={product.book.image} alt="" />
         <div className="product__info">
           <p className="product__info_created-date">

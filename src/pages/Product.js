@@ -65,16 +65,23 @@ const ProductWrapper = Styled.div`
       margin-top: 40px;
       width: 800px;
       height: 520px;
-      background-color: var(--theme-color);
+      background-color: ${(props) =>
+        props.isSold ? "#DDDDDD" : "var(--theme-color)"};
       position: relative;
+    }
+
+    .product span {
+      display: inline-block;
+      font-weight: bold;
+      width: 80px;
     }
     
     .product__img{
-      width: 300px;
-      height: 300px;
+      width: 260px;
+      height: 260px;
       background-color: lightgrey;
       position: absolute;
-      left: 50px;
+      left: 48px;
       top: 80px;
     }
 
@@ -87,10 +94,14 @@ const ProductWrapper = Styled.div`
     .product__info{
       width: 430px;
       height: 380px;
-      font-size: 18px;
+      font-size: 16px;
       position: absolute;
-      right: 0;
-      top: 50px;
+      right: 20px;
+      top: 40px;
+
+      & p {
+        margin-top: 5px;
+      }
 
       &_date {
         font-size: 14px;
@@ -99,6 +110,7 @@ const ProductWrapper = Styled.div`
 
       &_title, &_category {
         font-weight: bold; 
+        color: var(--primary-color);
       }
 
       &_author{
@@ -114,13 +126,18 @@ const ProductWrapper = Styled.div`
         margin-bottom: 15px;
       }
 
+      &_detail > div {
+        height: 80px;
+        width: 400px;
+      }
+
     }
 
     .product__btn--buy {
       width: 80px;
       position: absolute;
-      bottom: 40px;
-      right: 60px;
+      bottom: 20px;
+      right: 50px;
     }
 `;
 
@@ -179,6 +196,7 @@ const Product = ({ history, location }) => {
       state: {
         product: product,
         itemId: itemId,
+        fromHistory: false,
       },
     });
   };
@@ -202,7 +220,7 @@ const Product = ({ history, location }) => {
   return (
     <>
       <Navbar />
-      <ProductWrapper>
+      <ProductWrapper isSold={product.status === "SOLD"}>
         {isModalOpen ? (
           <div className="modal__bg">
             <div className="modal">
@@ -225,7 +243,7 @@ const Product = ({ history, location }) => {
               <img className="product__img" src={product.book.image} alt="" />
               <div className="product__info">
                 <p className="product__info_date">
-                  작성일: {product.createdDate}
+                  작성일 {product.createdDate}
                 </p>
                 <p className="product__info_category">
                   [{product.book.category}]
@@ -236,21 +254,26 @@ const Product = ({ history, location }) => {
                   {product.book.publisher}, {product.book.pubDate}
                 </p>
                 <p className="product__info_seller">
-                  판매자: {product.sellerNickname}님
+                  <span>판매자</span> {product.sellerNickname}님
                 </p>
                 <p className="product__info_price">
-                  정가: {product.book.priceStandard} 원 <br />
-                  판매가: {product.price} 원
+                  <span>정가</span> {product.book.priceStandard} 원 <br />
+                  <span>판매가</span> {product.price} 원
                 </p>
-                <p className="product__info_method">거래방법: {showMethod()}</p>
-                <p className="product__info_status">거래상태: {showStatus()}</p>
+                <p className="product__info_method">
+                  <span>거래방법</span> {showMethod()}
+                </p>
+                <p className="product__info_status">
+                  <span>거래상태</span> {showStatus()}
+                </p>
                 <p className="product__info_detail">
-                  상품설명:
+                  <span>상품설명</span>
                   <br />
-                  {product.detail}
+                  <div>{product.detail}</div>
                 </p>
               </div>
-              {product.status === "SOLD" ? null : (
+              {product.status === "SOLD" ||
+              product.sellerId === buyerId ? null : (
                 <button onClick={handleBuyClick} className="product__btn--buy">
                   구매하기
                 </button>
