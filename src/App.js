@@ -20,9 +20,8 @@ import MessageHistory from "./pages/MessageHistory";
 
 const App = () => {
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
+    <div className="App">
+      <Router>
         <Switch>
           <Route path="/" exact component={Main} />
           <Route path="/signup" exact component={Signup} />
@@ -42,8 +41,8 @@ const App = () => {
           <Route path="/mypage/message" exact component={MessageHistory} />
           <Route component={() => <div>Page Not Found</div>} />
         </Switch>
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
+import { withRouter } from "react-router-dom";
 
 const MessageCardWrapper = Styled.div`
 width: 850px;
@@ -59,23 +60,37 @@ button{
 }
 `;
 
-const MessageHistoryCard = () => {
+const MessageHistoryCard = ({ history, message, nickname, receiveClicked }) => {
+  const handleReply = () => {
+    history.push({
+      pathname: "/message",
+      state: {
+        product: message,
+        itemId: message.itemId,
+        fromHistory: true,
+      },
+    });
+  };
   return (
     <MessageCardWrapper>
       <div className="card__info">
         <p className="card__msg_info">
-          [카테고리] 도서명 | 저자 | 출판사, 출판일
+          [{message.book.category}] {message.book.title} | {message.book.author}{" "}
+          | {message.book.publisher}
         </p>
-        <p className="card__msg_title">수신자/발신자 ID</p>
-        <p className="card__msg_content">
-          쪽지
-          내용~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        <p className="card__msg_title">
+          {`${receiveClicked ? "발신자: " : "수신자: "} ${nickname}님 `}{" "}
         </p>
+        <p className="card__msg_content">{message.content}</p>
       </div>
-      <div className="card_msg_date">작성일자</div>
-      <button className="reply-btn">답장하기</button>
+      <div className="card_msg_date">{message.createdDate}</div>
+      {receiveClicked && (
+        <button onClick={handleReply} className="reply-btn">
+          답장하기
+        </button>
+      )}
     </MessageCardWrapper>
   );
 };
 
-export default MessageHistoryCard;
+export default withRouter(MessageHistoryCard);

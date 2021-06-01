@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
-import PurchaseHistoryCard from "../components/PurchaseHistoryCard";
-import SellHistoryCard from "../components/SellHistoryCard";
+import SellHistoryContainer from "../components/mypage/market/SellHistoryContainer";
+import PurchaseHistoryContainer from "../components/mypage/market/PurchaseHistoryContainer";
+import Navbar from "../components/Navbar";
 
 const MarketHistoryWrapper = Styled.div`
   margin: 110px;
@@ -32,11 +33,13 @@ const MarketHistoryWrapper = Styled.div`
       width: 70px;
       height: 44px;
       cursor: pointer;
+      border: 1px solid var(--primary-color);
   }
 
   .sell-btn.clicked {
     background: #3C64B1;
     color: white;
+    border: none;
   }
   
   .buy-btn {
@@ -48,16 +51,18 @@ const MarketHistoryWrapper = Styled.div`
     width: 70px;
     height: 44px;
     cursor: pointer;
+    border: 1px solid var(--primary-color);
 }
 
 .buy-btn.clicked {
   background: #3C64B1;
   color: white;
+  border: none;
 }
 `;
 
 const MarketHistory = () => {
-  const [sellClicked, setSellClicked] = useState(false);
+  const [sellClicked, setSellClicked] = useState(true);
   const [buyClicked, setBuyClicked] = useState(false);
 
   const handleSellSwitch = () => {
@@ -71,25 +76,27 @@ const MarketHistory = () => {
   };
 
   return (
-    <MarketHistoryWrapper>
-      <p className="title">거래 내역</p>
-      <div className="toggle-buttons">
-        <button
-          className={`sell-btn ${sellClicked ? "clicked" : null}`}
-          onClick={handleSellSwitch}
-        >
-          판매
-        </button>
-        <button
-          className={`buy-btn ${buyClicked ? "clicked" : null}`}
-          onClick={handleBuySwitch}
-        >
-          구매
-        </button>
-      </div>
-      <PurchaseHistoryCard />
-      <SellHistoryCard />
-    </MarketHistoryWrapper>
+    <>
+      <Navbar />
+      <MarketHistoryWrapper>
+        <p className="title">거래 내역</p>
+        <div className="toggle-buttons">
+          <button
+            className={`sell-btn ${sellClicked ? "clicked" : null}`}
+            onClick={handleSellSwitch}
+          >
+            판매
+          </button>
+          <button
+            className={`buy-btn ${buyClicked ? "clicked" : null}`}
+            onClick={handleBuySwitch}
+          >
+            구매
+          </button>
+        </div>
+        {sellClicked ? <SellHistoryContainer /> : <PurchaseHistoryContainer />}
+      </MarketHistoryWrapper>
+    </>
   );
 };
 

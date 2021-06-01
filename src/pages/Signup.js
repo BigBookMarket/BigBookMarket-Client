@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Styled from "styled-components";
+import Navbar from "../components/Navbar";
+import AuthService from "../services/AuthService";
 
 const SignupWrapper = Styled.div`
 margin-top: 110px;
@@ -45,20 +47,72 @@ button{
 }
 `;
 
-const Signup = () => {
+const Signup = ({ history }) => {
+  const [signupInfo, setSignupInfo] = useState({
+    id: "",
+    nickname: "",
+    pwd: "",
+    phone: "",
+  });
+
+  const { id, nickname, pwd, phone } = signupInfo;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSignupInfo({
+      ...signupInfo,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(signupInfo);
+
+    AuthService.signUp(signupInfo).then((res) => {
+      console.log(res.data);
+      history.push("/login");
+    });
+  };
+
   return (
-    <SignupWrapper>
-      <div className="wrapper">
-        <p>회원가입</p>
-        <div className="input-form">
-          <input type="text" placeholder="회원아이디"></input>
-          <input type="text" placeholder="닉네임"></input>
-          <input type="password" placeholder="비밀번호"></input>
-          <input type="text" placeholder="전화번호"></input>
-          <button>가입하기</button>
+    <>
+      <Navbar />
+      <SignupWrapper>
+        <div className="wrapper">
+          <p>회원가입</p>
+          <form onSubmit={handleSubmit} className="input-form">
+            <input
+              name="id"
+              value={id}
+              placeholder="회원아이디"
+              onChange={handleInputChange}
+            ></input>
+            <input
+              name="nickname"
+              value={nickname}
+              placeholder="닉네임"
+              onChange={handleInputChange}
+            ></input>
+            <input
+              name="pwd"
+              type="password"
+              value={pwd}
+              placeholder="비밀번호"
+              onChange={handleInputChange}
+            ></input>
+            <input
+              name="phone"
+              value={phone}
+              placeholder="전화번호"
+              onChange={handleInputChange}
+            ></input>
+            <button type="submit">가입하기</button>
+          </form>
         </div>
-      </div>
-    </SignupWrapper>
+      </SignupWrapper>
+    </>
   );
 };
 

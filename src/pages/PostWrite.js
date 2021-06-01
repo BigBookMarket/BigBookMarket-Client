@@ -5,6 +5,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import Navbar from "../components/Navbar";
 
 const PostWriteWrapper = Styled.div`
   display: flex;
@@ -102,54 +103,57 @@ const PostWrite = () => {
   };
 
   return (
-    <PostWriteWrapper>
-      <div className="page-title">게시글 작성하기</div>
-      <form onSubmit={handleSubmit}>
-        <div className="post-form">
-          <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel id="demo-simple-select-outlined-label">
-              게시글 카테고리
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-outlined-label"
-              id="demo-simple-select-outlined"
-              name="category"
-              value={category}
-              onChange={handleInputChange}
-              label="카테고리"
-            >
-              <MenuItem value="질문">
-                <em>질문</em>
-              </MenuItem>
-              <MenuItem value="후기">
-                <em>후기</em>
-              </MenuItem>
-              <MenuItem value="개정">
-                <em>개정</em>
-              </MenuItem>
-              <MenuItem value="자유">
-                <em>자유</em>
-              </MenuItem>
-            </Select>
-          </FormControl>
+    <>
+      <Navbar />
+      <PostWriteWrapper>
+        <div className="page-title">게시글 작성하기</div>
+        <form onSubmit={handleSubmit}>
+          <div className="post-form">
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel id="demo-simple-select-outlined-label">
+                게시글 카테고리
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                name="category"
+                value={category}
+                onChange={handleInputChange}
+                label="카테고리"
+              >
+                <MenuItem value="질문">
+                  <em>질문</em>
+                </MenuItem>
+                <MenuItem value="후기">
+                  <em>후기</em>
+                </MenuItem>
+                <MenuItem value="개정">
+                  <em>개정</em>
+                </MenuItem>
+                <MenuItem value="자유">
+                  <em>자유</em>
+                </MenuItem>
+              </Select>
+            </FormControl>
 
-          <input
-            onChange={handleInputChange}
-            value={title}
-            className="post__title"
-            name="title"
-            placeholder="게시글 제목"
-          />
-          <textarea
-            name="detail"
-            value={detail}
-            onChange={handleInputChange}
-            placeholder="내용"
-          />
-          <button className="post-submit-btn">완료</button>
-        </div>
-      </form>
-    </PostWriteWrapper>
+            <input
+              onChange={handleInputChange}
+              value={title}
+              className="post__title"
+              name="title"
+              placeholder="게시글 제목"
+            />
+            <textarea
+              name="detail"
+              value={detail}
+              onChange={handleInputChange}
+              placeholder="내용"
+            />
+            <button className="post-submit-btn">완료</button>
+          </div>
+        </form>
+      </PostWriteWrapper>
+    </>
   );
 };
 

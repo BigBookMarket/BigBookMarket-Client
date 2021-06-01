@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
-import axios from "axios";
+import Navbar from "../components/Navbar";
+import { getProductInfo, dealPurchase } from "../lib/api/item";
 
 const ProductWrapper = Styled.div`
     display: flex;
@@ -63,18 +64,25 @@ const ProductWrapper = Styled.div`
     .product {
       margin-top: 40px;
       width: 800px;
-      height: 540px;
-      background-color: var(--theme-color);
+      height: 520px;
+      background-color: ${(props) =>
+        props.isSold ? "#DDDDDD" : "var(--theme-color)"};
       position: relative;
+    }
+
+    .product span {
+      display: inline-block;
+      font-weight: bold;
+      width: 80px;
     }
     
     .product__img{
-      width: 300px;
-      height: 300px;
+      width: 260px;
+      height: 260px;
       background-color: lightgrey;
       position: absolute;
-      left: 30px;
-      top: 70px;
+      left: 48px;
+      top: 80px;
     }
 
     .product__btn{
@@ -84,40 +92,58 @@ const ProductWrapper = Styled.div`
     }
 
     .product__info{
-      margin-top: 40px;
       width: 430px;
       height: 380px;
-      font-size: 20px;
-      position: absolute;
-      right: 15px;
-      top: 30px;
-    }
-
-    .product__info_date{
       font-size: 16px;
-      margin-bottom: 18px;
-    }
+      position: absolute;
+      right: 20px;
+      top: 40px;
 
-    .product__info_title, 
-    .product__info_category{
-      font-weight: bold;
-    }
+      & p {
+        margin-top: 5px;
+      }
 
-    .product__info_publisher,
-    .product__info_deal{
-      margin-bottom: 15px;
+      &_date {
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
+
+      &_title, &_category {
+        font-weight: bold; 
+        color: var(--primary-color);
+      }
+
+      &_author{
+        font-size: 16px;
+      }
+
+      &_publisher{
+        margin-bottom: 15px;
+        font-size: 16px;
+      } 
+      
+      &_status{
+        margin-bottom: 15px;
+      }
+
+      &_detail > div {
+        height: 80px;
+        width: 400px;
+      }
+
     }
 
     .product__btn--buy {
       width: 80px;
       position: absolute;
-      bottom: 40px;
-      right: 60px;
+      bottom: 20px;
+      right: 50px;
     }
 `;
 
 const Product = ({ history, location }) => {
   const itemId = location.state.productinfo.itemId;
+  const buyerId = localStorage.getItem("userId");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [product, setProduct] = useState({
     book: [],
@@ -126,10 +152,37 @@ const Product = ({ history, location }) => {
     method: "",
     price: 0,
     status: "",
-    userId: 0,
+    sellerNickname: "",
+    sellerId: "",
   });
 
-  const handleBuyClick = () => {
+  const showStatus = () => {
+    switch (product.status) {
+      case "SALE":
+        return "판매중";
+      case "DEAL":
+        return "거래중";
+      case "SOLD":
+        return "판매완료";
+      default:
+        return;
+    }
+  };
+  const showMethod = () => {
+    switch (product.method) {
+      case "DELIVERY":
+        return "택배";
+      case "DIRECT":
+        return "직거래";
+      case "BOTH":
+        return "택배,직거래";
+      default:
+        return;
+    }
+  };
+
+  const handleBuyClick = async () => {
+    await dealPurchase(itemId, buyerId);
     setIsModalOpen(true);
   };
 
@@ -138,25 +191,19 @@ const Product = ({ history, location }) => {
   };
 
   const handleMessageClick = () => {
-    history.push("/message");
-  };
-
-  const getProductInfo = async () => {
-    try {
-      const data = await axios.get(
-        `https://bigbookmarket.kro.kr/item/${itemId}`
-      );
-      console.log("[SUCCESS] GET product data", data.data);
-      return data.data;
-    } catch (e) {
-      console.log("[FAIL] GET product data");
-      return null;
-    }
+    history.push({
+      pathname: "/message",
+      state: {
+        product: product,
+        itemId: itemId,
+        fromHistory: false,
+      },
+    });
   };
 
   useEffect(() => {
     (async () => {
-      const data = await getProductInfo();
+      const data = await getProductInfo(itemId);
       setProduct({
         book: data.book,
         createdDate: data.createdDate,
@@ -165,62 +212,77 @@ const Product = ({ history, location }) => {
         price: data.price,
         status: data.status,
         sellerNickname: data.sellerNickname,
+        sellerId: data.sellerId,
       });
     })();
   }, []);
 
   return (
-    <ProductWrapper>
-      {isModalOpen ? (
-        <div className="modal__bg">
-          <div className="modal">
-            <h1>구매신청이 완료되었습니다</h1>
-            <button onClick={handleMessageClick} className="modal__message-btn">
-              판매자와 쪽지하기
-            </button>
-            <div onClick={handleExitClick} className="modal__exit-btn">
-              X
+    <>
+      <Navbar />
+      <ProductWrapper isSold={product.status === "SOLD"}>
+        {isModalOpen ? (
+          <div className="modal__bg">
+            <div className="modal">
+              <h1>구매신청이 완료되었습니다</h1>
+              <button
+                onClick={handleMessageClick}
+                className="modal__message-btn"
+              >
+                판매자와 쪽지하기
+              </button>
+              <div onClick={handleExitClick} className="modal__exit-btn">
+                X
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <>
-          <div className="page-title">상품 정보</div>
-          <div className="product">
-            <img className="product__img" src={product.book.image} alt="" />
-            <div className="product__info">
-              <p className="product__info_date">
-                작성일: {product.createdDate}
-              </p>
-              <p className="product__info_category">
-                [{product.book.category}]
-              </p>
-              <p className="product__info_title">{product.book.title}</p>
-              <p className="product__info_author">{product.book.author}</p>
-              <p className="product__info_publisher">
-                {product.book.publisher}, {product.book.pubDate}
-              </p>
-              <p className="product__info_seller">
-                판매자: {product.sellerNickname}
-              </p>
-              <p className="product__info_price">
-                정가: {product.book.priceStandard} 원 <br />
-                판매가: {product.price} 원
-              </p>
-              <p className="product__info_deal">거래상태: {product.status}</p>
-              <p className="product__info_detail">
-                상품설명:
-                <br />
-                {product.detail}
-              </p>
+        ) : (
+          <>
+            <div className="page-title">상품 정보</div>
+            <div className="product">
+              <img className="product__img" src={product.book.image} alt="" />
+              <div className="product__info">
+                <p className="product__info_date">
+                  작성일 {product.createdDate}
+                </p>
+                <p className="product__info_category">
+                  [{product.book.category}]
+                </p>
+                <p className="product__info_title">{product.book.title}</p>
+                <p className="product__info_author">{product.book.author}</p>
+                <p className="product__info_publisher">
+                  {product.book.publisher}, {product.book.pubDate}
+                </p>
+                <p className="product__info_seller">
+                  <span>판매자</span> {product.sellerNickname}님
+                </p>
+                <p className="product__info_price">
+                  <span>정가</span> {product.book.priceStandard} 원 <br />
+                  <span>판매가</span> {product.price} 원
+                </p>
+                <p className="product__info_method">
+                  <span>거래방법</span> {showMethod()}
+                </p>
+                <p className="product__info_status">
+                  <span>거래상태</span> {showStatus()}
+                </p>
+                <p className="product__info_detail">
+                  <span>상품설명</span>
+                  <br />
+                  <div>{product.detail}</div>
+                </p>
+              </div>
+              {product.status === "SOLD" ||
+              product.sellerId === buyerId ? null : (
+                <button onClick={handleBuyClick} className="product__btn--buy">
+                  구매하기
+                </button>
+              )}
             </div>
-            <button onClick={handleBuyClick} className="product__btn--buy">
-              구매하기
-            </button>
-          </div>
-        </>
-      )}
-    </ProductWrapper>
+          </>
+        )}
+      </ProductWrapper>
+    </>
   );
 };
 
