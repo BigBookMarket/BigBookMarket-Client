@@ -69,6 +69,7 @@ button{
 }
 `;
 const PurchaseHistoryCard = ({ product }) => {
+  const userId = localStorage.getItem("userId");
   const showStatus = () => {
     switch (product.status) {
       case "DEAL":
@@ -93,7 +94,7 @@ const PurchaseHistoryCard = ({ product }) => {
   };
 
   const handleCancel = async () => {
-    await cancelPurchase(product.itemId);
+    await cancelPurchase(product.itemId, userId);
   };
 
   const handleComplete = async () => {

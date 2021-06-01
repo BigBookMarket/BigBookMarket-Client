@@ -1,5 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
+import { cancelPurchase, deleteProduct } from "../../../lib/api/item";
 
 const SellCardWrapper = Styled.div`
 width: 850px;
@@ -64,6 +65,7 @@ button{
 }
 `;
 const SellHistoryCard = ({ product }) => {
+  const userId = localStorage.getItem("userId");
   const showStatus = () => {
     switch (product.status) {
       case "SALE":
@@ -90,9 +92,13 @@ const SellHistoryCard = ({ product }) => {
   };
   const handleModify = () => {};
 
-  const handleDelete = () => {};
+  const handleDelete = async () => {
+    await deleteProduct(product.itemId);
+  };
 
-  const handleCancel = async () => {};
+  const handleCancel = async () => {
+    await cancelPurchase(product.itemId, userId);
+  };
 
   return (
     <SellCardWrapper>
@@ -119,11 +125,11 @@ const SellHistoryCard = ({ product }) => {
               수정하기
             </p>
             <p>&nbsp;|&nbsp;</p>
+            <p className="card__buttons_delete" onClick={handleDelete}>
+              삭제하기
+            </p>
           </>
         ) : null}
-        <p className="card__buttons_delete" onClick={handleDelete}>
-          삭제하기
-        </p>
       </div>
       {product.status === "DEAL" ? (
         <div>

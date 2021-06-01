@@ -11,11 +11,18 @@ const MainWrapper = Styled.div`
 
   .intro{
     margin-left: 32px;
-    padding: 16px;
-    width: 460px;
+    padding-top: 30px;
+    width: 480px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    &__logo {
+      margin-left: 3px;
+      font-weight: bold;
+      font-size: 32px;
+      color: var(--primary-color);
+    }
   }
 
   .main-img{
@@ -25,13 +32,12 @@ const MainWrapper = Styled.div`
 
   .intro p:nth-child(1){
     font-size: 36px;
-    font-weight: bold;
+    color: var(--primary-color);
   }
 
-  .intro p:nth-child(2){
+  .intro p:nth-child(3){
     margin-top: 40px;
     font-size: 16px;
-    color: #737B7D;
   }
 
   button{
@@ -69,8 +75,10 @@ const Main = () => {
             대학생들을 위한 <br />
             도서 및 지식공유 플랫폼
           </p>
+          <p className="intro__logo">대책마켓</p>
           <p>
             저희 &quot;대책마켓 &quot;은 대학생들이 전공책을 쉽게 판매하고
+            <br />
             구매할 수 있는 서비스이자, 해당 전공도서 내용들을 바탕으로 더
             심도있게 공부할 수 있는 서비스입니다.
           </p>

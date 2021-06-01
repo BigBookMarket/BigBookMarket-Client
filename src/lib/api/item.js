@@ -34,9 +34,11 @@ export const deleteProduct = async (itemId) => {
   try {
     const data = await instance.delete(`/item/${itemId}`);
     console.log("[SUCCESS] DELETE PRODUCT", data.data);
+    alert("삭제되었습니다");
     return data.data;
   } catch (error) {
     console.log("[FAIL] DELETE PRODUCT", error);
+    alert("삭제가 불가능합니다");
   }
 };
 
@@ -70,9 +72,9 @@ export const dealPurchase = async (itemId, buyerId) => {
   }
 };
 
-export const cancelPurchase = async (itemId) => {
+export const cancelPurchase = async (itemId, userId) => {
   try {
-    const data = await instance.put(`/item/cancel/${itemId}`);
+    const data = await instance.put(`/item/cancel/${itemId}`, userId);
     console.log("[SUCCESS] PUT CANCEL PURCHASE", data.data);
     return data.data;
   } catch (error) {
@@ -84,6 +86,7 @@ export const completePurchase = async (itemId) => {
   try {
     const data = await instance.put(`/item/sold/${itemId}`);
     console.log("[SUCCESS] PUT COMPLETE PURCHASE", data.data);
+    alert("거래완료되었습니다");
     return data.data;
   } catch (error) {
     console.log("[FAIL] PUT COMPLETE PURCHASE", error);
