@@ -1,8 +1,8 @@
 import instance from "./instance";
 
-export const writeMessage = async () => {
+export const writeMessage = async (message) => {
   try {
-    const data = await instance.post("/message");
+    const data = await instance.post("/message", message);
     console.log("[SUCCESS] WRITE MESSAGE", data.data);
     return data.data;
   } catch (error) {

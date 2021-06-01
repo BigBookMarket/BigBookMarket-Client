@@ -139,7 +139,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Sell = () => {
+const Sell = ({ history }) => {
   const apiKey = process.env.REACT_APP_API_KEY;
   const classes = useStyles();
   const [searchInput, setSearchInput] = useState("");
@@ -211,6 +211,7 @@ const Sell = () => {
       id: localStorage.getItem("userId"),
     };
     await writeProductSell(postData);
+    history.push("/market");
   };
 
   const getBooks = async (title) => {

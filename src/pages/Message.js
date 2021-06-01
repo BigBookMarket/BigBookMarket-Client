@@ -1,7 +1,7 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Styled from "styled-components";
 import Navbar from "../components/Navbar";
+import { writeMessage } from "../lib/api/message";
 
 const MessageWrapper = Styled.div`
   display: flex;
@@ -107,26 +107,30 @@ const Message = ({ history, location }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bookInfo, setBookInfo] = useState(location.state.product.book.title);
   const [receiverNickname, setReceiverNickname] = useState(
-    location.state.product.sellerNickname
+    location.state.fromHistory
+      ? location.state.product.senderNickname
+      : location.state.product.sellerNickname
   );
+  const [newReceiverId, setNewReceiverId] = useState(
+    location.state.fromHistory
+      ? location.state.product.senderId
+      : location.state.product.sellerId
+  );
+
   const [message, setMessage] = useState({
     itemId: location.state.itemId,
     content: "",
     senderId: localStorage.getItem("userId"),
-    receiverId: location.state.product.sellerId,
+    receiverId: newReceiverId,
   });
 
   const { itemId, content, senderId, receiverId } = message;
 
-  const handleMessageSubmit = (e) => {
+  const handleMessageSubmit = async (e) => {
     setIsModalOpen(true);
     e.preventDefault();
-    axios
-      .post("https://bigbookmarket.kro.kr/message", message)
-      .then((res) => console.log(res))
-      .catch((err) => {
-        console.log(err);
-      });
+    await writeMessage(message);
+    history.push("/mypage/message");
   };
 
   const handleConfirmClick = () => {

@@ -1,5 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
+import { withRouter } from "react-router-dom";
 
 const MessageCardWrapper = Styled.div`
 width: 850px;
@@ -59,7 +60,17 @@ button{
 }
 `;
 
-const MessageHistoryCard = ({ message, nickname, receiveClicked }) => {
+const MessageHistoryCard = ({ history, message, nickname, receiveClicked }) => {
+  const handleReply = () => {
+    history.push({
+      pathname: "/message",
+      state: {
+        product: message,
+        itemId: message.itemId,
+        fromHistory: true,
+      },
+    });
+  };
   return (
     <MessageCardWrapper>
       <div className="card__info">
@@ -73,9 +84,13 @@ const MessageHistoryCard = ({ message, nickname, receiveClicked }) => {
         <p className="card__msg_content">{message.content}</p>
       </div>
       <div className="card_msg_date">{message.createdDate}</div>
-      {receiveClicked && <button className="reply-btn">답장하기</button>}
+      {receiveClicked && (
+        <button onClick={handleReply} className="reply-btn">
+          답장하기
+        </button>
+      )}
     </MessageCardWrapper>
   );
 };
 
-export default MessageHistoryCard;
+export default withRouter(MessageHistoryCard);

@@ -4,6 +4,7 @@ export const writeProductSell = async (product) => {
   try {
     const data = await instance.post("/item", product);
     console.log("[SUCCESS] POST WRITE PRODUCT SELL", data.data);
+    alert("판매글 작성이 완료되었습니다");
     return data.data;
   } catch (error) {
     console.log("[FAIL] POST WRITE PRODUCT SELL", error);
