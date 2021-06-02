@@ -72,6 +72,7 @@ const Signup = ({ history }) => {
 
     AuthService.signUp(signupInfo).then((res) => {
       console.log(res.data);
+      alert("회원가입이 완료되었습니다");
       history.push("/login");
     });
   };

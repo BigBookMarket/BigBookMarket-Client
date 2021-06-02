@@ -41,7 +41,7 @@ const MainWrapper = Styled.div`
   }
 
   button{
-    padding: 10px;
+    padding: 12px;
     margin-top: 42px;
     background-color: #fff;
     color: var(--primary-color);
