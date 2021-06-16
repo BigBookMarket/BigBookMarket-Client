@@ -3,6 +3,7 @@ import Styled from "styled-components";
 import CommentCard from "../components/CommentCard";
 import Navbar from "../components/Navbar";
 import { getPost } from "../lib/api/post";
+import { writeComment } from "../lib/api/comment";
 
 const PostDetailWrapper = Styled.div`
     margin: 50px;
@@ -116,6 +117,8 @@ const PostDetailWrapper = Styled.div`
     width: 640px;
     height: 98px;
     border: 0px;
+    resize: none;
+    padding: 10px;
   }
 `;
 
@@ -123,13 +126,32 @@ const PostDetail = ({ location }) => {
   const postId = location.state.postInfo.postId;
   const [postInfo, setPostInfo] = useState(null);
   const [commentList, setCommentList] = useState(null);
+  const [newComment, setNewComment] = useState({
+    postId: postId,
+    content: "",
+    id: localStorage.getItem("userId"),
+  });
+
   useEffect(() => {
     (async () => {
       const data = await getPost(postId);
       setPostInfo(data);
       setCommentList(data.commentList);
     })();
-  }, []);
+  }, [commentList]);
+
+  const handleCommentChange = (e) => {
+    setNewComment({
+      ...newComment,
+      content: e.target.value,
+    });
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    await writeComment(newComment);
+  };
+
   return (
     postInfo && (
       <>
@@ -158,10 +180,15 @@ const PostDetail = ({ location }) => {
               <p className="post-information__content">{postInfo.content}</p>
             </div>
           </div>
-          <div className="write-wrapper">
-            <textarea></textarea>
-            <button className="comment-btn">등록</button>
-          </div>
+          <form onSubmit={handleCommentSubmit} className="write-wrapper">
+            <textarea
+              value={newComment.content}
+              onChange={handleCommentChange}
+            />
+            <button type="submit" className="comment-btn">
+              등록
+            </button>
+          </form>
           <div className="comment-wrapper">
             {commentList?.map((comment) => (
               <CommentCard key={comment.commentId} comment={comment} />
