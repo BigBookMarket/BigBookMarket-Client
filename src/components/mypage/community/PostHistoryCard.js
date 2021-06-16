@@ -17,7 +17,7 @@ position: relative;
   margin: 0 50px;
 }
 
-.card_info{
+.card__post_date{
   color: #3C64B1;
   font-size: 14px;
   font-weight: bold;
@@ -26,11 +26,11 @@ position: relative;
   top: 20px;
 }
 
-.card__product_info{
+.card__book_info{
   color: #3C64B1;
   font-size: 14px;
   font-weight: bold;
-  margin-bottom: 25px;
+  margin-bottom: 12px;
 }
 
 .card__post_title{
@@ -41,22 +41,27 @@ position: relative;
 .card__post_content{
     overflow: hidden;
     word-break:break-all;
+    width: 700px;
+    height: 54px;
 }
 `;
 
-const PostHistoryCard = () => {
+const PostHistoryCard = ({ post }) => {
   return (
     <PostCardWrapper>
       <div className="card__info">
-        <p className="card__product_info">
-          [카테고리] 도서명 - 저자 - 출판사, 출판일
+        <p className="card__book_info">
+          [{post.book.category}] {post.book.title}
+          <p>
+            {post.book.author} - {post.book.publisher}
+          </p>
         </p>
-        <p className="card__post_title">[카테고리] 게시글 제목</p>
-        <p className="card__post_content">
-          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        <p className="card__post_title">
+          [{post.category}] {post.title}
         </p>
+        <p className="card__post_content">{post.content}</p>
       </div>
-      <div className="card_info">작성일자 | 댓글 수 0</div>
+      <div className="card__post_date">{post.createdDate} | 댓글 수 0</div>
     </PostCardWrapper>
   );
 };

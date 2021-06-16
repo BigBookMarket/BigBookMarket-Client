@@ -44,18 +44,19 @@ position: relative;
 }
 `;
 
-const CommentHistoryCard = () => {
+const CommentHistoryCard = ({ comment }) => {
   return (
     <CommentCardWrapper>
       <div className="card__info">
-        <p className="card__product_info">[카테고리] 도서명</p>
-        <p className="card__comment_title">[카테고리] 게시글 제목</p>
-        <p className="card__comment_content">
-          댓글
-          내용~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        <p className="card__product_info">
+          [{comment.bookCategory}] {comment.bookTitle}
         </p>
+        <p className="card__comment_title">
+          [{comment.postCategory}] {comment.postTitle}
+        </p>
+        <p className="card__comment_content">{comment.content}</p>
       </div>
-      <div className="card_info">작성일자 | 댓글 수 0</div>
+      <div className="card_info">{comment.createdDate} | 댓글 수 0</div>
     </CommentCardWrapper>
   );
 };

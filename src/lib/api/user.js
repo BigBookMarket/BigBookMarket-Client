@@ -39,3 +39,23 @@ export const getSellHistory = async (userId) => {
     console.log("[FAIL] GET SELL HISTORY", error);
   }
 };
+
+export const getPostHistory = async (userId) => {
+  try {
+    const data = await instance.get(`/user/post/${userId}`);
+    console.log("[SUCCESS] GET POST HISTORY", data.data);
+    return data.data;
+  } catch (error) {
+    console.log("[FAIL] GET POST HISTORY", error);
+  }
+};
+
+export const getCommentHistory = async (userId) => {
+  try {
+    const data = await instance.get(`/user/comment/${userId}`);
+    console.log("[SUCCESS] GET COMMENT HISTORY", data.data);
+    return data.data;
+  } catch (error) {
+    console.log("[FAIL] GET COMMENT HISTORY", error);
+  }
+};

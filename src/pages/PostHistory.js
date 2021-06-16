@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import PostHistoryCard from "../components/mypage/community/PostHistoryCard";
 import Navbar from "../components/Navbar";
+import { getPostHistory } from "../lib/api/user";
 
 const PostHistoryWrapper = Styled.div`
   margin: 110px;
@@ -19,14 +20,23 @@ const PostHistoryWrapper = Styled.div`
 `;
 
 const PostHistory = () => {
+  const [postHistory, setPostHistory] = useState(null);
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    (async () => {
+      const data = await getPostHistory(userId);
+      setPostHistory(data);
+    })();
+  }, []);
   return (
     <>
       <Navbar />
       <PostHistoryWrapper>
         <p className="title">내가 쓴 게시글</p>
-        <PostHistoryCard />
-        <PostHistoryCard />
-        <PostHistoryCard />
+        {postHistory?.map((post) => (
+          <PostHistoryCard key={post.postId} post={post} />
+        ))}
       </PostHistoryWrapper>
     </>
   );

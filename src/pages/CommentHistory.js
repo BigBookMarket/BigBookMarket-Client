@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import CommentHistoryCard from "../components/mypage/community/CommentHistoryCard";
 import Navbar from "../components/Navbar";
+import { getCommentHistory } from "../lib/api/user";
 
 const CommentHistoryWrapper = Styled.div`
   margin: 110px;
@@ -19,14 +20,23 @@ const CommentHistoryWrapper = Styled.div`
 `;
 
 const CommentHistory = () => {
+  const [commentHistory, setCommentHistory] = useState(null);
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    (async () => {
+      const data = await getCommentHistory(userId);
+      setCommentHistory(data);
+    })();
+  }, []);
   return (
     <>
       <Navbar />
       <CommentHistoryWrapper>
         <p className="title">내가 쓴 댓글</p>
-        <CommentHistoryCard />
-        <CommentHistoryCard />
-        <CommentHistoryCard />
+        {commentHistory?.map((comment) => (
+          <CommentHistoryCard key={comment.commentId} />
+        ))}
       </CommentHistoryWrapper>
     </>
   );
