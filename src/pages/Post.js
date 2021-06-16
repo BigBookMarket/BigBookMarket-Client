@@ -118,6 +118,9 @@ const Post = ({ location }) => {
           style={{ textDecoration: "none", color: "inherit" }}
           to={{
             pathname: "post-write",
+            state: {
+              bookId: bookId,
+            },
           }}
         >
           <PostWrapper>

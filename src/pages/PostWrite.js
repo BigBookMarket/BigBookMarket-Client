@@ -6,6 +6,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Navbar from "../components/Navbar";
+import { writePost } from "../lib/api/post";
+import { withRouter } from "react-router-dom";
 
 const PostWriteWrapper = Styled.div`
   display: flex;
@@ -78,28 +80,34 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const PostWrite = () => {
+const PostWrite = ({ history, location }) => {
   const classes = useStyles();
+  const bookId = location.state.bookId;
 
-  const [inputs, setInputs] = useState({
+  const [post, setPost] = useState({
+    bookId: bookId,
     category: "",
+    content: "",
     title: "",
-    detail: "",
+    id: localStorage.getItem("userId"),
   });
 
-  const { category, title, detail } = inputs;
+  const { category, title, content } = post;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setInputs({
-      ...inputs,
+    setPost({
+      ...post,
       [name]: value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
+    console.log(post);
+    await writePost(post);
+    alert("게시글 작성이 완료되었습니다");
+    history.goBack();
   };
 
   return (
@@ -121,16 +129,16 @@ const PostWrite = () => {
                 onChange={handleInputChange}
                 label="카테고리"
               >
-                <MenuItem value="질문">
+                <MenuItem value="QUESTION">
                   <em>질문</em>
                 </MenuItem>
-                <MenuItem value="후기">
+                <MenuItem value="REVIEW">
                   <em>후기</em>
                 </MenuItem>
-                <MenuItem value="개정">
+                <MenuItem value="REVISION">
                   <em>개정</em>
                 </MenuItem>
-                <MenuItem value="자유">
+                <MenuItem value="FREE">
                   <em>자유</em>
                 </MenuItem>
               </Select>
@@ -144,8 +152,8 @@ const PostWrite = () => {
               placeholder="게시글 제목"
             />
             <textarea
-              name="detail"
-              value={detail}
+              name="content"
+              value={content}
               onChange={handleInputChange}
               placeholder="내용"
             />
@@ -157,4 +165,4 @@ const PostWrite = () => {
   );
 };
 
-export default PostWrite;
+export default withRouter(PostWrite);
