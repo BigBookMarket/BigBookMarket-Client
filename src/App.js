@@ -29,11 +29,11 @@ const App = () => {
           <Route path="/community" exact component={Community} />
           <Route path="/market" exact component={Market} />
           <Route path="/mypage" exact component={Mypage} />
-          <Route path="/product/:productid" component={Product}></Route>
+          <Route path="/product/:productid" component={Product} />
           <Route path="/sell" exact component={Sell} />
           <Route path="/message" exact component={Message} />
           <Route path="/post" exact component={Post} />
-          <Route path="/post/detail" exact component={PostDetail} />
+          <Route path="/post/:postId" exact component={PostDetail} />
           <Route path="/post-write" exact component={PostWrite} />
           <Route path="/mypage/market" exact component={MarketHistory} />
           <Route path="/mypage/post" exact component={PostHistory} />

@@ -1,6 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const CardWrapper = Styled.div`
   .card{
@@ -58,7 +58,15 @@ const CardWrapper = Styled.div`
   }
 `;
 
-const CommunityCard = ({ book }) => {
+const CommunityCard = ({ book, history }) => {
+  const handleButtonClick = () => {
+    history.push({
+      pathname: "/post",
+      state: {
+        bookId: book.bookId,
+      },
+    });
+  };
   return (
     <CardWrapper>
       <div className="card">
@@ -69,13 +77,11 @@ const CommunityCard = ({ book }) => {
           <p className="card__content_title"> {book.title}</p>
           <p className="card__content_author">{book.author}</p>
           <p className="card__content_publisher">{book.publisher}</p>
-          <Link to="/post">
-            <button>게시글보기</button>
-          </Link>
+          <button onClick={handleButtonClick}>게시글보기</button>
         </div>
       </div>
     </CardWrapper>
   );
 };
 
-export default CommunityCard;
+export default withRouter(CommunityCard);

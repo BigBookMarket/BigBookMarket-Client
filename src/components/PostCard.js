@@ -1,5 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const PostWrapper = Styled.div`
 .card{
@@ -43,20 +44,30 @@ const PostWrapper = Styled.div`
   }
 `;
 
-const PostCard = () => {
+const PostCard = ({ bookInfo, post }) => {
   return (
-    <PostWrapper>
-      <div className="card">
-        <div className="card__content">
-          <p className="card__content_category">[카테고리]</p>
-          <p className="card__content_title">게시글 제목</p>
-          <p className="card__content_content">
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <Link
+      style={{ textDecoration: "none", color: "inherit" }}
+      to={{
+        pathname: `/post/${post.postId}`,
+        state: {
+          postInfo: post,
+        },
+      }}
+    >
+      <PostWrapper>
+        <div className="card">
+          <div className="card__content">
+            <p className="card__content_category">[{post.category}]</p>
+            <p className="card__content_title">{post.title}</p>
+            <p className="card__content_content">{post.content}</p>
+          </div>
+          <p className="card-information">
+            {post.nickname} | {post.createdDate} | 댓글 수 0
           </p>
         </div>
-        <p className="card-information">작성자 ID | 작성일자 | 댓글 수 0</p>
-      </div>
-    </PostWrapper>
+      </PostWrapper>
+    </Link>
   );
 };
 
