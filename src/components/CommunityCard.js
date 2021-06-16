@@ -58,17 +58,17 @@ const CardWrapper = Styled.div`
   }
 `;
 
-const CommunityCard = () => {
+const CommunityCard = ({ book }) => {
   return (
     <CardWrapper>
       <div className="card">
-        <div className="card__img"></div>
+        <img src={book.image} alt="" className="card__img" />
         <div className="card__content">
           <p className="card__content_date">작성일자</p>
-          <p className="card__content_category">[카테고리]</p>
-          <p className="card__content_title"> 도서명</p>
-          <p className="card__content_author">저자</p>
-          <p className="card__content_publisher">출판사, 출판일</p>
+          <p className="card__content_category">[{book.category}]</p>
+          <p className="card__content_title"> {book.title}</p>
+          <p className="card__content_author">{book.author}</p>
+          <p className="card__content_publisher">{book.publisher}</p>
           <Link to="/post">
             <button>게시글보기</button>
           </Link>

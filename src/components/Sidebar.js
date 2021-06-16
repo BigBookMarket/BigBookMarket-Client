@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { getCategoryList, getCategoryBooks } from "../lib/api/book";
+import { getCategoryProducts } from "../lib/api/item";
 
 const SidebarWrapper = Styled.div`
   width: 240px;
@@ -47,53 +48,37 @@ const SidebarWrapper = Styled.div`
   }
 `;
 
-const Sidebar = ({ setProductList }) => {
+const Sidebar = ({ setProductList, location }) => {
+  let data;
   const [categories, setCategories] = useState([]);
-
-  const getCategories = async () => {
-    try {
-      const data = await axios.get(
-        "http://bigbookmarket.kro.kr:8080/book/category"
-      );
-      console.log("[SUCCESS] GET category data");
-      return data.data;
-    } catch (e) {
-      console.log("[FAIL] GET category data");
-      return null;
-    }
-  };
 
   const showTotalBooks = () => {
     (async () => {
-      const data = await getBooks("");
+      if (location.pathname === "/community") {
+        data = await getCategoryBooks("");
+      } else {
+        data = await getCategoryProducts("");
+      }
       console.log(data);
       setProductList(data);
     })();
   };
 
-  const getBooks = async (category) => {
-    try {
-      const data = await axios.get(
-        `https://bigbookmarket.kro.kr/item/list/${category}`
-      );
-      console.log("[SUCCESS] GET product list data");
-      return data.data;
-    } catch (e) {
-      console.log("[FAIL] GET product list data");
-      return null;
-    }
-  };
-
   const showSelectedBooks = (e) => {
     (async () => {
-      const data = await getBooks(e.target.innerText);
+      if (location.pathname === "/community") {
+        data = await getCategoryBooks(e.target.innerText);
+      } else {
+        data = await getCategoryProducts(e.target.innerText);
+      }
+      console.log(data);
       setProductList(data);
     })();
   };
 
   useEffect(() => {
     (async () => {
-      const data = await getCategories();
+      const data = await getCategoryList();
       setCategories(data);
     })();
   }, []);
@@ -119,4 +104,4 @@ const Sidebar = ({ setProductList }) => {
   );
 };
 
-export default Sidebar;
+export default withRouter(Sidebar);

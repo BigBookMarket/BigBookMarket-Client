@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CommunityCard from "../components/CommunityCard";
 import Sidebar from "../components/Sidebar";
 import Styled from "styled-components";
 import Navbar from "../components/Navbar";
+import { getAllBooks, getCategoryBooks } from "../lib/api/book";
 
 const CommunityWrapper = Styled.div`
   display: flex;
@@ -50,22 +51,46 @@ const CommunityWrapper = Styled.div`
 `;
 
 const Community = () => {
+  const [searchInput, setSearchInput] = useState("");
+  const [bookList, setBookList] = useState([]);
+
+  const handleChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const searchedBooks = bookList.filter((book) =>
+      book.title.includes(searchInput)
+    );
+    setBookList(searchedBooks);
+    setSearchInput("");
+  };
+
+  useEffect(() => {
+    (async () => {
+      const data = await getAllBooks();
+      setBookList(data);
+    })();
+  }, []);
+
   return (
     <>
       <Navbar />
-      <Sidebar />
+      <Sidebar setProductList={setBookList} />
       <CommunityWrapper>
-        <div className="book-search">
-          <input className="book-search__input" placeholder="도서 검색" />
+        <form className="book-search" onSubmit={handleSubmit}>
+          <input
+            className="book-search__input"
+            value={searchInput}
+            onChange={handleChange}
+            placeholder="도서 검색"
+          />
           <button className="book-search__btn">검색</button>
-        </div>
+        </form>
         <div className="book-cards">
-          <CommunityCard />
-          <CommunityCard />
-          <CommunityCard />
-          <CommunityCard />
-          <CommunityCard />
-          <CommunityCard />
+          {bookList?.map((book) => (
+            <CommunityCard key={book.bookId} book={book} />
+          ))}
         </div>
       </CommunityWrapper>
     </>
