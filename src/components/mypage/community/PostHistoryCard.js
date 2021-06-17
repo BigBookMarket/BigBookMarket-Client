@@ -61,6 +61,20 @@ position: relative;
 `;
 
 const PostHistoryCard = ({ post }) => {
+  const showCategory = () => {
+    switch (post.category) {
+      case "QUESTION":
+        return "질문";
+      case "REVIEW":
+        return "후기";
+      case "REVISION":
+        return "개정";
+      case "FREE":
+        return "자유";
+      default:
+        return;
+    }
+  };
   const handleModify = () => null;
   const handleDelete = async () => {
     await deletePost(post.postId);
@@ -75,7 +89,7 @@ const PostHistoryCard = ({ post }) => {
           </p>
         </p>
         <p className="card__post_title">
-          [{post.category}] {post.title}
+          [{showCategory()}] {post.title}
         </p>
         <p className="card__post_content">{post.content}</p>
       </div>

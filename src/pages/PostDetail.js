@@ -152,6 +152,10 @@ const PostDetail = ({ location }) => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     await writeComment(newComment);
+    setNewComment({
+      ...newComment,
+      content: "",
+    });
   };
 
   return (

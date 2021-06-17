@@ -86,7 +86,7 @@ const PostWriteWrapper = Styled.div`
 
   textarea{
     margin-top: 30px;
-    height: 140px;
+    height: 130px;
     padding: 10px;
     resize: none;
     border: none;

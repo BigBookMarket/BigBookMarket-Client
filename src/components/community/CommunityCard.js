@@ -27,7 +27,7 @@ const CardWrapper = Styled.div`
     font-size: 17px;
     width: 180px;
     height: 200px;
-    margin-top: 14px;
+    margin-top: 20px;
     padding-left: 12px;
 
     & > p{
