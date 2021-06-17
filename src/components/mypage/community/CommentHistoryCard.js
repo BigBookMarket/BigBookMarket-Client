@@ -1,5 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
+import { deleteComment } from "../../../lib/api/comment";
 
 const CommentCardWrapper = Styled.div`
 width: 850px;
@@ -42,9 +43,27 @@ position: relative;
     overflow: hidden;
     word-break:break-all;
 }
+
+.card__buttons{
+  display: flex;
+  color: var(--primary-color);
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  right: 46px;
+  bottom: 30px;
+
+  & > p:nth-child(2n+1) {
+    cursor: pointer;
+  }
+}
 `;
 
 const CommentHistoryCard = ({ comment }) => {
+  const handleModify = () => null;
+  const handleDelete = async () => {
+    await deleteComment(comment.commentId);
+  };
   return (
     <CommentCardWrapper>
       <div className="card__info">
@@ -57,6 +76,15 @@ const CommentHistoryCard = ({ comment }) => {
         <p className="card__comment_content">{comment.content}</p>
       </div>
       <div className="card_info">{comment.createdDate}</div>
+      <div className="card__buttons">
+        <p className="card__buttons_modify" onClick={handleModify}>
+          수정하기
+        </p>
+        <p>&nbsp;|&nbsp;</p>
+        <p className="card__buttons_delete" onClick={handleDelete}>
+          삭제하기
+        </p>
+      </div>
     </CommentCardWrapper>
   );
 };

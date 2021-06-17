@@ -45,6 +45,7 @@ export const deletePost = async (postId) => {
   try {
     const data = await instance.delete(`/post/${postId}`);
     console.log("[SUCCESS] DELETE POST", data.data);
+    alert("게시물이 삭제되었습니다");
     return data.data;
   } catch (error) {
     console.log("[FAIL] DELETE POST", error);

@@ -28,7 +28,7 @@ const CommentHistory = () => {
       const data = await getCommentHistory(userId);
       setCommentHistory(data);
     })();
-  }, []);
+  }, [commentHistory]);
   return (
     <>
       <Navbar />

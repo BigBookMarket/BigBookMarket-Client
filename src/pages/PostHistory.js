@@ -28,7 +28,7 @@ const PostHistory = () => {
       const data = await getPostHistory(userId);
       setPostHistory(data);
     })();
-  }, []);
+  }, [postHistory]);
   return (
     <>
       <Navbar />

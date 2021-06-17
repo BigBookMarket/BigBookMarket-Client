@@ -1,5 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
+import { deletePost } from "../../../lib/api/post";
 
 const PostCardWrapper = Styled.div`
 width: 850px;
@@ -18,16 +19,15 @@ position: relative;
 }
 
 .card__post_date{
-  color: #3C64B1;
+  color: var(--primary-color);
   font-size: 14px;
-  font-weight: bold;
   position: absolute;
   right: 50px;
-  top: 20px;
+  top: 30px;
 }
 
 .card__book_info{
-  color: #3C64B1;
+  color: var(--primary-color);
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 12px;
@@ -44,9 +44,27 @@ position: relative;
     width: 700px;
     height: 54px;
 }
+
+.card__buttons{
+  display: flex;
+  color: var(--primary-color);
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  right: 46px;
+  bottom: 30px;
+
+  & > p:nth-child(2n+1) {
+    cursor: pointer;
+  }
+}
 `;
 
 const PostHistoryCard = ({ post }) => {
+  const handleModify = () => null;
+  const handleDelete = async () => {
+    await deletePost(post.postId);
+  };
   return (
     <PostCardWrapper>
       <div className="card__info">
@@ -63,6 +81,15 @@ const PostHistoryCard = ({ post }) => {
       </div>
       <div className="card__post_date">
         {post.createdDate} | 댓글 수 {post.commentCount}
+      </div>
+      <div className="card__buttons">
+        <p className="card__buttons_modify" onClick={handleModify}>
+          수정하기
+        </p>
+        <p>&nbsp;|&nbsp;</p>
+        <p className="card__buttons_delete" onClick={handleDelete}>
+          삭제하기
+        </p>
       </div>
     </PostCardWrapper>
   );
