@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
-import CommentCard from "../components/CommentCard";
+import CommentCard from "../components/community/CommentCard";
 import Navbar from "../components/Navbar";
 import { getPost } from "../lib/api/post";
 import { writeComment } from "../lib/api/comment";

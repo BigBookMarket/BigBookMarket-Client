@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CommunityCard from "../components/CommunityCard";
+import CommunityCard from "../components/community/CommunityCard";
 import Sidebar from "../components/Sidebar";
 import Styled from "styled-components";
 import Navbar from "../components/Navbar";
