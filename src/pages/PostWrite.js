@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -82,17 +82,15 @@ const useStyles = makeStyles(() => ({
 
 const PostWrite = ({ history, location }) => {
   const classes = useStyles();
-  const bookId = location.state.bookId;
+  const bookInfo = location.state.bookInfo;
 
   const [post, setPost] = useState({
-    bookId: bookId,
-    category: "",
-    content: "",
-    title: "",
-    id: localStorage.getItem("userId"),
+    postCategory: "",
+    postTitle: "",
+    postContent: "",
   });
 
-  const { category, title, content } = post;
+  const { postCategory, postTitle, postContent } = post;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -104,9 +102,24 @@ const PostWrite = ({ history, location }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(post);
-    await writePost(post);
-    alert("게시글 작성이 완료되었습니다");
+    const postData = {
+      book: {
+        bookId: bookInfo.bookId,
+        title: bookInfo.title,
+        author: bookInfo.author,
+        category: bookInfo.category,
+        publisher: bookInfo.publisher,
+        pubDate: bookInfo.pubDate,
+        priceStandard: bookInfo.priceStandard,
+        image: bookInfo.image,
+      },
+      category: post.postCategory,
+      title: post.postTitle,
+      content: post.postContent,
+      id: localStorage.getItem("userId"),
+    };
+    console.log(postData);
+    await writePost(postData);
     history.goBack();
   };
 
@@ -124,8 +137,8 @@ const PostWrite = ({ history, location }) => {
               <Select
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
-                name="category"
-                value={category}
+                name="postCategory"
+                value={postCategory}
                 onChange={handleInputChange}
                 label="카테고리"
               >
@@ -146,14 +159,14 @@ const PostWrite = ({ history, location }) => {
 
             <input
               onChange={handleInputChange}
-              value={title}
+              value={postTitle}
               className="post__title"
-              name="title"
+              name="postTitle"
               placeholder="게시글 제목"
             />
             <textarea
-              name="content"
-              value={content}
+              name="postContent"
+              value={postContent}
               onChange={handleInputChange}
               placeholder="내용"
             />

@@ -23,7 +23,7 @@ position: relative;
   font-weight: bold;
   position: absolute;
   right: 50px;
-  top: 20px;
+  top: 36px;
 }
 
 .card__product_info{
@@ -56,7 +56,7 @@ const CommentHistoryCard = ({ comment }) => {
         </p>
         <p className="card__comment_content">{comment.content}</p>
       </div>
-      <div className="card_info">{comment.createdDate} | 댓글 수 0</div>
+      <div className="card_info">{comment.createdDate}</div>
     </CommentCardWrapper>
   );
 };

@@ -35,7 +35,7 @@ const CommentHistory = () => {
       <CommentHistoryWrapper>
         <p className="title">내가 쓴 댓글</p>
         {commentHistory?.map((comment) => (
-          <CommentHistoryCard key={comment.commentId} />
+          <CommentHistoryCard key={comment.commentId} comment={comment} />
         ))}
       </CommentHistoryWrapper>
     </>

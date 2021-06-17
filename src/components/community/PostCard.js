@@ -44,7 +44,7 @@ const PostWrapper = Styled.div`
   }
 `;
 
-const PostCard = ({ bookInfo, post }) => {
+const PostCard = ({ post }) => {
   return (
     <Link
       style={{ textDecoration: "none", color: "inherit" }}
@@ -63,7 +63,7 @@ const PostCard = ({ bookInfo, post }) => {
             <p className="card__content_content">{post.content}</p>
           </div>
           <p className="card-information">
-            {post.nickname} | {post.createdDate} | 댓글 수 {post.commentCount}
+            {post.nickname}님 | {post.createdDate} | 댓글 수 {post.commentCount}
           </p>
         </div>
       </PostWrapper>

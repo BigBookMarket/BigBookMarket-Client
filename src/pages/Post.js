@@ -121,7 +121,7 @@ const Post = ({ location }) => {
           to={{
             pathname: "post-write",
             state: {
-              bookId: bookId,
+              bookInfo: bookInfo,
             },
           }}
         >
