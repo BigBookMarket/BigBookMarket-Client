@@ -9,6 +9,7 @@ import axios from "axios";
 import SearchDropdown from "../components/SearchDropdown";
 import Navbar from "../components/Navbar";
 import { writeProductSell } from "../lib/api/item";
+import { getAladinBooks } from "../lib/api/aladin";
 
 const SellWrapper = Styled.div`
   display: flex;
@@ -187,7 +188,7 @@ const Sell = ({ history }) => {
   const handleSearchButton = (e) => {
     e.preventDefault();
     (async () => {
-      const bookInfo = await getBooks(searchInput);
+      const bookInfo = await getAladinBooks(searchInput);
       setOptions(bookInfo.item);
     })();
   };
@@ -212,19 +213,6 @@ const Sell = ({ history }) => {
     };
     await writeProductSell(postData);
     history.push("/market");
-  };
-
-  const getBooks = async (title) => {
-    try {
-      const data = await axios.get(
-        `/api/?ttbkey=${apiKey}&Query=${title}&QueryType=Keyword&MaxResults=100&start=1&SearchTarget=Book&CategoryId=8257&output=js&Version=20131101`
-      );
-      console.log("[SUCCESS] GET books data");
-      return data.data;
-    } catch (e) {
-      console.log("[FAIL] GET books data");
-      return null;
-    }
   };
 
   useEffect(() => {

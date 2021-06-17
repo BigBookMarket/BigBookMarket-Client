@@ -9,7 +9,7 @@ import SearchDropdown from "../components/SearchDropdown";
 import Navbar from "../components/Navbar";
 import { writePost } from "../lib/api/post";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
+import { getAladinBooks } from "../lib/api/aladin";
 
 const PostWriteWrapper = Styled.div`
   display: flex;
@@ -172,19 +172,6 @@ const NewPostWrite = ({ history, location }) => {
     postContent,
   } = post;
 
-  const getBooks = async (title) => {
-    try {
-      const data = await axios.get(
-        `/api/?ttbkey=${apiKey}&Query=${title}&QueryType=Keyword&MaxResults=100&start=1&SearchTarget=Book&CategoryId=8257&output=js&Version=20131101`
-      );
-      console.log("[SUCCESS] GET books data");
-      return data.data;
-    } catch (e) {
-      console.log("[FAIL] GET books data");
-      return null;
-    }
-  };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setPost({
@@ -200,7 +187,7 @@ const NewPostWrite = ({ history, location }) => {
   const handleSearchButton = (e) => {
     e.preventDefault();
     (async () => {
-      const bookInfo = await getBooks(searchInput);
+      const bookInfo = await getAladinBooks(searchInput);
       setOptions(bookInfo.item);
     })();
   };
