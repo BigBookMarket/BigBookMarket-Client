@@ -141,7 +141,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Sell = ({ history }) => {
-  const apiKey = process.env.REACT_APP_API_KEY;
   const classes = useStyles();
   const [searchInput, setSearchInput] = useState("");
   const [options, setOptions] = useState(null);

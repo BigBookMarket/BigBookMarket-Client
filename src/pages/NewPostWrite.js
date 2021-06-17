@@ -143,7 +143,6 @@ const useStyles = makeStyles(() => ({
 
 const NewPostWrite = ({ history, location }) => {
   const classes = useStyles();
-  const apiKey = process.env.REACT_APP_API_KEY;
   const [searchInput, setSearchInput] = useState("");
   const [options, setOptions] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
