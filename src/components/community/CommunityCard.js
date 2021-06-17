@@ -77,7 +77,6 @@ const CommunityCard = ({ book, history }) => {
       <div className="card">
         <img src={book.image} alt="" className="card__img" />
         <div className="card__content">
-          <p className="card__content_date">작성일자</p>
           <p className="card__content_category">[{book.category}]</p>
           <p className="card__content_title"> {book.title}</p>
           <p className="card__content_author">{book.author}</p>

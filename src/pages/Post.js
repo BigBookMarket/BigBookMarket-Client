@@ -42,6 +42,7 @@ const PostWrapper = Styled.div`
     background-color: #EEF2F6;
     padding: 25px 60px;
     display: flex;
+    position: relative;
   }
   
   .img{
@@ -51,9 +52,9 @@ const PostWrapper = Styled.div`
   }
   
   .book-information{
-    width: 200px;
-    font-size: 13px;
-    margin-left: 70px;
+    width: 400px;
+    font-size: 16px;
+    margin-left: 48px;
     text-align: left;
   }
 
@@ -81,8 +82,9 @@ const PostWrapper = Styled.div`
     height: 40px;
     width: 120px;
     font-size: 12px;
-    margin-top: 130px;
-    margin-left: 50px;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
   }
 
   .post-wrapper{
@@ -136,7 +138,6 @@ const Post = ({ location }) => {
                 <p className="information__author">{bookInfo.author}</p>
                 <p className="information__publisher">{bookInfo.publisher}</p>
               </div>
-              <p className="information__date">작성일자</p>
               <button className="post__btn">게시글 작성하기</button>
             </div>
             <div className="post-wrapper">

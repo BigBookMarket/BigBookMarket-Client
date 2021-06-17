@@ -63,7 +63,7 @@ const PostCard = ({ bookInfo, post }) => {
             <p className="card__content_content">{post.content}</p>
           </div>
           <p className="card-information">
-            {post.nickname} | {post.createdDate} | 댓글 수 0
+            {post.nickname} | {post.createdDate} | 댓글 수 {post.commentCount}
           </p>
         </div>
       </PostWrapper>

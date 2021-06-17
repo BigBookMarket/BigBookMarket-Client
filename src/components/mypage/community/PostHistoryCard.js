@@ -61,7 +61,9 @@ const PostHistoryCard = ({ post }) => {
         </p>
         <p className="card__post_content">{post.content}</p>
       </div>
-      <div className="card__post_date">{post.createdDate} | 댓글 수 0</div>
+      <div className="card__post_date">
+        {post.createdDate} | 댓글 수 {post.commentCount}
+      </div>
     </PostCardWrapper>
   );
 };

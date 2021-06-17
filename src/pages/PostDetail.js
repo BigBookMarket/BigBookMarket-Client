@@ -56,6 +56,8 @@ const PostDetailWrapper = Styled.div`
     font-weight: bold;
     color: #3C64B1;
     width: 400px;
+    font-size: 16px;
+    margin-top: 30px;
   }
 
   .post-information__detail{
@@ -64,20 +66,20 @@ const PostDetailWrapper = Styled.div`
     right: 0;
     margin-bottom: 100px;
     margin-right: 35px;
-    font-weight: bold;
     color: #3C64B1;
   }
 
   .post-information__title{
     margin-top: 20px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .post-information__content{
     width: 680px;
-    height: 80px;
-    font-size: 15px;
+    height: 76px;
+    font-size: 14px;
+    margin-top: 6px;
     overflow: hidden;
     word-break: break-all;
   }
@@ -174,7 +176,8 @@ const PostDetail = ({ location }) => {
                 </p>
               </div>
               <p className="post-information__detail">
-                {postInfo.nickname} | {postInfo.createdDate} | 댓글 수 0
+                {postInfo.nickname} | {postInfo.createdDate} | 댓글 수{" "}
+                {postInfo.commentCount}
               </p>
               <p className="post-information__title">{postInfo.title}</p>
               <p className="post-information__content">{postInfo.content}</p>
