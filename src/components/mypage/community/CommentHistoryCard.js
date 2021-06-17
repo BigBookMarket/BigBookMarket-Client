@@ -60,6 +60,20 @@ position: relative;
 `;
 
 const CommentHistoryCard = ({ comment }) => {
+  const showCategory = () => {
+    switch (comment.postCategory) {
+      case "QUESTION":
+        return "질문";
+      case "REVIEW":
+        return "후기";
+      case "REVISION":
+        return "개정";
+      case "FREE":
+        return "자유";
+      default:
+        return;
+    }
+  };
   const handleModify = () => null;
   const handleDelete = async () => {
     await deleteComment(comment.commentId);
@@ -71,7 +85,7 @@ const CommentHistoryCard = ({ comment }) => {
           [{comment.bookCategory}] {comment.bookTitle}
         </p>
         <p className="card__comment_title">
-          [{comment.postCategory}] {comment.postTitle}
+          [{showCategory()}] {comment.postTitle}
         </p>
         <p className="card__comment_content">{comment.content}</p>
       </div>
