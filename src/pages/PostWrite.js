@@ -6,7 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Navbar from "../components/Navbar";
-import { writePost } from "../lib/api/post";
+import { updatePost, writePost } from "../lib/api/post";
 import { withRouter } from "react-router-dom";
 
 const PostWriteWrapper = Styled.div`
@@ -102,26 +102,43 @@ const PostWrite = ({ history, location }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const postData = {
-      book: {
-        bookId: bookInfo.bookId,
-        title: bookInfo.title,
-        author: bookInfo.author,
-        category: bookInfo.category,
-        publisher: bookInfo.publisher,
-        pubDate: bookInfo.pubDate,
-        priceStandard: bookInfo.priceStandard,
-        image: bookInfo.image,
-      },
-      category: post.postCategory,
-      title: post.postTitle,
-      content: post.postContent,
-      id: localStorage.getItem("userId"),
-    };
-    console.log(postData);
-    await writePost(postData);
+    if (location.state.isEdit) {
+      const updatedPostData = {
+        content: post.postContent,
+        title: post.postTitle,
+      };
+      await updatePost(bookInfo.postId, updatedPostData);
+    } else {
+      const postData = {
+        book: {
+          bookId: bookInfo.bookId,
+          title: bookInfo.title,
+          author: bookInfo.author,
+          category: bookInfo.category,
+          publisher: bookInfo.publisher,
+          pubDate: bookInfo.pubDate,
+          priceStandard: bookInfo.priceStandard,
+          image: bookInfo.image,
+        },
+        category: post.postCategory,
+        title: post.postTitle,
+        content: post.postContent,
+        id: localStorage.getItem("userId"),
+      };
+      await writePost(postData);
+    }
     history.goBack();
   };
+
+  useEffect(() => {
+    if (location.state.isEdit) {
+      setPost({
+        postCategory: bookInfo.category,
+        postTitle: bookInfo.title,
+        postContent: bookInfo.content,
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -141,6 +158,7 @@ const PostWrite = ({ history, location }) => {
                 value={postCategory}
                 onChange={handleInputChange}
                 label="카테고리"
+                readOnly={location.state.isEdit ? true : false}
               >
                 <MenuItem value="QUESTION">
                   <em>질문</em>

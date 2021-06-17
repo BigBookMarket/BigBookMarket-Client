@@ -55,7 +55,7 @@ const PostDetailWrapper = Styled.div`
   .post-information__book{
     font-weight: bold;
     color: #3C64B1;
-    width: 400px;
+    width: 460px;
     font-size: 16px;
     margin-top: 30px;
   }
@@ -73,10 +73,11 @@ const PostDetailWrapper = Styled.div`
     margin-top: 20px;
     font-weight: bold;
     font-size: 18px;
+    width: 640px;
   }
 
   .post-information__content{
-    width: 680px;
+    width: 640px;
     height: 76px;
     font-size: 14px;
     margin-top: 6px;

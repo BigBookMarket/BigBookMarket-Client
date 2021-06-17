@@ -1,6 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
 import { deletePost } from "../../../lib/api/post";
+import { withRouter } from "react-router-dom";
 
 const PostCardWrapper = Styled.div`
 width: 850px;
@@ -60,7 +61,7 @@ position: relative;
 }
 `;
 
-const PostHistoryCard = ({ post }) => {
+const PostHistoryCard = ({ post, history }) => {
   const showCategory = () => {
     switch (post.category) {
       case "QUESTION":
@@ -75,7 +76,16 @@ const PostHistoryCard = ({ post }) => {
         return;
     }
   };
-  const handleModify = () => null;
+
+  const handleModify = () => {
+    history.push({
+      pathname: "/post-write",
+      state: {
+        bookInfo: post,
+        isEdit: true,
+      },
+    });
+  };
   const handleDelete = async () => {
     await deletePost(post.postId);
   };
@@ -109,4 +119,4 @@ const PostHistoryCard = ({ post }) => {
   );
 };
 
-export default PostHistoryCard;
+export default withRouter(PostHistoryCard);

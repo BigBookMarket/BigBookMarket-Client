@@ -21,9 +21,9 @@ export const getPost = async (postId) => {
   }
 };
 
-export const updatePost = async (postId) => {
+export const updatePost = async (postId, updatedPost) => {
   try {
-    const data = await instance.put(`/post/${postId}`);
+    const data = await instance.put(`/post/${postId}`, updatedPost);
     console.log("[SUCCESS] UPDATE POST", data.data);
     return data.data;
   } catch (error) {
