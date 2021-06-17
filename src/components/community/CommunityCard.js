@@ -11,12 +11,13 @@ const CardWrapper = Styled.div`
     margin-top: 15px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    position: relative;
   }
 
   .card__img {
     width: 150px;
     height: 160px;
+    margin-top: 40px;
     background-color: lightgrey;
   }
 
@@ -25,23 +26,27 @@ const CardWrapper = Styled.div`
     flex-direction: column;
     font-size: 17px;
     width: 180px;
-    height: 230px;
-    padding-left: 20px;
-    position: relative;
-  }
+    height: 200px;
+    margin-top: 14px;
+    padding-left: 12px;
 
-  .card__content > p{
-    margin-top: 5px;
-  }
+    & > p{
+      margin-top: 5px;
+    }
 
-  .card__content_date{
-    font-size: 14px;
-    margin-bottom: 12px;
-  }
+    &_category, &_title{
+      font-weight: bold;
+      font-size: 15px;
+    }
 
-  .card__content_category,
-  .card__content_title{
-    font-weight: bold;
+    &_date {
+      font-size: 14px;
+      margin-bottom: 12px;   
+    }
+
+    &_author, &_publisher {
+      font-size: 14px;
+    }
   }
 
   .card button{
@@ -52,8 +57,8 @@ const CardWrapper = Styled.div`
     background-color: var(--primary-color);
     color: #fff;
     position: absolute;
-    right: 0;
-    bottom: 0;
+    right: 10px;
+    bottom: 10px;
     cursor: pointer;
   }
 `;
