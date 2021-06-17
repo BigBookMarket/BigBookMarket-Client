@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -6,6 +6,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Navbar from "../components/Navbar";
+import { updatePost, writePost } from "../lib/api/post";
+import { withRouter } from "react-router-dom";
 
 const PostWriteWrapper = Styled.div`
   display: flex;
@@ -78,29 +80,65 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const PostWrite = () => {
+const PostWrite = ({ history, location }) => {
   const classes = useStyles();
+  const bookInfo = location.state.bookInfo;
 
-  const [inputs, setInputs] = useState({
-    category: "",
-    title: "",
-    detail: "",
+  const [post, setPost] = useState({
+    postCategory: "",
+    postTitle: "",
+    postContent: "",
   });
 
-  const { category, title, detail } = inputs;
+  const { postCategory, postTitle, postContent } = post;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setInputs({
-      ...inputs,
+    setPost({
+      ...post,
       [name]: value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
+    if (location.state.isEdit) {
+      const updatedPostData = {
+        content: post.postContent,
+        title: post.postTitle,
+      };
+      await updatePost(bookInfo.postId, updatedPostData);
+    } else {
+      const postData = {
+        book: {
+          bookId: bookInfo.bookId,
+          title: bookInfo.title,
+          author: bookInfo.author,
+          category: bookInfo.category,
+          publisher: bookInfo.publisher,
+          pubDate: bookInfo.pubDate,
+          priceStandard: bookInfo.priceStandard,
+          image: bookInfo.image,
+        },
+        category: post.postCategory,
+        title: post.postTitle,
+        content: post.postContent,
+        id: localStorage.getItem("userId"),
+      };
+      await writePost(postData);
+    }
+    history.goBack();
   };
+
+  useEffect(() => {
+    if (location.state.isEdit) {
+      setPost({
+        postCategory: bookInfo.category,
+        postTitle: bookInfo.title,
+        postContent: bookInfo.content,
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -116,21 +154,22 @@ const PostWrite = () => {
               <Select
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
-                name="category"
-                value={category}
+                name="postCategory"
+                value={postCategory}
                 onChange={handleInputChange}
                 label="카테고리"
+                readOnly={location.state.isEdit ? true : false}
               >
-                <MenuItem value="질문">
+                <MenuItem value="QUESTION">
                   <em>질문</em>
                 </MenuItem>
-                <MenuItem value="후기">
+                <MenuItem value="REVIEW">
                   <em>후기</em>
                 </MenuItem>
-                <MenuItem value="개정">
+                <MenuItem value="REVISION">
                   <em>개정</em>
                 </MenuItem>
-                <MenuItem value="자유">
+                <MenuItem value="FREE">
                   <em>자유</em>
                 </MenuItem>
               </Select>
@@ -138,14 +177,14 @@ const PostWrite = () => {
 
             <input
               onChange={handleInputChange}
-              value={title}
+              value={postTitle}
               className="post__title"
-              name="title"
+              name="postTitle"
               placeholder="게시글 제목"
             />
             <textarea
-              name="detail"
-              value={detail}
+              name="postContent"
+              value={postContent}
               onChange={handleInputChange}
               placeholder="내용"
             />
@@ -157,4 +196,4 @@ const PostWrite = () => {
   );
 };
 
-export default PostWrite;
+export default withRouter(PostWrite);

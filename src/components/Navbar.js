@@ -24,6 +24,12 @@ const NavWrapper = Styled.div`
 
   .welcome {
     margin-right: 10px;
+
+    & > p {
+      display: inline-block;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
   }
 
   button{
@@ -74,7 +80,9 @@ const Navbar = ({ history }) => {
       <div className="buttons">
         {isLoggedIn ? (
           <div className="logged-in-info">
-            <div className="welcome">{nickname}님</div>
+            <div className="welcome">
+              <p>{nickname}</p>님
+            </div>
             <button
               className="mypage-btn"
               onClick={() => history.push("/mypage")}

@@ -63,20 +63,18 @@ const CommentWrapper = Styled.div`
   }
 `;
 
-const CommentCard = () => {
+const CommentCard = ({ comment }) => {
   return (
     <CommentWrapper>
       <div className="card">
         <div className="card__content">
           <div className="comment-writer">
             <div className="profile"></div>
-            <p className="card__content_writerid">작성자 ID</p>
+            <p className="card__content_writerid">{comment.nickname}</p>
           </div>
-          <p className="card__content_comment">
-            댓글 내용~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-          </p>
+          <p className="card__content_comment">{comment.content}</p>
         </div>
-        <p className="card-information">작성자 ID | 작성일자</p>
+        <p className="card-information">{comment.createdDate}</p>
       </div>
     </CommentWrapper>
   );

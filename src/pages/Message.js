@@ -130,7 +130,6 @@ const Message = ({ history, location }) => {
     setIsModalOpen(true);
     e.preventDefault();
     await writeMessage(message);
-    history.push("/mypage/message");
   };
 
   const handleConfirmClick = () => {

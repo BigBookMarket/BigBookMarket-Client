@@ -112,7 +112,6 @@ const Mypage = () => {
               <p>아이디: {myId} </p>
               <p>전화번호: {myPhone} </p>
             </div>
-            <button>수정하기</button>
           </div>
           <div className="block-wrapper">
             <div className="block">

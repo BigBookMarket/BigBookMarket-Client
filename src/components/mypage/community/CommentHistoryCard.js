@@ -1,5 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
+import { deleteComment } from "../../../lib/api/comment";
 
 const CommentCardWrapper = Styled.div`
 width: 850px;
@@ -23,7 +24,7 @@ position: relative;
   font-weight: bold;
   position: absolute;
   right: 50px;
-  top: 20px;
+  top: 36px;
 }
 
 .card__product_info{
@@ -42,20 +43,62 @@ position: relative;
     overflow: hidden;
     word-break:break-all;
 }
+
+.card__buttons{
+  display: flex;
+  color: var(--primary-color);
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  right: 46px;
+  bottom: 30px;
+
+  & > p:nth-child(2n+1) {
+    cursor: pointer;
+  }
+}
 `;
 
-const CommentHistoryCard = () => {
+const CommentHistoryCard = ({ comment }) => {
+  const showCategory = () => {
+    switch (comment.postCategory) {
+      case "QUESTION":
+        return "질문";
+      case "REVIEW":
+        return "후기";
+      case "REVISION":
+        return "개정";
+      case "FREE":
+        return "자유";
+      default:
+        return;
+    }
+  };
+  const handleModify = () => null;
+  const handleDelete = async () => {
+    await deleteComment(comment.commentId);
+  };
   return (
     <CommentCardWrapper>
       <div className="card__info">
-        <p className="card__product_info">[카테고리] 도서명</p>
-        <p className="card__comment_title">[카테고리] 게시글 제목</p>
-        <p className="card__comment_content">
-          댓글
-          내용~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        <p className="card__product_info">
+          [{comment.bookCategory}] {comment.bookTitle}
+        </p>
+        <p className="card__comment_title">
+          [{showCategory()}] {comment.postTitle}
+        </p>
+        <p className="card__comment_content">{comment.content}</p>
+      </div>
+      <div className="card_info">{comment.createdDate}</div>
+      <div className="card__buttons">
+        <p className="card__buttons_modify" onClick={handleModify}>
+          수정하기
+        </p>
+        <p>&nbsp;|&nbsp;</p>
+        <p className="card__buttons_delete" onClick={handleDelete}>
+          삭제하기
         </p>
       </div>
-      <div className="card_info">작성일자 | 댓글 수 0</div>
     </CommentCardWrapper>
   );
 };

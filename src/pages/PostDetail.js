@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
-import CommentCard from "../components/CommentCard";
+import CommentCard from "../components/community/CommentCard";
 import Navbar from "../components/Navbar";
+import { getPost } from "../lib/api/post";
+import { writeComment } from "../lib/api/comment";
 
 const PostDetailWrapper = Styled.div`
     margin: 50px;
@@ -50,33 +52,37 @@ const PostDetailWrapper = Styled.div`
     text-align: left;
   }
 
-  .post-information__category, .post-information__book{
+  .post-information__book{
     font-weight: bold;
     color: #3C64B1;
+    width: 460px;
+    font-size: 16px;
+    margin-top: 30px;
   }
 
   .post-information__detail{
     position: absolute;
     top: 35px;
-    right: 30px;
+    right: 0;
     margin-bottom: 100px;
     margin-right: 35px;
-    font-weight: bold;
     color: #3C64B1;
   }
 
   .post-information__title{
-    margin-top: 50px;
+    margin-top: 20px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
+    width: 640px;
   }
 
   .post-information__content{
-    width: 680px;
-    heigth: 65px;
-    font-size: 15px;
+    width: 640px;
+    height: 76px;
+    font-size: 14px;
+    margin-top: 6px;
     overflow: hidden;
-    word-break:break-all;
+    word-break: break-all;
   }
 
   .comment-wrapper{
@@ -114,45 +120,91 @@ const PostDetailWrapper = Styled.div`
     width: 640px;
     height: 98px;
     border: 0px;
+    resize: none;
+    padding: 10px;
   }
 `;
 
-const PostDetail = () => {
+const PostDetail = ({ location }) => {
+  const postId = location.state.postInfo.postId;
+  const [postInfo, setPostInfo] = useState(null);
+  const [commentList, setCommentList] = useState(null);
+  const [newComment, setNewComment] = useState({
+    postId: postId,
+    content: "",
+    id: localStorage.getItem("userId"),
+  });
+
+  useEffect(() => {
+    (async () => {
+      const data = await getPost(postId);
+      setPostInfo(data);
+      setCommentList(data.commentList);
+    })();
+  }, [commentList]);
+
+  const handleCommentChange = (e) => {
+    setNewComment({
+      ...newComment,
+      content: e.target.value,
+    });
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    await writeComment(newComment);
+    setNewComment({
+      ...newComment,
+      content: "",
+    });
+  };
+
   return (
-    <>
-      <Navbar />
-      <PostDetailWrapper>
-        <div className="book-search">
-          <input className="book-search__input" placeholder="도서 검색" />
-          <button className="book-search__btn">검색</button>
-        </div>
-        <div className="post-wrapper">
-          <div className="post-information">
-            <p className="post-information__category">[카테고리]</p>
-            <p className="post-information__book">
-              도서명 - 저자 - 출판사, 출판일
-            </p>
-            <p className="post-information__detail">
-              작성자 ID | 작성일자 | 댓글 수 0
-            </p>
-            <p className="post-information__title">게시글 제목</p>
-            <p className="post-information__content">
-              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            </p>
+    postInfo && (
+      <>
+        <Navbar />
+        <PostDetailWrapper>
+          <div className="book-search">
+            <input className="book-search__input" placeholder="도서 검색" />
+            <button className="book-search__btn">검색</button>
           </div>
-        </div>
-        <div className="write-wrapper">
-          <textarea></textarea>
-          <button className="comment-btn">등록</button>
-        </div>
-        <div className="comment-wrapper">
-          <CommentCard />
-          <CommentCard />
-          <CommentCard />
-          <CommentCard />
-        </div>
-      </PostDetailWrapper>
-    </>
+          <div className="post-wrapper">
+            <div className="post-information">
+              <div className="post-information__book">
+                <p>[{postInfo.book.category}]</p>
+                <p>
+                  {postInfo.book.title}
+                  <p>
+                    {postInfo.book.author}
+                    {postInfo.book.publisher}
+                  </p>
+                </p>
+              </div>
+              <p className="post-information__detail">
+                {postInfo.nickname} | {postInfo.createdDate} | 댓글 수{" "}
+                {postInfo.commentCount}
+              </p>
+              <p className="post-information__title">{postInfo.title}</p>
+              <p className="post-information__content">{postInfo.content}</p>
+            </div>
+          </div>
+          <form onSubmit={handleCommentSubmit} className="write-wrapper">
+            <textarea
+              value={newComment.content}
+              onChange={handleCommentChange}
+            />
+            <button type="submit" className="comment-btn">
+              등록
+            </button>
+          </form>
+          <div className="comment-wrapper">
+            {commentList?.map((comment) => (
+              <CommentCard key={comment.commentId} comment={comment} />
+            ))}
+          </div>
+        </PostDetailWrapper>
+      </>
+    )
   );
 };
 

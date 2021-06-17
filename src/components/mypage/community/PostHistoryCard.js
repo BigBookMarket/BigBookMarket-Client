@@ -1,5 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
+import { deletePost } from "../../../lib/api/post";
+import { withRouter } from "react-router-dom";
 
 const PostCardWrapper = Styled.div`
 width: 850px;
@@ -17,20 +19,19 @@ position: relative;
   margin: 0 50px;
 }
 
-.card_info{
-  color: #3C64B1;
+.card__post_date{
+  color: var(--primary-color);
   font-size: 14px;
-  font-weight: bold;
   position: absolute;
   right: 50px;
-  top: 20px;
+  top: 30px;
 }
 
-.card__product_info{
-  color: #3C64B1;
+.card__book_info{
+  color: var(--primary-color);
   font-size: 14px;
   font-weight: bold;
-  margin-bottom: 25px;
+  margin-bottom: 12px;
 }
 
 .card__post_title{
@@ -41,24 +42,81 @@ position: relative;
 .card__post_content{
     overflow: hidden;
     word-break:break-all;
+    width: 700px;
+    height: 54px;
+}
+
+.card__buttons{
+  display: flex;
+  color: var(--primary-color);
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  right: 46px;
+  bottom: 30px;
+
+  & > p:nth-child(2n+1) {
+    cursor: pointer;
+  }
 }
 `;
 
-const PostHistoryCard = () => {
+const PostHistoryCard = ({ post, history }) => {
+  const showCategory = () => {
+    switch (post.category) {
+      case "QUESTION":
+        return "질문";
+      case "REVIEW":
+        return "후기";
+      case "REVISION":
+        return "개정";
+      case "FREE":
+        return "자유";
+      default:
+        return;
+    }
+  };
+
+  const handleModify = () => {
+    history.push({
+      pathname: "/post-write",
+      state: {
+        bookInfo: post,
+        isEdit: true,
+      },
+    });
+  };
+  const handleDelete = async () => {
+    await deletePost(post.postId);
+  };
   return (
     <PostCardWrapper>
       <div className="card__info">
-        <p className="card__product_info">
-          [카테고리] 도서명 - 저자 - 출판사, 출판일
+        <p className="card__book_info">
+          [{post.book.category}] {post.book.title}
+          <p>
+            {post.book.author} - {post.book.publisher}
+          </p>
         </p>
-        <p className="card__post_title">[카테고리] 게시글 제목</p>
-        <p className="card__post_content">
-          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        <p className="card__post_title">
+          [{showCategory()}] {post.title}
+        </p>
+        <p className="card__post_content">{post.content}</p>
+      </div>
+      <div className="card__post_date">
+        {post.createdDate} | 댓글 수 {post.commentCount}
+      </div>
+      <div className="card__buttons">
+        <p className="card__buttons_modify" onClick={handleModify}>
+          수정하기
+        </p>
+        <p>&nbsp;|&nbsp;</p>
+        <p className="card__buttons_delete" onClick={handleDelete}>
+          삭제하기
         </p>
       </div>
-      <div className="card_info">작성일자 | 댓글 수 0</div>
     </PostCardWrapper>
   );
 };
 
-export default PostHistoryCard;
+export default withRouter(PostHistoryCard);

@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import axios from "axios";
 import SearchDropdown from "../components/SearchDropdown";
 import Navbar from "../components/Navbar";
-import { writeProductSell } from "../lib/api/item";
+import { writePost } from "../lib/api/post";
+import { withRouter } from "react-router-dom";
 import { getAladinBooks } from "../lib/api/aladin";
 
-const SellWrapper = Styled.div`
+const PostWriteWrapper = Styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 48px;
+  position: relative;
 
   .page-title{
     font-weight: bold;
@@ -30,10 +31,19 @@ const SellWrapper = Styled.div`
     background-color: var(--theme-color);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     position: relative;
+  } 
+  
+  button {
+    border: none;
+    padding: 10px;
+    width: 80px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: #fff;
+    cursor: pointer;
   }
-
   form input {
     padding: 10px;
     width: 280px;
@@ -55,31 +65,50 @@ const SellWrapper = Styled.div`
     }
   }
 
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  .post-form {
+      display: flex;
+      flex-direction: column;
+      width: 760px;
+      margin-left: 60px;
+
+      &__info{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+      }
   }
 
-  form button {
-    border: none;
+  .post__title{
+    width: 400px;
+    position: absolute;
+    right: 70px;
+  }
+
+  textarea{
+    margin-top: 30px;
+    height: 130px;
     padding: 10px;
-    width: 64px;
-    height: 40px;
-    background-color: var(--primary-color);
-    color: #fff;
-    cursor: pointer;
+    resize: none;
+    border: none;
+    font-size: 16px;
   }
 
-  .product-form {
+  .post-submit-btn {
+    position: absolute;
+    right: 70px;
+    bottom: 15px;
+  }
+
+  .book-form {
     display: flex;
     margin-top: 40px;
+    margin-left: 60px;
 
     &__img {
       width: 200px;
       height: 200px;
       background-color: lightgrey;  
-    background-color: lightgrey;
+        background-color: lightgrey;
       background-color: lightgrey;  
     }
 
@@ -87,7 +116,7 @@ const SellWrapper = Styled.div`
       width: 580px;
       height: 200px;
       padding-left: 20px; 
-    padding-left: 20px;
+      padding-left: 20px;
       padding-left: 20px; 
     }
   }
@@ -102,34 +131,6 @@ const SellWrapper = Styled.div`
       left: 300px; 
     }
   }
-
-  .deal-form{
-    margin-top: 10px;
-    width: 780px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-
-    &__detail > p{
-      font-size : 14px;
-    }
-
-    & textarea {
-      margin-top: 8px;
-      width: 400px;
-      height: 180px;
-      padding: 10px;
-      resize: none;
-      border: none; 
-    border: none;
-      border: none; 
-    }
-  }
-  .form-submit-btn {
-    position: absolute;
-    right: 70px;
-    bottom: 15px;
-  }
 `;
 
 const useStyles = makeStyles(() => ({
@@ -140,42 +141,40 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Sell = ({ history }) => {
+const NewPostWrite = ({ history, location }) => {
   const classes = useStyles();
   const [searchInput, setSearchInput] = useState("");
   const [options, setOptions] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
-
-  const [inputs, setInputs] = useState({
-    category: "",
-    title: "",
-    standardPrice: "",
-    author: "",
-    publisher: "",
-    sellPrice: "",
-    method: "",
-    status: "",
-    detail: "",
-    coverImage: "",
+  const [post, setPost] = useState({
+    bookIitle: "",
+    bookAuthor: "",
+    bookCategory: "",
+    bookPublisher: "",
+    bookPubDate: "",
+    bookPrice: 0,
+    bookImage: "",
+    postCategory: "",
+    postTitle: "",
+    postContent: "",
   });
 
   const {
-    category,
-    title,
-    standardPrice,
-    author,
-    publisher,
-    sellPrice,
-    method,
-    status,
-    detail,
-    coverImage,
-  } = inputs;
+    bookTitle,
+    bookAuthor,
+    bookCategory,
+    bookPublisher,
+    bookPrice,
+    bookImage,
+    postCategory,
+    postTitle,
+    postContent,
+  } = post;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setInputs({
-      ...inputs,
+    setPost({
+      ...post,
       [name]: value,
     });
   };
@@ -205,25 +204,26 @@ const Sell = ({ history }) => {
         priceStandard: selectedBook.priceStandard,
         image: selectedBook.cover,
       },
-      detail: inputs.detail,
-      method: inputs.method,
-      price: parseInt(inputs.sellPrice),
+      category: post.postCategory,
+      title: post.postTitle,
+      content: post.postContent,
       id: localStorage.getItem("userId"),
     };
-    await writeProductSell(postData);
-    history.push("/market");
+    console.log(postData);
+    await writePost(postData);
+    history.goBack();
   };
 
   useEffect(() => {
     if (selectedBook) {
-      setInputs({
-        ...inputs,
-        category: selectedBook.categoryName.split(">")[2],
-        title: selectedBook.title,
-        standardPrice: selectedBook.priceStandard,
-        author: selectedBook.author,
-        publisher: selectedBook.publisher,
-        coverImage: selectedBook.cover,
+      setPost({
+        ...post,
+        bookCategory: selectedBook.categoryName.split(">")[2],
+        bookTitle: selectedBook.title,
+        bookAuthor: selectedBook.author,
+        bookPublisher: selectedBook.publisher,
+        bookPrice: selectedBook.priceStandard,
+        bookImage: selectedBook.cover,
       });
     }
   }, [options, selectedBook]);
@@ -231,12 +231,12 @@ const Sell = ({ history }) => {
   return (
     <>
       <Navbar />
-      <SellWrapper>
-        <div className="page-title">판매글 작성하기</div>
+      <PostWriteWrapper>
+        <div className="page-title">게시글 작성하기</div>
         <form onSubmit={handleSubmit}>
-          <div className="product-form">
-            <img className="product-form__img" src={coverImage} alt="" />
-            <div className="product-form__info">
+          <div className="book-form">
+            <img className="book-form__img" src={bookImage} alt="" />
+            <div className="book-form__info">
               <div className="info__search">
                 <SearchDropdown
                   handleSearchInput={handleSearchInput}
@@ -251,7 +251,7 @@ const Sell = ({ history }) => {
               <input
                 onChange={handleInputChange}
                 name="category"
-                value={category}
+                value={bookCategory}
                 className="info__category"
                 placeholder="카테고리"
                 readOnly
@@ -259,14 +259,14 @@ const Sell = ({ history }) => {
               <input
                 name="title"
                 onChange={handleInputChange}
-                value={title}
+                value={bookTitle}
                 className="info__title"
                 placeholder="도서명"
                 readOnly
               />
               <input
                 onChange={handleInputChange}
-                value={standardPrice}
+                value={bookPrice}
                 name="standardPrice"
                 className="info__price"
                 placeholder="정가정보"
@@ -275,89 +275,70 @@ const Sell = ({ history }) => {
               <input
                 name="author"
                 onChange={handleInputChange}
-                value={author}
+                value={bookAuthor}
                 className="info__author"
                 placeholder="저자"
                 readOnly
               />
               <input
-                onChange={handleInputChange}
-                value={publisher}
                 name="publisher"
+                onChange={handleInputChange}
+                value={bookPublisher}
                 className="info__publisher"
                 placeholder="출판사/ 출판일"
                 readOnly
               />
             </div>
           </div>
-          <div className="deal-form">
-            <div className="deal-form__info">
+          <div className="post-form">
+            <div className="post-form__info">
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel id="demo-simple-select-outlined-label">
+                  게시글 카테고리
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  name="postCategory"
+                  value={postCategory}
+                  onChange={handleInputChange}
+                  label="카테고리"
+                >
+                  <MenuItem value="QUESTION">
+                    <em>질문</em>
+                  </MenuItem>
+                  <MenuItem value="REVIEW">
+                    <em>후기</em>
+                  </MenuItem>
+                  <MenuItem value="REVISION">
+                    <em>개정</em>
+                  </MenuItem>
+                  <MenuItem value="FREE">
+                    <em>자유</em>
+                  </MenuItem>
+                </Select>
+              </FormControl>
+
               <input
-                type="number"
                 onChange={handleInputChange}
-                value={sellPrice}
-                className="info__sellPrice"
-                name="sellPrice"
-                placeholder="판매가 (원)"
-              />
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel id="demo-simple-select-outlined-label">
-                  거래방법
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  name="method"
-                  value={method}
-                  onChange={handleInputChange}
-                  label="거래방법"
-                >
-                  <MenuItem value="DELIVERY">
-                    <em>택배</em>
-                  </MenuItem>
-                  <MenuItem value="DIRECT">
-                    <em>직거래</em>
-                  </MenuItem>
-                  <MenuItem value="BOTH">
-                    <em>둘다가능</em>
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel id="demo-simple-select-outlined-label">
-                  거래상태
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  name="status"
-                  value={status}
-                  onChange={handleInputChange}
-                  label="거래상태"
-                >
-                  <MenuItem value="SALE">
-                    <em>판매중</em>
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-            <div className="deal-form__detail">
-              <p>상품 상세 내용을 입력해주세요. 상품 상태도 기입해주세요</p>
-              <textarea
-                name="detail"
-                value={detail}
-                onChange={handleInputChange}
-                placeholder="설명"
+                value={postTitle}
+                className="post__title"
+                name="postTitle"
+                placeholder="게시글 제목"
               />
             </div>
+            <textarea
+              name="postContent"
+              value={postContent}
+              onChange={handleInputChange}
+              placeholder="내용"
+            />
+            <button className="post-submit-btn">완료</button>
           </div>
-          <button type="submit" className="form-submit-btn">
-            완료
-          </button>
         </form>
-      </SellWrapper>
+      </PostWriteWrapper>
     </>
   );
 };
 
-export default Sell;
+export default withRouter(NewPostWrite);
