@@ -3,7 +3,7 @@ import CommunityCard from "../components/CommunityCard";
 import Sidebar from "../components/Sidebar";
 import Styled from "styled-components";
 import Navbar from "../components/Navbar";
-import { getAllBooks, getCategoryBooks } from "../lib/api/book";
+import { getAllBooks } from "../lib/api/book";
 
 const CommunityWrapper = Styled.div`
   display: flex;
@@ -17,7 +17,7 @@ const CommunityWrapper = Styled.div`
   .book-cards{
     display: flex;
     flex-wrap: wrap;
-    margin-top: 10px;
+    margin-top: 20px;
     width: 1110px;
   }
 
@@ -43,14 +43,22 @@ const CommunityWrapper = Styled.div`
     height: 40px;
     background-color: #3c64b1;
     color: white;
-
-    &:hover{
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
+
+  .post-btn{
+    border: none;
+    margin-left: 60px;
+    padding: 10px;
+    width: 120px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    }
 `;
 
-const Community = () => {
+const Community = ({ history }) => {
   const [searchInput, setSearchInput] = useState("");
   const [bookList, setBookList] = useState([]);
 
@@ -86,6 +94,12 @@ const Community = () => {
             placeholder="도서 검색"
           />
           <button className="book-search__btn">검색</button>
+          <button
+            className="post-btn"
+            onClick={() => history.push("/newpost-write")}
+          >
+            게시글 작성하기
+          </button>
         </form>
         <div className="book-cards">
           {bookList?.map((book) => (

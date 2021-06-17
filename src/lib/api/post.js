@@ -4,6 +4,7 @@ export const writePost = async (post) => {
   try {
     const data = await instance.post("/post", post);
     console.log("[SUCCESS] WRITE POST", data.data);
+    alert("게시글 작성이 완료되었습니다");
     return data.data;
   } catch (error) {
     console.log("[FAIL] WRITE POST", error);

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Main from "./pages/Main";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import Navbar from "./components/Navbar";
 import Community from "./pages/Community";
 import Market from "./pages/Market";
 import Mypage from "./pages/Mypage";
@@ -17,6 +16,7 @@ import MarketHistory from "./pages/MarketHistory";
 import PostHistory from "./pages/PostHistory";
 import CommentHistory from "./pages/CommentHistory";
 import MessageHistory from "./pages/MessageHistory";
+import NewPostWrite from "./pages/NewPostWrite";
 
 const App = () => {
   return (
@@ -35,6 +35,7 @@ const App = () => {
           <Route path="/post" exact component={Post} />
           <Route path="/post/:postId" exact component={PostDetail} />
           <Route path="/post-write" exact component={PostWrite} />
+          <Route path="/newpost-write" exact component={NewPostWrite} />
           <Route path="/mypage/market" exact component={MarketHistory} />
           <Route path="/mypage/post" exact component={PostHistory} />
           <Route path="/mypage/comment" exact component={CommentHistory} />
