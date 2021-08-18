@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
-import { getCategoryList, getCategoryBooks } from "../lib/api/book";
-import { getCategoryProducts } from "../lib/api/item";
+import { getCategoryList, getCategoryBooks } from "../../lib/api/book";
+import { getCategoryProducts } from "../../lib/api/item";
 
 const SidebarWrapper = Styled.div`
   width: 240px;

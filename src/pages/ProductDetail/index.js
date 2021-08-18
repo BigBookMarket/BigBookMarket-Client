@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
-import Navbar from "../../components/Navbar";
+import { Navbar } from "../../components";
 import { getProductInfo, dealPurchase } from "../../lib/api/item";
 
 const ProductWrapper = Styled.div`

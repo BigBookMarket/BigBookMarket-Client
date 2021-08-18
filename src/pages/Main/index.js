@@ -1,7 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/Navbar";
+import { Navbar } from "../../components";
 import { MainImage } from "../../assets/images";
 
 const MainWrapper = Styled.div`

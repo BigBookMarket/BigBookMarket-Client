@@ -1,6 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
-import Navbar from "../../components/Navbar";
+import { Navbar } from "../../components";
 import { Link } from "react-router-dom";
 import { ProfileImage } from "../../assets/images";
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
-import Navbar from "../../components/Navbar";
+import { Navbar } from "../../components";
 import AuthService from "../../services/AuthService";
 
 const LoginWrapper = Styled.div`

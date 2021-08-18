@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../../components/Sidebar";
+import { Sidebar } from "../../components";
 import Styled from "styled-components";
-import ProductCard from "../../components/ProductCard";
+import { ProductCard } from "../../components";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../../components/Navbar";
+import { Navbar } from "../../components";
 
 const MarketWrapper = Styled.div`
   display: flex;

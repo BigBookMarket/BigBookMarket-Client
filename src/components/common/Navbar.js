@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import Styled from "styled-components";
-import AuthService from "../services/AuthService";
+import AuthService from "../../services/AuthService";
 
 const NavWrapper = Styled.div`
   background-color: var(--theme-color);
@@ -55,7 +55,7 @@ const Navbar = ({ history }) => {
   const handleLogout = () => {
     const logoutInfo = {
       id: localStorage.getItem("userId"),
-      refreshToken: localStorage.getItem("refreshToken"),
+      refreshToken: localStorage.getItem("refreshToken")
     };
 
     AuthService.logout(logoutInfo).then((res) => {

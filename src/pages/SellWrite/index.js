@@ -5,9 +5,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import axios from "axios";
-import SearchDropdown from "../../components/SearchDropdown";
-import Navbar from "../../components/Navbar";
+import { SearchDropdown } from "../../components";
+import { Navbar } from "../../components";
 import { writeProductSell } from "../../lib/api/item";
 import { getAladinBooks } from "../../lib/api/aladin";
 

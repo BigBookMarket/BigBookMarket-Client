@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import PostCard from "../../components/community/PostCard";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/Navbar";
+import { Navbar } from "../../components";
 import { getPostList } from "../../lib/api/post";
 
 const PostWrapper = Styled.div`
@@ -121,8 +121,8 @@ const Post = ({ location }) => {
           to={{
             pathname: "post-write",
             state: {
-              bookInfo: bookInfo,
-            },
+              bookInfo: bookInfo
+            }
           }}
         >
           <PostWrapper>

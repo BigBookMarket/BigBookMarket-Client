@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CommunityCard from "../../components/community/CommunityCard";
-import Sidebar from "../../components/Sidebar";
+import { Sidebar } from "../../components";
 import Styled from "styled-components";
-import Navbar from "../../components/Navbar";
+import { Navbar } from "../../components";
 import { getAllBooks } from "../../lib/api/book";
 
 const CommunityWrapper = Styled.div`
