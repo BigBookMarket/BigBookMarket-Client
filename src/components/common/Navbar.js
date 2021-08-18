@@ -4,7 +4,7 @@ import Styled from "styled-components";
 import AuthService from "../../services/AuthService";
 
 const NavWrapper = Styled.div`
-  background-color: var(--theme-color);
+  background-color: ${({ theme }) => theme.colors.light_blue};
   height: 80px;
   padding: 0 120px;
   display: flex;
@@ -12,7 +12,7 @@ const NavWrapper = Styled.div`
   align-items: center;
 
   .logo{
-    color: #3c64b1;
+    color: ${({ theme }) => theme.colors.dark_blue};
     font-weight: bold;
     font-size: 20px;
   }
@@ -28,19 +28,19 @@ const NavWrapper = Styled.div`
     & > p {
       display: inline-block;
       font-weight: bold;
-      color: var(--primary-color);
+      color: ${({ theme }) => theme.colors.dark_blue};
     }
   }
 
   button{
     border: none;
-    background-color:  var(--theme-color);
+    background-color:  ${({ theme }) => theme.colors.light_blue};
     padding: 10px;
   }
 
   button:hover{
     cursor: pointer;
-    background-color: var(--primary-color);
+    background-color: ${({ theme }) => theme.colors.dark_blue};
     color: #fff;
   }
 `;

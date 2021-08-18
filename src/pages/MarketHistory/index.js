@@ -33,11 +33,11 @@ const MarketHistoryWrapper = Styled.div`
       width: 70px;
       height: 44px;
       cursor: pointer;
-      border: 1px solid var(--primary-color);
+      border: 1px solid ${({ theme }) => theme.colors.dark_blue};
   }
 
   .sell-btn.clicked {
-    background: #3C64B1;
+    background: ${({ theme }) => theme.colors.dark_blue};
     color: white;
     border: none;
   }
@@ -51,11 +51,11 @@ const MarketHistoryWrapper = Styled.div`
     width: 70px;
     height: 44px;
     cursor: pointer;
-    border: 1px solid var(--primary-color);
+    border: 1px solid ${({ theme }) => theme.colors.dark_blue};
 }
 
 .buy-btn.clicked {
-  background: #3C64B1;
+  background: ${({ theme }) => theme.colors.dark_blue};
   color: white;
   border: none;
 }

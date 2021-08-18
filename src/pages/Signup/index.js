@@ -41,8 +41,8 @@ button{
   padding: 8px;
   width: 80px;
   margin-top: 55px;
-  border: 1px solid var(--primary-color);
-  background-color: #3c64b1;
+  border: 1px solid ${({ theme }) => theme.colors.dark_blue};
+  background-color: ${({ theme }) => theme.colors.dark_blue};
   color: #fff;
 }
 `;

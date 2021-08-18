@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 const PostCardWrapper = Styled.div`
 width: 850px;
 height: 190px;
-background-color: var(--theme-color);
+background-color: ${({ theme }) => theme.colors.light_blue};;
 margin-bottom: 30px;
 display: flex;
 align-items: center;
@@ -20,7 +20,7 @@ position: relative;
 }
 
 .card__post_date{
-  color: var(--primary-color);
+  color: ${({ theme }) => theme.colors.dark_blue};
   font-size: 14px;
   position: absolute;
   right: 50px;
@@ -28,7 +28,7 @@ position: relative;
 }
 
 .card__book_info{
-  color: var(--primary-color);
+  color: ${({ theme }) => theme.colors.dark_blue};
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 12px;
@@ -48,7 +48,7 @@ position: relative;
 
 .card__buttons{
   display: flex;
-  color: var(--primary-color);
+  color: ${({ theme }) => theme.colors.dark_blue};
   font-size: 14px;
   font-weight: bold;
   position: absolute;
@@ -82,8 +82,8 @@ const PostHistoryCard = ({ post, history }) => {
       pathname: "/post-write",
       state: {
         bookInfo: post,
-        isEdit: true,
-      },
+        isEdit: true
+      }
     });
   };
   const handleDelete = async () => {

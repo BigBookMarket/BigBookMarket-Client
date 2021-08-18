@@ -5,7 +5,7 @@ import { deleteComment } from "../../../lib/api/comment";
 const CommentCardWrapper = Styled.div`
 width: 850px;
 height: 190px;
-background-color: var(--theme-color);
+background-color: ${({ theme }) => theme.colors.light_blue};;
 margin-bottom: 30px;
 display: flex;
 align-items: center;
@@ -19,7 +19,7 @@ position: relative;
 }
 
 .card_info{
-  color: #3C64B1;
+  color: ${({ theme }) => theme.colors.dark_blue};
   font-size: 14px;
   font-weight: bold;
   position: absolute;
@@ -28,7 +28,7 @@ position: relative;
 }
 
 .card__product_info{
-  color: #3C64B1;
+  color: ${({ theme }) => theme.colors.dark_blue};
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 25px;
@@ -46,7 +46,7 @@ position: relative;
 
 .card__buttons{
   display: flex;
-  color: var(--primary-color);
+  color: ${({ theme }) => theme.colors.dark_blue};
   font-size: 14px;
   font-weight: bold;
   position: absolute;

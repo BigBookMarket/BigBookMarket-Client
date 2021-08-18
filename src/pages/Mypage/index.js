@@ -25,7 +25,7 @@ text-align: center;
   height: 170px;
   margin-top: 30px;
   margin-bottom: 60px;
-  background-color: #EEF2F6;
+  background-color: ${({ theme }) => theme.colors.light_blue};
   padding: 20px 60px;
   display: flex;
 }
@@ -55,8 +55,8 @@ button{
   width: 85px;
   margin-top: 80px;
   margin-left: 50px;
-  border: 1px solid var(--primary-color);
-  background-color: #3c64b1;
+  border: 1px solid ${({ theme }) => theme.colors.dark_blue};
+  background-color: ${({ theme }) => theme.colors.dark_blue};
   color: #fff;
   cursor: pointer;
 }
@@ -74,7 +74,7 @@ button{
   margin: 10px 0;
   height: 270px;
   width: 370px;
-  background: var(--theme-color);
+  background: ${({ theme }) => theme.colors.light_blue};
   border-radius: 25px;
 }
 

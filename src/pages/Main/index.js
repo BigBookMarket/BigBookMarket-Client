@@ -21,7 +21,7 @@ const MainWrapper = Styled.div`
       margin-left: 3px;
       font-weight: bold;
       font-size: 32px;
-      color: var(--primary-color);
+      color: ${({ theme }) => theme.colors.dark_blue};
     }
   }
 
@@ -32,7 +32,7 @@ const MainWrapper = Styled.div`
 
   .intro p:nth-child(1){
     font-size: 36px;
-    color: var(--primary-color);
+    color: ${({ theme }) => theme.colors.dark_blue};
   }
 
   .intro p:nth-child(3){
@@ -44,14 +44,14 @@ const MainWrapper = Styled.div`
     padding: 12px;
     margin-top: 42px;
     background-color: #fff;
-    color: var(--primary-color);
+    color: ${({ theme }) => theme.colors.dark_blue};
     font-weight: bold;
-    border: 1px solid var(--primary-color);
+    border: 1px solid ${({ theme }) => theme.colors.dark_blue};
   }
 
   button:hover{
     cursor: pointer;
-    background-color: var(--primary-color);
+    background-color: ${({ theme }) => theme.colors.dark_blue};
     color: #fff;
   }
 

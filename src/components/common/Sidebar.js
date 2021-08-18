@@ -7,7 +7,7 @@ import { getCategoryProducts } from "../../lib/api/item";
 const SidebarWrapper = Styled.div`
   width: 240px;
   height: 100%;
-  background-color: var(--theme-color);
+  background-color: ${({ theme }) => theme.colors.light_blue};
   top: 0; 
   left: 0;
   position: absolute;
@@ -15,7 +15,7 @@ const SidebarWrapper = Styled.div`
   padding: 30px;
   
   .logo{
-    color: #3c64b1;
+    color: ${({ theme }) => theme.colors.dark_blue};
     font-weight: bold;
     font-size: 20px;
     cursor: pointer;
@@ -43,7 +43,7 @@ const SidebarWrapper = Styled.div`
   } 
 
   .sidebar__list:hover{
-    color: var(--primary-color);
+    color: ${({ theme }) => theme.colors.dark_blue};
     font-weight: bold;
   }
 `;

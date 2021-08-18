@@ -8,7 +8,7 @@ const CommentWrapper = Styled.div`
     width: 800px;
     height: 130px;
     padding: 35px;
-    background-color: var(--theme-color);
+    background-color: ${({ theme }) => theme.colors.light_blue};
     display: flex;
     text-align: left;
     align-items: center;
@@ -20,7 +20,7 @@ const CommentWrapper = Styled.div`
   }
 
   .card__content_category{
-      color: #3C64B1;
+      color: ${({ theme }) => theme.colors.dark_blue};
       font-size: 13px;
       font-weight: bold;
   }
@@ -33,7 +33,7 @@ const CommentWrapper = Styled.div`
       margin-right: 35px;
       font-size: 13px;
       font-weight: bold;
-      color: #3C64B1;
+      color: ${({ theme }) => theme.colors.dark_blue};
   }
   
   .card__content_writerid{

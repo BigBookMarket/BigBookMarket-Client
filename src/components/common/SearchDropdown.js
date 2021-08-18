@@ -30,7 +30,7 @@ const DropdownWrapper = styled.div`
     line-height: 1.5;
     font-size: 1rem;
     background-color: #fff;
-    border: 1px solid var(--primary-color);
+    border: 1px solid ${({ theme }) => theme.colors.dark_blue};
     border-radius: 2px;
     box-sizing: border-box;
     cursor: default;
@@ -69,7 +69,7 @@ const DropdownWrapper = styled.div`
 
   .option.selected,
   .option:hover {
-    background-color: var(--theme-color);
+    background-color: ${({ theme }) => theme.colors.light_blue};
     color: #333;
     font-weight: bold;
   }

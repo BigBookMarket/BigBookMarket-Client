@@ -41,7 +41,7 @@ const CommunityWrapper = Styled.div`
     padding: 10px;
     width: 64px;
     height: 40px;
-    background-color: #3c64b1;
+    background-color: ${({ theme }) => theme.colors.dark_blue};
     color: white;
     cursor: pointer;
   }
@@ -52,7 +52,7 @@ const CommunityWrapper = Styled.div`
     padding: 10px;
     width: 120px;
     height: 40px;
-    background-color: var(--primary-color);
+    background-color: ${({ theme }) => theme.colors.dark_blue};
     color: white;
     cursor: pointer;
     }

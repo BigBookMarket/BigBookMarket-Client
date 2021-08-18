@@ -29,13 +29,13 @@ const MarketWrapper = Styled.div`
     width: 280px;
     height: 42px;
     border: none;
-    background-color: var(--theme-color);
+    background-color: ${({ theme }) => theme.colors.light_blue};
   }
 
   button {
     border: none;
     padding: 10px;
-    background-color: var(--primary-color);
+    background-color: ${({ theme }) => theme.colors.dark_blue};
     color: #fff;
     cursor: pointer;
   }

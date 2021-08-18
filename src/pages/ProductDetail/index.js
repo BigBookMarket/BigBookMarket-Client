@@ -13,7 +13,7 @@ const ProductWrapper = Styled.div`
       padding: 8px;
       width: 150px;
       border: none;
-      background-color: var(--primary-color);
+      background-color: ${({ theme }) => theme.colors.dark_blue};
       color: #fff;
       cursor: pointer;
     }
@@ -65,8 +65,7 @@ const ProductWrapper = Styled.div`
       margin-top: 40px;
       width: 800px;
       height: 520px;
-      background-color: ${(props) =>
-        props.isSold ? "#DDDDDD" : "var(--theme-color)"};
+      background-color: ${(props) => (props.isSold ? "#DDDDDD" : "#EEF2F6")};
       position: relative;
     }
 
@@ -86,7 +85,7 @@ const ProductWrapper = Styled.div`
     }
 
     .product__btn{
-      color: var(--primary-color);
+      color: ${({ theme }) => theme.colors.dark_blue};
       font-weight: bold;
       cursor: pointer;
     }
@@ -110,7 +109,7 @@ const ProductWrapper = Styled.div`
 
       &_title, &_category {
         font-weight: bold; 
-        color: var(--primary-color);
+        color: ${({ theme }) => theme.colors.dark_blue};
       }
 
       &_author{

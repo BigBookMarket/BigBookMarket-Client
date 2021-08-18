@@ -39,7 +39,7 @@ const PostWrapper = Styled.div`
     height: 230px;
     margin-top: 30px;
     margin-bottom: 60px;
-    background-color: #EEF2F6;
+    background-color: ${({ theme }) => theme.colors.light_blue};
     padding: 25px 60px;
     display: flex;
     position: relative;
@@ -94,7 +94,7 @@ const PostWrapper = Styled.div`
   button{
     border: none;
     padding: 10px;
-    background-color: #3c64b1;
+    background-color: ${({ theme }) => theme.colors.dark_blue};
     color: white;
     cursor: pointer;
   }

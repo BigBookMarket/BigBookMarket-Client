@@ -6,7 +6,7 @@ const CardWrapper = Styled.div`
   .card{
     width: 350px;
     height: 260px;
-    background-color: var(--theme-color);
+    background-color: ${({ theme }) => theme.colors.light_blue};
     margin-left: 15px;
     margin-top: 15px;
     display: flex;
@@ -54,7 +54,7 @@ const CardWrapper = Styled.div`
     padding: 8px;
     width: 90px;
     border-radius: 20px;
-    background-color: var(--primary-color);
+    background-color: ${({ theme }) => theme.colors.dark_blue};
     color: #fff;
     position: absolute;
     right: 10px;
@@ -68,8 +68,8 @@ const CommunityCard = ({ book, history }) => {
     history.push({
       pathname: "/post",
       state: {
-        bookId: book.bookId,
-      },
+        bookId: book.bookId
+      }
     });
   };
   return (

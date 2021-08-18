@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 const ProductWrapper = Styled.div`
   width: 850px;
   height: 250px;
-  background-color: ${(props) =>
-    props.isSold ? "#DDDDDD" : "var(--theme-color)"};
+  background-color: ${(props) => (props.isSold ? "#DDDDDD" : "#EEF2F6")};
   margin-bottom: 60px;
   display: flex;
   align-items: center;
@@ -29,7 +28,7 @@ const ProductWrapper = Styled.div`
     right: 110px;
 
     &_created-date{
-      color: var(--primary-color);
+      color: ${({ theme }) => theme.colors.dark_blue};
     }
   }
 
@@ -82,8 +81,8 @@ const ProductCard = ({ product }) => {
       to={{
         pathname: `/product/${product.itemId}`,
         state: {
-          productinfo: product,
-        },
+          productinfo: product
+        }
       }}
     >
       <ProductWrapper isSold={product.status === "SOLD"}>

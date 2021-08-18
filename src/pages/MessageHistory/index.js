@@ -33,11 +33,11 @@ const MessageHistoryWrapper = Styled.div`
     width: 70px;
     height: 44px;
     cursor: pointer;
-    border: 1px solid var(--primary-color);
+    border: 1px solid ${({ theme }) => theme.colors.dark_blue};
 }
 
   .receive-btn.clicked {
-    background: #3C64B1;
+    background: ${({ theme }) => theme.colors.dark_blue};
     color: white;
     border: none;
   }
@@ -51,11 +51,11 @@ const MessageHistoryWrapper = Styled.div`
     width: 70px;
     height: 44px;
     cursor: pointer;
-    border: 1px solid var(--primary-color);
+    border: 1px solid ${({ theme }) => theme.colors.dark_blue};
   }
 
   .send-btn.clicked {
-    background: #3C64B1;
+    background: ${({ theme }) => theme.colors.dark_blue};
     color: white;
     border: none;
   }

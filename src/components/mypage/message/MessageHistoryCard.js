@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 const MessageCardWrapper = Styled.div`
 width: 850px;
 height: 190px;
-background-color: var(--theme-color);
+background-color: ${({ theme }) => theme.colors.light_blue};
 margin-bottom: 30px;
 display: flex;
 align-items: center;
@@ -19,7 +19,7 @@ position: relative;
 }
 
 .card_msg_date{
-  color: #3C64B1;
+  color: ${({ theme }) => theme.colors.dark_blue};
   font-size: 14px;
   font-weight: bold;
   position: absolute;
@@ -28,7 +28,7 @@ position: relative;
 }
 
 .card__msg_info{
-  color: #3C64B1;
+  color: ${({ theme }) => theme.colors.dark_blue};
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 25px;
@@ -54,7 +54,7 @@ position: relative;
 button{
   border: none;
   padding: 9px;
-  background-color: #3c64b1;
+  background-color: ${({ theme }) => theme.colors.dark_blue};
   color: white;
   cursor: pointer;
 }
@@ -67,8 +67,8 @@ const MessageHistoryCard = ({ history, message, nickname, receiveClicked }) => {
       state: {
         product: message,
         itemId: message.itemId,
-        fromHistory: true,
-      },
+        fromHistory: true
+      }
     });
   };
   return (

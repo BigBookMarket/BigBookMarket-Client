@@ -40,7 +40,7 @@ const PostDetailWrapper = Styled.div`
     height: 230px;
     margin-top: 30px;
     margin-bottom: 60px;
-    background-color: #EEF2F6;
+    background-color: ${({ theme }) => theme.colors.light_blue};
     padding: 25px 60px;
     display: flex;
     align-items: center;
@@ -54,7 +54,7 @@ const PostDetailWrapper = Styled.div`
 
   .post-information__book{
     font-weight: bold;
-    color: #3C64B1;
+    color: ${({ theme }) => theme.colors.dark_blue};
     width: 460px;
     font-size: 16px;
     margin-top: 30px;
@@ -66,7 +66,7 @@ const PostDetailWrapper = Styled.div`
     right: 0;
     margin-bottom: 100px;
     margin-right: 35px;
-    color: #3C64B1;
+    color: ${({ theme }) => theme.colors.dark_blue};
   }
 
   .post-information__title{
@@ -95,7 +95,7 @@ const PostDetailWrapper = Styled.div`
     width: 800px;
     height: 130px;
     padding: 35px;
-    background-color: var(--theme-color);
+    background-color: ${({ theme }) => theme.colors.light_blue};
     display: flex;
     text-align: left;
     align-items: center;
@@ -110,7 +110,7 @@ const PostDetailWrapper = Styled.div`
   button{
     border: none;
     padding: 10px;
-    background-color: #3c64b1;
+    background-color: ${({ theme }) => theme.colors.dark_blue};
     color: white;
     cursor: pointer;
   }

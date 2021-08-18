@@ -26,7 +26,7 @@ const SellWrapper = Styled.div`
     margin-top: 28px;
     width: 900px;
     height: 540px;
-    background-color: var(--theme-color);
+    background-color: ${({ theme }) => theme.colors.light_blue};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -65,7 +65,7 @@ const SellWrapper = Styled.div`
     padding: 10px;
     width: 64px;
     height: 40px;
-    background-color: var(--primary-color);
+    background-color: ${({ theme }) => theme.colors.dark_blue};
     color: #fff;
     cursor: pointer;
   }
