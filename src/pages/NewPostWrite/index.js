@@ -5,11 +5,11 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import SearchDropdown from "../components/SearchDropdown";
-import Navbar from "../components/Navbar";
-import { writePost } from "../lib/api/post";
+import SearchDropdown from "../../components/SearchDropdown";
+import Navbar from "../../components/Navbar";
+import { writePost } from "../../lib/api/post";
 import { withRouter } from "react-router-dom";
-import { getAladinBooks } from "../lib/api/aladin";
+import { getAladinBooks } from "../../lib/api/aladin";
 
 const PostWriteWrapper = Styled.div`
   display: flex;
@@ -137,8 +137,8 @@ const useStyles = makeStyles(() => ({
   formControl: {
     minWidth: 280,
     backgroundColor: "#fff",
-    marginTop: "20px",
-  },
+    marginTop: "20px"
+  }
 }));
 
 const NewPostWrite = ({ history, location }) => {
@@ -156,7 +156,7 @@ const NewPostWrite = ({ history, location }) => {
     bookImage: "",
     postCategory: "",
     postTitle: "",
-    postContent: "",
+    postContent: ""
   });
 
   const {
@@ -168,14 +168,14 @@ const NewPostWrite = ({ history, location }) => {
     bookImage,
     postCategory,
     postTitle,
-    postContent,
+    postContent
   } = post;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setPost({
       ...post,
-      [name]: value,
+      [name]: value
     });
   };
 
@@ -202,12 +202,12 @@ const NewPostWrite = ({ history, location }) => {
         publisher: selectedBook.publisher,
         pubDate: selectedBook.pubDate,
         priceStandard: selectedBook.priceStandard,
-        image: selectedBook.cover,
+        image: selectedBook.cover
       },
       category: post.postCategory,
       title: post.postTitle,
       content: post.postContent,
-      id: localStorage.getItem("userId"),
+      id: localStorage.getItem("userId")
     };
     console.log(postData);
     await writePost(postData);
@@ -223,7 +223,7 @@ const NewPostWrite = ({ history, location }) => {
         bookAuthor: selectedBook.author,
         bookPublisher: selectedBook.publisher,
         bookPrice: selectedBook.priceStandard,
-        bookImage: selectedBook.cover,
+        bookImage: selectedBook.cover
       });
     }
   }, [options, selectedBook]);

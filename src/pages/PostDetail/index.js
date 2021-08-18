@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
-import CommentCard from "../components/community/CommentCard";
-import Navbar from "../components/Navbar";
-import { getPost } from "../lib/api/post";
-import { writeComment } from "../lib/api/comment";
+import CommentCard from "../../components/community/CommentCard";
+import Navbar from "../../components/Navbar";
+import { getPost } from "../../lib/api/post";
+import { writeComment } from "../../lib/api/comment";
 
 const PostDetailWrapper = Styled.div`
     margin: 50px;
@@ -132,7 +132,7 @@ const PostDetail = ({ location }) => {
   const [newComment, setNewComment] = useState({
     postId: postId,
     content: "",
-    id: localStorage.getItem("userId"),
+    id: localStorage.getItem("userId")
   });
 
   useEffect(() => {
@@ -146,7 +146,7 @@ const PostDetail = ({ location }) => {
   const handleCommentChange = (e) => {
     setNewComment({
       ...newComment,
-      content: e.target.value,
+      content: e.target.value
     });
   };
 
@@ -155,7 +155,7 @@ const PostDetail = ({ location }) => {
     await writeComment(newComment);
     setNewComment({
       ...newComment,
-      content: "",
+      content: ""
     });
   };
 

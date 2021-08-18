@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
-import Navbar from "../components/Navbar";
-import AuthService from "../services/AuthService";
+import Navbar from "../../components/Navbar";
+import AuthService from "../../services/AuthService";
 
-const LoginWrapper = Styled.div`
+const SignupWrapper = Styled.div`
 margin-top: 110px;
 display: flex;
 justify-content: center;
@@ -23,7 +23,7 @@ text-align: center;
 .input-form{
   width: 50%;
   margin: 0 auto;
-  margin-top: 95px;
+  margin-top: 60px;
 }
 
 input{
@@ -39,72 +39,82 @@ input{
 
 button{
   padding: 8px;
-  width: 70px;
+  width: 80px;
   margin-top: 55px;
   border: 1px solid var(--primary-color);
   background-color: #3c64b1;
   color: #fff;
-  cursor: pointer;
 }
 `;
 
-const Login = ({ history }) => {
-  const [loginInfo, setLoginInfo] = useState({
+const Signup = ({ history }) => {
+  const [signupInfo, setSignupInfo] = useState({
     id: "",
+    nickname: "",
     pwd: "",
+    phone: ""
   });
 
-  const { id, pwd } = loginInfo;
+  const { id, nickname, pwd, phone } = signupInfo;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setLoginInfo({
-      ...loginInfo,
-      [name]: value,
+    setSignupInfo({
+      ...signupInfo,
+      [name]: value
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    AuthService.login(loginInfo).then((res) => {
-      console.log(res);
-      localStorage.setItem("userNickname", res.data.nickname);
-      localStorage.setItem("phone", res.data.phone);
-      localStorage.setItem("userId", res.data.id);
-      localStorage.setItem("authenticationToken", res.data.authenticationToken);
-      localStorage.setItem("refreshToken", res.data.refreshToken);
-      localStorage.setItem("expiresAt", res.data.expiresAt);
-      history.push("/");
+
+    console.log(signupInfo);
+
+    AuthService.signUp(signupInfo).then((res) => {
+      console.log(res.data);
+      alert("회원가입이 완료되었습니다");
+      history.push("/login");
     });
   };
 
   return (
     <>
       <Navbar />
-      <LoginWrapper>
+      <SignupWrapper>
         <div className="wrapper">
-          <p>로그인</p>
+          <p>회원가입</p>
           <form onSubmit={handleSubmit} className="input-form">
             <input
               name="id"
-              onChange={handleInputChange}
               value={id}
-              type="text"
               placeholder="회원아이디"
+              onChange={handleInputChange}
+            ></input>
+            <input
+              name="nickname"
+              value={nickname}
+              placeholder="닉네임"
+              onChange={handleInputChange}
             ></input>
             <input
               name="pwd"
-              onChange={handleInputChange}
-              value={pwd}
               type="password"
+              value={pwd}
               placeholder="비밀번호"
+              onChange={handleInputChange}
             ></input>
-            <button type="submit">로그인</button>
+            <input
+              name="phone"
+              value={phone}
+              placeholder="전화번호"
+              onChange={handleInputChange}
+            ></input>
+            <button type="submit">가입하기</button>
           </form>
         </div>
-      </LoginWrapper>
+      </SignupWrapper>
     </>
   );
 };
 
-export default Login;
+export default Signup;

@@ -1,8 +1,8 @@
 import React from "react";
 import Styled from "styled-components";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { MainImage } from "../assets/images";
+import Navbar from "../../components/Navbar";
+import { MainImage } from "../../assets/images";
 
 const MainWrapper = Styled.div`
   display: flex;

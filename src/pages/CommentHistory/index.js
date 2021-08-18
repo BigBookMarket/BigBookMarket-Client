@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
-import CommentHistoryCard from "../components/mypage/community/CommentHistoryCard";
-import Navbar from "../components/Navbar";
-import { getCommentHistory } from "../lib/api/user";
+import CommentHistoryCard from "../../components/mypage/community/CommentHistoryCard";
+import Navbar from "../../components/Navbar";
+import { getCommentHistory } from "../../lib/api/user";
 
 const CommentHistoryWrapper = Styled.div`
   margin: 110px;

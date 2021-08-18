@@ -5,8 +5,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Navbar from "../components/Navbar";
-import { updatePost, writePost } from "../lib/api/post";
+import Navbar from "../../components/Navbar";
+import { updatePost, writePost } from "../../lib/api/post";
 import { withRouter } from "react-router-dom";
 
 const PostWriteWrapper = Styled.div`
@@ -76,8 +76,8 @@ const useStyles = makeStyles(() => ({
   formControl: {
     width: "300px",
     backgroundColor: "#fff",
-    marginTop: "20px",
-  },
+    marginTop: "20px"
+  }
 }));
 
 const PostWrite = ({ history, location }) => {
@@ -87,7 +87,7 @@ const PostWrite = ({ history, location }) => {
   const [post, setPost] = useState({
     postCategory: "",
     postTitle: "",
-    postContent: "",
+    postContent: ""
   });
 
   const { postCategory, postTitle, postContent } = post;
@@ -96,7 +96,7 @@ const PostWrite = ({ history, location }) => {
     const { name, value } = e.target;
     setPost({
       ...post,
-      [name]: value,
+      [name]: value
     });
   };
 
@@ -105,7 +105,7 @@ const PostWrite = ({ history, location }) => {
     if (location.state.isEdit) {
       const updatedPostData = {
         content: post.postContent,
-        title: post.postTitle,
+        title: post.postTitle
       };
       await updatePost(bookInfo.postId, updatedPostData);
     } else {
@@ -118,12 +118,12 @@ const PostWrite = ({ history, location }) => {
           publisher: bookInfo.publisher,
           pubDate: bookInfo.pubDate,
           priceStandard: bookInfo.priceStandard,
-          image: bookInfo.image,
+          image: bookInfo.image
         },
         category: post.postCategory,
         title: post.postTitle,
         content: post.postContent,
-        id: localStorage.getItem("userId"),
+        id: localStorage.getItem("userId")
       };
       await writePost(postData);
     }
@@ -135,7 +135,7 @@ const PostWrite = ({ history, location }) => {
       setPost({
         postCategory: bookInfo.category,
         postTitle: bookInfo.title,
-        postContent: bookInfo.content,
+        postContent: bookInfo.content
       });
     }
   }, []);

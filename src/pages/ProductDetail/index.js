@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
-import Navbar from "../components/Navbar";
-import { getProductInfo, dealPurchase } from "../lib/api/item";
+import Navbar from "../../components/Navbar";
+import { getProductInfo, dealPurchase } from "../../lib/api/item";
 
 const ProductWrapper = Styled.div`
     display: flex;
@@ -153,7 +153,7 @@ const Product = ({ history, location }) => {
     price: 0,
     status: "",
     sellerNickname: "",
-    sellerId: "",
+    sellerId: ""
   });
 
   const showStatus = () => {
@@ -196,8 +196,8 @@ const Product = ({ history, location }) => {
       state: {
         product: product,
         itemId: itemId,
-        fromHistory: false,
-      },
+        fromHistory: false
+      }
     });
   };
 
@@ -212,7 +212,7 @@ const Product = ({ history, location }) => {
         price: data.price,
         status: data.status,
         sellerNickname: data.sellerNickname,
-        sellerId: data.sellerId,
+        sellerId: data.sellerId
       });
     })();
   }, []);

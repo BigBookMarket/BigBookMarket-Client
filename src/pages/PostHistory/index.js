@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
-import PostHistoryCard from "../components/mypage/community/PostHistoryCard";
-import Navbar from "../components/Navbar";
-import { getPostHistory } from "../lib/api/user";
+import PostHistoryCard from "../../components/mypage/community/PostHistoryCard";
+import Navbar from "../../components/Navbar";
+import { getPostHistory } from "../../lib/api/user";
 
 const PostHistoryWrapper = Styled.div`
   margin: 110px;

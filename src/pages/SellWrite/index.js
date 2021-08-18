@@ -6,10 +6,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import axios from "axios";
-import SearchDropdown from "../components/SearchDropdown";
-import Navbar from "../components/Navbar";
-import { writeProductSell } from "../lib/api/item";
-import { getAladinBooks } from "../lib/api/aladin";
+import SearchDropdown from "../../components/SearchDropdown";
+import Navbar from "../../components/Navbar";
+import { writeProductSell } from "../../lib/api/item";
+import { getAladinBooks } from "../../lib/api/aladin";
 
 const SellWrapper = Styled.div`
   display: flex;
@@ -136,8 +136,8 @@ const useStyles = makeStyles(() => ({
   formControl: {
     minWidth: 280,
     backgroundColor: "#fff",
-    marginTop: "20px",
-  },
+    marginTop: "20px"
+  }
 }));
 
 const Sell = ({ history }) => {
@@ -156,7 +156,7 @@ const Sell = ({ history }) => {
     method: "",
     status: "",
     detail: "",
-    coverImage: "",
+    coverImage: ""
   });
 
   const {
@@ -169,14 +169,14 @@ const Sell = ({ history }) => {
     method,
     status,
     detail,
-    coverImage,
+    coverImage
   } = inputs;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInputs({
       ...inputs,
-      [name]: value,
+      [name]: value
     });
   };
 
@@ -203,12 +203,12 @@ const Sell = ({ history }) => {
         publisher: selectedBook.publisher,
         pubDate: selectedBook.pubDate,
         priceStandard: selectedBook.priceStandard,
-        image: selectedBook.cover,
+        image: selectedBook.cover
       },
       detail: inputs.detail,
       method: inputs.method,
       price: parseInt(inputs.sellPrice),
-      id: localStorage.getItem("userId"),
+      id: localStorage.getItem("userId")
     };
     await writeProductSell(postData);
     history.push("/market");
@@ -223,7 +223,7 @@ const Sell = ({ history }) => {
         standardPrice: selectedBook.priceStandard,
         author: selectedBook.author,
         publisher: selectedBook.publisher,
-        coverImage: selectedBook.cover,
+        coverImage: selectedBook.cover
       });
     }
   }, [options, selectedBook]);

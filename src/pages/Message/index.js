@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
-import Navbar from "../components/Navbar";
-import { writeMessage } from "../lib/api/message";
+import Navbar from "../../components/Navbar";
+import { writeMessage } from "../../lib/api/message";
 
 const MessageWrapper = Styled.div`
   display: flex;
@@ -121,7 +121,7 @@ const Message = ({ history, location }) => {
     itemId: location.state.itemId,
     content: "",
     senderId: localStorage.getItem("userId"),
-    receiverId: newReceiverId,
+    receiverId: newReceiverId
   });
 
   const { itemId, content, senderId, receiverId } = message;
@@ -140,7 +140,7 @@ const Message = ({ history, location }) => {
     const { name, value } = e.target;
     setMessage({
       ...message,
-      [name]: value,
+      [name]: value
     });
   };
 

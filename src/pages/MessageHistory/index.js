@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
-import InboxContainer from "../components/mypage/message/InboxContainer";
-import Navbar from "../components/Navbar";
-import OutboxContainer from "../components/mypage/message/OutboxContainer";
+import InboxContainer from "../../components/mypage/message/InboxContainer";
+import Navbar from "../../components/Navbar";
+import OutboxContainer from "../../components/mypage/message/OutboxContainer";
 
 const MessageHistoryWrapper = Styled.div`
   margin: 110px;

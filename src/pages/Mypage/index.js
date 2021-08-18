@@ -1,8 +1,8 @@
 import React from "react";
 import Styled from "styled-components";
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/Navbar";
 import { Link } from "react-router-dom";
-import { ProfileImage } from "../assets/images";
+import { ProfileImage } from "../../assets/images";
 
 const MypageWrapper = Styled.div`
 margin: 110px;

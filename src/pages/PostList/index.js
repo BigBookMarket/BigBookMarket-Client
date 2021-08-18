@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
-import PostCard from "../components/community/PostCard";
+import PostCard from "../../components/community/PostCard";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { getPostList } from "../lib/api/post";
+import Navbar from "../../components/Navbar";
+import { getPostList } from "../../lib/api/post";
 
 const PostWrapper = Styled.div`
     margin: 50px;

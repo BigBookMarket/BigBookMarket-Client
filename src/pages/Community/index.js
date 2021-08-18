@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import CommunityCard from "../components/community/CommunityCard";
-import Sidebar from "../components/Sidebar";
+import CommunityCard from "../../components/community/CommunityCard";
+import Sidebar from "../../components/Sidebar";
 import Styled from "styled-components";
-import Navbar from "../components/Navbar";
-import { getAllBooks } from "../lib/api/book";
+import Navbar from "../../components/Navbar";
+import { getAllBooks } from "../../lib/api/book";
 
 const CommunityWrapper = Styled.div`
   display: flex;
