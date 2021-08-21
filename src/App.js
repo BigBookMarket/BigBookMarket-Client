@@ -19,6 +19,7 @@ import {
   MessageHistory,
   NewPostWrite
 } from "./pages";
+import connectStore from "./hoc/connectStore";
 
 const App = () => {
   return (
@@ -49,4 +50,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default connectStore(App);
