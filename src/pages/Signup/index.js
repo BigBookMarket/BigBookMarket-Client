@@ -1,51 +1,7 @@
 import React, { useState } from "react";
-import Styled from "styled-components";
 import { Navbar } from "../../components";
 import AuthService from "../../services/AuthService";
-
-const SignupWrapper = Styled.div`
-margin-top: 110px;
-display: flex;
-justify-content: center;
-align-items: center;
-text-align: center;
-
-.wrapper{
-  padding: 16px;
-  width: 460px;
-}
-
-.wrapper p:nth-child(1){
-  font-size: 36px;
-  font-weight: bold;
-}
-
-.input-form{
-  width: 50%;
-  margin: 0 auto;
-  margin-top: 60px;
-}
-
-input{
-  font-size: 13px;
-  width: 250px;
-  padding: 10px 16px;
-  margin-top: 30px;
-  background-color: #F3F6FA;
-  color: #737B7D;
-  border: 0;
-  border-radius: 1.5px;
-}
-
-button{
-  padding: 8px;
-  width: 80px;
-  margin-top: 55px;
-  border: 1px solid ${({ theme }) => theme.colors.dark_blue};
-  background-color: ${({ theme }) => theme.colors.dark_blue};
-  color: #fff;
-}
-`;
+import { Wrapper } from "./style";
 
 const Signup = ({ history }) => {
   const [signupInfo, setSignupInfo] = useState({
@@ -80,7 +36,7 @@ const Signup = ({ history }) => {
   return (
     <>
       <Navbar />
-      <SignupWrapper>
+      <Wrapper>
         <div className="wrapper">
           <p>회원가입</p>
           <form onSubmit={handleSubmit} className="input-form">
@@ -112,7 +68,7 @@ const Signup = ({ history }) => {
             <button type="submit">가입하기</button>
           </form>
         </div>
-      </SignupWrapper>
+      </Wrapper>
     </>
   );
 };

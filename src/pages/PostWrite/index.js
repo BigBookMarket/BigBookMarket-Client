@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -8,69 +7,7 @@ import Select from "@material-ui/core/Select";
 import { Navbar } from "../../components";
 import { updatePost, writePost } from "../../lib/api/post";
 import { withRouter } from "react-router-dom";
-
-const PostWriteWrapper = Styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 48px;
-
-  .page-title{
-    font-weight: bold;
-    font-size: 28px;
-  }
-
-  form{
-    margin-top: 28px;
-    width: 900px;
-    height: 540px;
-    background-color: ${({ theme }) => theme.colors.light_blue};
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    position: relative;
-  }
-
-  form input {
-    padding: 10px;
-    height: 50px;
-    border: none;
-    margin-top: 18px;
-    margin-right: 12px;
-    font-size: 16px;
-  }
-
-  .post-form {
-      display: flex;
-      flex-direction: column;
-      width: 760px;
-      margin-top: 30px;
-      margin-left: 60px;
-  }
-
-  textarea{
-    margin-top: 30px;
-    height: 260px;
-    padding: 10px;
-    resize: none;
-    border: none;
-    font-size: 16px;
-  }
-
-  .post-submit-btn {
-    border: none;
-    padding: 10px;
-    width: 80px;
-    height: 40px;
-    background-color: ${({ theme }) => theme.colors.dark_blue};
-    color: #fff;
-    cursor: pointer;
-    position: absolute;
-    right: 70px;
-    bottom: 15px;
-  }
-`;
+import { Wrapper } from "./style";
 
 const useStyles = makeStyles(() => ({
   formControl: {
@@ -143,7 +80,7 @@ const PostWrite = ({ history, location }) => {
   return (
     <>
       <Navbar />
-      <PostWriteWrapper>
+      <Wrapper>
         <div className="page-title">게시글 작성하기</div>
         <form onSubmit={handleSubmit}>
           <div className="post-form">
@@ -191,7 +128,7 @@ const PostWrite = ({ history, location }) => {
             <button className="post-submit-btn">완료</button>
           </div>
         </form>
-      </PostWriteWrapper>
+      </Wrapper>
     </>
   );
 };
