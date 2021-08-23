@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
+import history from "./utils/history";
 import {
   Main,
   Signup,
@@ -24,7 +25,7 @@ import connectStore from "./hoc/connectStore";
 const App = () => {
   return (
     <div className="App">
-      <Router>
+      <Router history={history}>
         <Switch>
           <Route path="/" exact component={Main} />
           <Route path="/signup" exact component={Signup} />
