@@ -9,7 +9,7 @@ const PostWrapper = Styled.div`
     width: 800px;
     height: 150px;
     padding: 0 40px;
-    background-color: var(--theme-color);
+    background-color: ${({ theme }) => theme.colors.light_blue};
     display: flex;
     text-align: left;
   }
@@ -22,7 +22,7 @@ const PostWrapper = Styled.div`
   }
 
   .card__content_category{
-      color: #3C64B1;
+      color: ${({ theme }) => theme.colors.dark_blue};
       font-size: 13px;
       font-weight: bold;
       margin-top: 20px;
@@ -43,7 +43,7 @@ const PostWrapper = Styled.div`
       margin-bottom: 100px;
       margin-right: 35px;
       font-size: 13px;
-      color: #3C64B1;
+      color: ${({ theme }) => theme.colors.dark_blue};
   }
 `;
 
@@ -68,8 +68,8 @@ const PostCard = ({ post }) => {
       to={{
         pathname: `/post/${post.postId}`,
         state: {
-          postInfo: post,
-        },
+          postInfo: post
+        }
       }}
     >
       <PostWrapper>

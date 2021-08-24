@@ -1,0 +1,17 @@
+export { default as Main } from "./Main";
+export { default as CommentHistory } from "./CommentHistory";
+export { default as Community } from "./Community";
+export { default as Login } from "./Login";
+export { default as Market } from "./Market";
+export { default as MarketHistory } from "./MarketHistory";
+export { default as Message } from "./Message";
+export { default as MessageHistory } from "./MessageHistory";
+export { default as Mypage } from "./Mypage";
+export { default as NewPostWrite } from "./NewPostWrite";
+export { default as PostDetail } from "./PostDetail";
+export { default as PostHistory } from "./PostHistory";
+export { default as PostList } from "./PostList";
+export { default as PostWrite } from "./PostWrite";
+export { default as ProductDetail } from "./ProductDetail";
+export { default as SellWrite } from "./SellWrite";
+export { default as Signup } from "./Signup";

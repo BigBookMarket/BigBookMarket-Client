@@ -1,27 +1,31 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Main from "./pages/Main";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import Community from "./pages/Community";
-import Market from "./pages/Market";
-import Mypage from "./pages/Mypage";
-import Product from "./pages/Product";
-import Sell from "./pages/Sell";
-import Message from "./pages/Message";
-import Post from "./pages/Post";
-import PostDetail from "./pages/PostDetail";
-import PostWrite from "./pages/PostWrite";
-import MarketHistory from "./pages/MarketHistory";
-import PostHistory from "./pages/PostHistory";
-import CommentHistory from "./pages/CommentHistory";
-import MessageHistory from "./pages/MessageHistory";
-import NewPostWrite from "./pages/NewPostWrite";
+import { Router, Route, Switch } from "react-router-dom";
+import history from "./utils/history";
+import {
+  Main,
+  Signup,
+  Login,
+  Community,
+  Market,
+  Mypage,
+  ProductDetail,
+  SellWrite,
+  Message,
+  PostList,
+  PostDetail,
+  PostWrite,
+  MarketHistory,
+  PostHistory,
+  CommentHistory,
+  MessageHistory,
+  NewPostWrite
+} from "./pages";
+import connectStore from "./hoc/connectStore";
 
 const App = () => {
   return (
     <div className="App">
-      <Router>
+      <Router history={history}>
         <Switch>
           <Route path="/" exact component={Main} />
           <Route path="/signup" exact component={Signup} />
@@ -29,10 +33,10 @@ const App = () => {
           <Route path="/community" exact component={Community} />
           <Route path="/market" exact component={Market} />
           <Route path="/mypage" exact component={Mypage} />
-          <Route path="/product/:productid" component={Product} />
-          <Route path="/sell" exact component={Sell} />
+          <Route path="/product/:productid" component={ProductDetail} />
+          <Route path="/sell" exact component={SellWrite} />
           <Route path="/message" exact component={Message} />
-          <Route path="/post" exact component={Post} />
+          <Route path="/post" exact component={PostList} />
           <Route path="/post/:postId" exact component={PostDetail} />
           <Route path="/post-write" exact component={PostWrite} />
           <Route path="/newpost-write" exact component={NewPostWrite} />
@@ -47,4 +51,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default connectStore(App);
