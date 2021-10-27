@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Navbar } from "../../components";
-import AuthService from "../../services/AuthService";
+import connectStore from "../../hoc/connectStore";
 import { Wrapper } from "./style";
 
-const Signup = ({ history }) => {
+const Signup = ({ actions }) => {
   const [signupInfo, setSignupInfo] = useState({
     id: "",
     nickname: "",
@@ -23,14 +23,11 @@ const Signup = ({ history }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(signupInfo);
-
-    AuthService.signUp(signupInfo).then((res) => {
-      console.log(res.data);
-      alert("회원가입이 완료되었습니다");
-      history.push("/login");
-    });
+    if (!id || !nickname || !pwd || !phone) {
+      alert("입력을 확인해주세요");
+    } else {
+      actions.signUp(signupInfo);
+    }
   };
 
   return (
@@ -73,4 +70,4 @@ const Signup = ({ history }) => {
   );
 };
 
-export default Signup;
+export default connectStore(Signup);

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Link, withRouter } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import Styled from "styled-components";
-import AuthService from "../../services/AuthService";
+import history from "../../utils/history";
+import connectStore from "../../hoc/connectStore";
 
 const NavWrapper = Styled.div`
   background-color: ${({ theme }) => theme.colors.light_blue};
@@ -44,32 +45,9 @@ const NavWrapper = Styled.div`
     color: #fff;
   }
 `;
-const Navbar = ({ history }) => {
-  const [nickname, setNickname] = useState(
-    localStorage.getItem("userNickname")
-  );
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("refreshToken") !== null
-  );
-
+const Navbar = ({ user: { nickname, isLoggedIn }, actions }) => {
   const handleLogout = () => {
-    const logoutInfo = {
-      id: localStorage.getItem("userId"),
-      refreshToken: localStorage.getItem("refreshToken")
-    };
-
-    AuthService.logout(logoutInfo).then((res) => {
-      localStorage.removeItem("userNickname");
-      localStorage.removeItem("phone");
-      localStorage.removeItem("authenticationToken");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("expiresAt");
-
-      setIsLoggedIn(localStorage.getItem("refreshToken") != null);
-
-      history.push("/");
-    });
+    actions.logOut();
   };
 
   return (
@@ -108,4 +86,4 @@ const Navbar = ({ history }) => {
   );
 };
 
-export default withRouter(Navbar);
+export default connectStore(Navbar);
