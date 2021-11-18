@@ -45,7 +45,8 @@ const NavWrapper = Styled.div`
     color: #fff;
   }
 `;
-const Navbar = ({ user: { nickname, isLoggedIn }, actions }) => {
+const Navbar = ({ user: { user }, actions }) => {
+  const { nickname, isLoggedIn } = user;
   const handleLogout = () => {
     actions.logOut();
   };

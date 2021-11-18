@@ -44,3 +44,33 @@ export const signUp = async (signupInfo) => {
     alert("이미 존재하는 계정입니다");
   }
 };
+
+export const showSellHistory = (userId) => async (dispatch) => {
+  const sellHistory = await Services.getSellHistory(userId);
+  dispatch({ type: ActionTypes.SHOW_SELL_HISTORY, sellHistory });
+};
+
+export const showBuyHistory = (userId) => async (dispatch) => {
+  const buyHistory = await Services.getBuyHistory(userId);
+  dispatch({ type: ActionTypes.SHOW_BUY_HISTORY, buyHistory });
+};
+
+export const showInboxHistory = (userId) => async (dispatch) => {
+  const inboxHistory = await Services.getInboxHistory(userId);
+  dispatch({ type: ActionTypes.SHOW_INBOX_HISTORY, inboxHistory });
+};
+
+export const showOutboxHistory = (userId) => async (dispatch) => {
+  const outboxHistory = await Services.getOutboxHistory(userId);
+  dispatch({ type: ActionTypes.SHOW_OUTBOX_HISTORY, outboxHistory });
+};
+
+export const showPostHistory = (userId) => async (dispatch) => {
+  const postHistory = await Services.getPostHistory(userId);
+  dispatch({ type: ActionTypes.SHOW_POST_HISTORY, postHistory });
+};
+
+export const showCommentHistory = (userId) => async (dispatch) => {
+  const commentHistory = await Services.getCommentHistory(userId);
+  dispatch({ type: ActionTypes.SHOW_COMMENT_HISTORY, commentHistory });
+};

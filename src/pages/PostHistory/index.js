@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import PostHistoryCard from "../../components/mypage/community/PostHistoryCard";
 import { Navbar } from "../../components";
-import { getPostHistory } from "../../lib/api/user";
 import { Wrapper } from "./style";
+import connectStore from "../../hoc/connectStore";
 
-const PostHistory = () => {
-  const [postHistory, setPostHistory] = useState(null);
+const PostHistory = ({ user: { userHistory }, actions }) => {
+  const { myPosts } = userHistory;
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    (async () => {
-      const data = await getPostHistory(userId);
-      setPostHistory(data);
-    })();
-  }, [postHistory]);
+    actions.showPostHistory(userId);
+  }, []);
+
   return (
     <>
       <Navbar />
       <Wrapper>
         <p className="title">내가 쓴 게시글</p>
-        {postHistory?.map((post) => (
+        {myPosts?.map((post) => (
           <PostHistoryCard key={post.postId} post={post} />
         ))}
       </Wrapper>
@@ -27,4 +25,4 @@ const PostHistory = () => {
   );
 };
 
-export default PostHistory;
+export default connectStore(PostHistory);

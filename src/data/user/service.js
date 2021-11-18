@@ -35,3 +35,33 @@ export const logOutUser = async (userInfo) => {
 export const signupUser = async (signupInfo) => {
   await axios.post("/auth/signup", signupInfo);
 };
+
+export const getSellHistory = async (userId) => {
+  const { data } = await axios.get(`/user/sale/${userId}`);
+  return data;
+};
+
+export const getBuyHistory = async (userId) => {
+  const { data } = await axios.get(`/user/buy/${userId}`);
+  return data;
+};
+
+export const getPostHistory = async (userId) => {
+  const { data } = await axios.get(`/user/post/${userId}`);
+  return data;
+};
+
+export const getCommentHistory = async (userId) => {
+  const { data } = await axios.get(`/user/comment/${userId}`);
+  return data;
+};
+
+export const getOutboxHistory = async (userId) => {
+  const { data } = await axios.get(`/user/outbox/${userId}`);
+  return data;
+};
+
+export const getInboxHistory = async (userId) => {
+  const { data } = await axios.get(`/user/inbox/${userId}`);
+  return data;
+};
