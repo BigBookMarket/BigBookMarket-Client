@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Styled from "styled-components";
-import { Link, withRouter } from "react-router-dom";
-import { getCategoryList, getCategoryBooks } from "../../lib/api/book";
+import { Link } from "react-router-dom";
+import { getCategoryBooks } from "../../lib/api/book";
 import { getCategoryProducts } from "../../lib/api/item";
+import history from "../../utils/history";
+import connectStore from "../../hoc/connectStore";
 
 const SidebarWrapper = Styled.div`
   width: 240px;
@@ -48,39 +50,27 @@ const SidebarWrapper = Styled.div`
   }
 `;
 
-const Sidebar = ({ setProductList, location }) => {
-  let data;
-  const [categories, setCategories] = useState([]);
+const Sidebar = ({ book: { categoryList }, actions }) => {
+  const { location } = history;
 
   const showTotalBooks = () => {
-    (async () => {
-      if (location.pathname === "/community") {
-        data = await getCategoryBooks("");
-      } else {
-        data = await getCategoryProducts("");
-      }
-      console.log(data);
-      setProductList(data);
-    })();
+    if (location.pathname === "/community") {
+      actions.showBooks("");
+    } else {
+      actions.showItems("");
+    }
   };
 
   const showSelectedBooks = (e) => {
-    (async () => {
-      if (location.pathname === "/community") {
-        data = await getCategoryBooks(e.target.innerText);
-      } else {
-        data = await getCategoryProducts(e.target.innerText);
-      }
-      console.log(data);
-      setProductList(data);
-    })();
+    if (location.pathname === "/community") {
+      actions.showBooks(e.target.innerText);
+    } else {
+      actions.showItems(e.target.innerText);
+    }
   };
 
   useEffect(() => {
-    (async () => {
-      const data = await getCategoryList();
-      setCategories(data);
-    })();
+    actions.getBookCategories();
   }, []);
 
   return (
@@ -92,7 +82,7 @@ const Sidebar = ({ setProductList, location }) => {
         <li className="sidebar__title">
           <p onClick={showTotalBooks}>대학생 전공도서</p>
         </li>
-        {categories.map((category, idx) => {
+        {categoryList?.map((category, idx) => {
           return (
             <li className="sidebar__list" key={idx}>
               <p onClick={showSelectedBooks}>{category}</p>
@@ -104,4 +94,4 @@ const Sidebar = ({ setProductList, location }) => {
   );
 };
 
-export default withRouter(Sidebar);
+export default connectStore(Sidebar);

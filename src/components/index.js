@@ -4,7 +4,7 @@ export { default as Sidebar } from "./common/Sidebar";
 export { default as PostCard } from "./community/PostCard";
 export { default as CommunityCard } from "./community/CommunityCard";
 export { default as CommentCard } from "./community/CommentCard";
-export { default as ProductCard } from "./market/ProductCard";
+export { default as ItemCard } from "./market/ItemCard";
 export { default as PostHistoryCard } from "./mypage/community/PostHistoryCard";
 export { default as CommentHistoryCard } from "./mypage/community/CommentHistoryCard";
 export { default as PurchaseHistoryContainer } from "./mypage/market/PurchaseHistoryCard";

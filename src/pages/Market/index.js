@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Sidebar } from "../../components";
-import { ProductCard } from "../../components";
-import { withRouter } from "react-router-dom";
+import { ItemCard } from "../../components";
+import history from "../../utils/history";
 import axios from "axios";
 import { Navbar } from "../../components";
 import { Wrapper } from "./style";
+import connectStore from "../../hoc/connectStore";
 
 const getProductList = async () => {
   try {
@@ -17,7 +18,7 @@ const getProductList = async () => {
   }
 };
 
-const Market = ({ history }) => {
+const Market = ({ book: { categoryList }, items: { items }, actions }) => {
   const [searchInput, setSearchInput] = useState("");
   const [productList, setProductList] = useState([]);
 
@@ -38,16 +39,13 @@ const Market = ({ history }) => {
   };
 
   useEffect(() => {
-    (async () => {
-      const data = await getProductList();
-      setProductList(data);
-    })();
+    actions.showItems("");
   }, []);
 
   return (
     <>
       <Navbar />
-      <Sidebar setProductList={setProductList} />
+      <Sidebar />
       <Wrapper>
         <div className="product-search">
           <form onSubmit={handleSubmit}>
@@ -62,12 +60,12 @@ const Market = ({ history }) => {
             판매하기
           </button>
         </div>
-        {productList.map((product) => {
-          return <ProductCard key={product.itemId} product={product} />;
+        {items.currentItemList?.map((item) => {
+          return <ItemCard key={item.itemId} item={item} />;
         })}
       </Wrapper>
     </>
   );
 };
 
-export default withRouter(Market);
+export default connectStore(Market);

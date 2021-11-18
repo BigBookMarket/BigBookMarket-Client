@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Navbar } from "../../components";
-import { getProductInfo, dealPurchase } from "../../lib/api/item";
+//import { dealPurchase } from "../../lib/api/item";
 import { Wrapper } from "./style";
+import connectStore from "../../hoc/connectStore";
+import { useParams } from "react-router";
 
-const Product = ({ history, location }) => {
-  const itemId = location.state.productinfo.itemId;
+const ItemDetail = ({ items: { itemDetail }, actions }) => {
+  const params = useParams();
+  const itemId = params.itemId;
   const buyerId = localStorage.getItem("userId");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [product, setProduct] = useState({
-    book: [],
-    createdDate: "",
-    detail: "",
-    method: "",
-    price: 0,
-    status: "",
-    sellerNickname: "",
-    sellerId: ""
-  });
 
   const showStatus = () => {
-    switch (product.status) {
+    switch (itemDetail.status) {
       case "SALE":
         return "판매중";
       case "DEAL":
@@ -31,7 +24,7 @@ const Product = ({ history, location }) => {
     }
   };
   const showMethod = () => {
-    switch (product.method) {
+    switch (itemDetail.method) {
       case "DELIVERY":
         return "택배";
       case "DIRECT":
@@ -44,8 +37,8 @@ const Product = ({ history, location }) => {
   };
 
   const handleBuyClick = async () => {
-    await dealPurchase(itemId, buyerId);
-    setIsModalOpen(true);
+    // await dealPurchase(itemId, buyerId);
+    // setIsModalOpen(true);
   };
 
   const handleExitClick = () => {
@@ -53,36 +46,24 @@ const Product = ({ history, location }) => {
   };
 
   const handleMessageClick = () => {
-    history.push({
-      pathname: "/message",
-      state: {
-        product: product,
-        itemId: itemId,
-        fromHistory: false
-      }
-    });
+    // history.push({
+    //   pathname: "/message",
+    //   state: {
+    //     product: product,
+    //     itemId: itemId,
+    //     fromHistory: false
+    //   }
+    // });
   };
 
   useEffect(() => {
-    (async () => {
-      const data = await getProductInfo(itemId);
-      setProduct({
-        book: data.book,
-        createdDate: data.createdDate,
-        detail: data.detail,
-        method: data.method,
-        price: data.price,
-        status: data.status,
-        sellerNickname: data.sellerNickname,
-        sellerId: data.sellerId
-      });
-    })();
+    actions.showItemDetail(itemId);
   }, []);
 
   return (
     <>
       <Navbar />
-      <Wrapper isSold={product.status === "SOLD"}>
+      <Wrapper isSold={itemDetail.status === "SOLD"}>
         {isModalOpen ? (
           <div className="modal__bg">
             <div className="modal">
@@ -102,25 +83,29 @@ const Product = ({ history, location }) => {
           <>
             <div className="page-title">상품 정보</div>
             <div className="product">
-              <img className="product__img" src={product.book.image} alt="" />
+              <img
+                className="product__img"
+                src={itemDetail.book.image}
+                alt=""
+              />
               <div className="product__info">
                 <p className="product__info_date">
-                  작성일 {product.createdDate}
+                  작성일 {itemDetail.createdDate}
                 </p>
                 <p className="product__info_category">
-                  [{product.book.category}]
+                  [{itemDetail.book.category}]
                 </p>
-                <p className="product__info_title">{product.book.title}</p>
-                <p className="product__info_author">{product.book.author}</p>
+                <p className="product__info_title">{itemDetail.book.title}</p>
+                <p className="product__info_author">{itemDetail.book.author}</p>
                 <p className="product__info_publisher">
-                  {product.book.publisher}, {product.book.pubDate}
+                  {itemDetail.book.publisher}, {itemDetail.book.pubDate}
                 </p>
                 <p className="product__info_seller">
-                  <span>판매자</span> {product.sellerNickname}님
+                  <span>판매자</span> {itemDetail.sellerNickname}님
                 </p>
                 <p className="product__info_price">
-                  <span>정가</span> {product.book.priceStandard} 원 <br />
-                  <span>판매가</span> {product.price} 원
+                  <span>정가</span> {itemDetail.book.priceStandard} 원 <br />
+                  <span>판매가</span> {itemDetail.price} 원
                 </p>
                 <p className="product__info_method">
                   <span>거래방법</span> {showMethod()}
@@ -131,11 +116,11 @@ const Product = ({ history, location }) => {
                 <p className="product__info_detail">
                   <span>상품설명</span>
                   <br />
-                  <div>{product.detail}</div>
+                  <div>{itemDetail.detail}</div>
                 </p>
               </div>
-              {product.status === "SOLD" ||
-              product.sellerId === buyerId ? null : (
+              {itemDetail.status === "SOLD" ||
+              itemDetail.sellerId === itemDetail.buyerId ? null : (
                 <button onClick={handleBuyClick} className="product__btn--buy">
                   구매하기
                 </button>
@@ -148,4 +133,4 @@ const Product = ({ history, location }) => {
   );
 };
 
-export default Product;
+export default connectStore(ItemDetail);
