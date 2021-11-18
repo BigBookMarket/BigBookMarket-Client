@@ -97,6 +97,17 @@ const userHistory = (state = initialUserHistory, action = {}) => {
         }
       };
 
+    case ActionTypes.DELETE_BUY_HISTORY:
+      return {
+        ...state,
+        myDeals: {
+          ...state.myDeals,
+          myBuys: state.myDeals.myBuys.filter(
+            (item) => item.itemId !== action.itemId
+          )
+        }
+      };
+
     case ActionTypes.DELETE_SELL_HISTORY:
       return {
         ...state,

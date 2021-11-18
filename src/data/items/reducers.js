@@ -19,20 +19,24 @@ const items = (state = initialState, action = {}) => {
 
 const initialItemState = {
   book: {},
+  itemId: 0,
   createdDate: "",
   detail: "",
   method: "",
   price: 0,
   status: "",
   sellerNickname: "",
-  sellerId: ""
+  sellerId: "",
+  buyerId: "",
+  buyerNickname: ""
 };
 
-const itemDetail = (state = initialItemState, action = {}) => {
+const item = (state = initialItemState, action = {}) => {
   switch (action.type) {
     case ActionTypes.SHOW_ITEM_DETAIL:
       const { item } = action;
       return {
+        ...state,
         book: item.book,
         createdDate: item.createdDate,
         detail: item.detail,
@@ -43,6 +47,24 @@ const itemDetail = (state = initialItemState, action = {}) => {
         sellerId: item.sellerId
       };
 
+    case ActionTypes.DEAL_ITEM:
+      return {
+        ...state,
+        status: "DEAL"
+      };
+
+    case ActionTypes.CANCEL_ITEM:
+      return {
+        ...state,
+        status: "SALE"
+      };
+
+    case ActionTypes.BUY_ITEM:
+      return {
+        ...state,
+        status: "SOLD"
+      };
+
     default:
       return state;
   }
@@ -50,5 +72,5 @@ const itemDetail = (state = initialItemState, action = {}) => {
 
 export default combineReducers({
   items,
-  itemDetail
+  item
 });

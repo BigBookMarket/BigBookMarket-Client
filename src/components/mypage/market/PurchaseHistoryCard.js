@@ -1,6 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
-import { cancelPurchase, completePurchase } from "../../../lib/api/item";
+import connectStore from "../../../hoc/connectStore";
 
 const PurchaseCardWrapper = Styled.div`
 width: 850px;
@@ -68,7 +68,7 @@ button{
   cursor: pointer;
 }
 `;
-const PurchaseHistoryCard = ({ item }) => {
+const PurchaseHistoryCard = ({ actions, item }) => {
   const userId = localStorage.getItem("userId");
   const showStatus = () => {
     switch (item.status) {
@@ -94,11 +94,11 @@ const PurchaseHistoryCard = ({ item }) => {
   };
 
   const handleCancel = async () => {
-    await cancelPurchase(item.itemId, userId);
+    actions.cancelItem(item.itemId, userId);
   };
 
   const handleComplete = async () => {
-    await completePurchase(item.itemId);
+    actions.buyItem(item.itemId);
   };
   return (
     <PurchaseCardWrapper>
@@ -135,4 +135,4 @@ const PurchaseHistoryCard = ({ item }) => {
   );
 };
 
-export default PurchaseHistoryCard;
+export default connectStore(PurchaseHistoryCard);
