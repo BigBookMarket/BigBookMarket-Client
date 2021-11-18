@@ -1,6 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
-import { cancelPurchase, deleteProduct } from "../../../lib/api/item";
+import connectStore from "../../../hoc/connectStore";
+import { cancelPurchase } from "../../../lib/api/item";
 
 const SellCardWrapper = Styled.div`
 width: 850px;
@@ -64,7 +65,7 @@ button{
     padding: 0 9px;
 }
 `;
-const SellHistoryCard = ({ item }) => {
+const SellHistoryCard = ({ actions, item }) => {
   const userId = localStorage.getItem("userId");
   const showStatus = () => {
     switch (item.status) {
@@ -92,8 +93,8 @@ const SellHistoryCard = ({ item }) => {
   };
   const handleModify = () => {};
 
-  const handleDelete = async () => {
-    await deleteProduct(item.itemId);
+  const handleDelete = () => {
+    actions.deleteItem(item.itemId);
   };
 
   const handleCancel = async () => {
@@ -142,4 +143,4 @@ const SellHistoryCard = ({ item }) => {
   );
 };
 
-export default SellHistoryCard;
+export default connectStore(SellHistoryCard);

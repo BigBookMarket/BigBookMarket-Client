@@ -97,6 +97,31 @@ const userHistory = (state = initialUserHistory, action = {}) => {
         }
       };
 
+    case ActionTypes.DELETE_SELL_HISTORY:
+      return {
+        ...state,
+        myDeals: {
+          ...state.myDeals,
+          mySells: state.myDeals.mySells.filter(
+            (item) => item.itemId !== action.itemId
+          )
+        }
+      };
+
+    case ActionTypes.DELETE_POST_HISTORY:
+      return {
+        ...state,
+        myPosts: state.myPosts.filter((post) => post.postId !== action.postId)
+      };
+
+    case ActionTypes.DELETE_COMMENT_HISTORY:
+      return {
+        ...state,
+        myComments: state.myComments.filter(
+          (comment) => comment.commentId !== action.commentId
+        )
+      };
+
     default:
       return state;
   }

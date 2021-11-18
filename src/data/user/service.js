@@ -65,3 +65,15 @@ export const getInboxHistory = async (userId) => {
   const { data } = await axios.get(`/user/inbox/${userId}`);
   return data;
 };
+
+export const deleteItem = async (itemId) => {
+  await axios.delete(`/item/${itemId}`);
+};
+
+export const deletePost = async (postId) => {
+  await axios.delete(`/post/${postId}`);
+};
+
+export const deleteComment = async (commentId) => {
+  await axios.delete(`/comment/${commentId}`);
+};

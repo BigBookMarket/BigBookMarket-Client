@@ -74,3 +74,36 @@ export const showCommentHistory = (userId) => async (dispatch) => {
   const commentHistory = await Services.getCommentHistory(userId);
   dispatch({ type: ActionTypes.SHOW_COMMENT_HISTORY, commentHistory });
 };
+
+export const deleteItem = (itemId) => async (dispatch) => {
+  try {
+    dispatch({ type: ActionTypes.DELETE_SELL_HISTORY, itemId });
+    alert("삭제되었습니다");
+    await Services.deleteItem(itemId);
+  } catch (error) {
+    console.log("[FAIL] DELETE ITEM", error);
+    alert("삭제가 불가능합니다");
+  }
+};
+
+export const deletePost = (postId) => async (dispatch) => {
+  try {
+    dispatch({ type: ActionTypes.DELETE_POST_HISTORY, postId });
+    alert("삭제되었습니다");
+    await Services.deletePost(postId);
+  } catch (error) {
+    console.log("[FAIL] DELETE POST", error);
+    alert("삭제가 불가능합니다");
+  }
+};
+
+export const deleteComment = (commentId) => async (dispatch) => {
+  try {
+    dispatch({ type: ActionTypes.DELETE_COMMENT_HISTORY, commentId });
+    alert("삭제되었습니다");
+    await Services.deleteComment(commentId);
+  } catch (error) {
+    console.log("[FAIL] DELETE COMMENT", error);
+    alert("삭제가 불가능합니다");
+  }
+};
