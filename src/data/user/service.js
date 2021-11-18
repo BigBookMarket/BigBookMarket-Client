@@ -9,12 +9,14 @@ export const setToken = (data) => {
   localStorage.setItem("authenticationToken", data.authenticationToken);
   localStorage.setItem("refreshToken", data.refreshToken);
   localStorage.setItem("userId", data.id);
+  localStorage.setItem("nickname", data.nickname);
 };
 
 export const removeToken = () => {
   localStorage.removeItem("authenticationToken");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("userId");
+  localStorage.removeItem("nickname");
 };
 
 export const getUserInfo = () => {

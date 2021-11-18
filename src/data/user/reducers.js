@@ -4,7 +4,7 @@ import * as ActionTypes from "../rootActionTypes";
 // 기존 상태를 변경하지는 않지만, 새로운 상태를 리턴할 수 있다
 
 const initialState = {
-  nickname: "",
+  nickname: localStorage.getItem("nickname"),
   userId: null,
   phone: "",
   isLoggedIn: localStorage.getItem("refreshToken") != null
