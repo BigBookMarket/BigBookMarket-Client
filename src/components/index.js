@@ -1,6 +1,7 @@
 export { default as Navbar } from "./common/Navbar";
 export { default as SearchDropdown } from "./common/SearchDropdown";
 export { default as Sidebar } from "./common/Sidebar";
+export { default as Modal } from "./common/Modal";
 export { default as PostCard } from "./community/PostCard";
 export { default as CommunityCard } from "./community/CommunityCard";
 export { default as CommentCard } from "./community/CommentCard";

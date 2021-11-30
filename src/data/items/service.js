@@ -13,7 +13,7 @@ export const fetchItems = async (categoryName) => {
 
 export const getItemDetail = async (itemId) => {
   const { data } = await axios.get(`/item/${itemId}`);
-  console.log("[SUCCESS] GET PRODUCT INFO", data);
+  console.log("[SUCCESS] GET ITEM INFO", data);
   return data;
 };
 

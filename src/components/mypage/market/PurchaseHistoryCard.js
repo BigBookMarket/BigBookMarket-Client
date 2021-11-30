@@ -70,6 +70,8 @@ button{
 `;
 const PurchaseHistoryCard = ({ actions, item }) => {
   const userId = localStorage.getItem("userId");
+  const userNickname = localStorage.getItem("nickname");
+
   const showStatus = () => {
     switch (item.status) {
       case "DEAL":
@@ -98,7 +100,7 @@ const PurchaseHistoryCard = ({ actions, item }) => {
   };
 
   const handleComplete = async () => {
-    actions.buyItem(item.itemId);
+    actions.buyItem(item.itemId, userId, userNickname);
   };
   return (
     <PurchaseCardWrapper>

@@ -18,7 +18,7 @@ export const showItemDetail = (itemId) => async (dispatch) => {
 
 export const dealItem = (itemId, buyerId) => async (dispatch) => {
   await Services.dealItem(itemId, buyerId);
-  alert("구매신청이 완료되었습니다");
+  dispatch({ type: ActionTypes.OPEN_MODAL });
   dispatch({ type: ActionTypes.DEAL_ITEM });
 };
 
@@ -29,9 +29,13 @@ export const cancelItem = (itemId, userId) => async (dispatch) => {
   dispatch({ type: ActionTypes.CANCEL_ITEM });
 };
 
-export const buyItem = (itemId) => async (dispatch) => {
+export const buyItem = (itemId, userId, userNickname) => async (dispatch) => {
   await Services.buyItem(itemId);
   alert("거래가 완료되었습니다");
   dispatch({ type: ActionTypes.DELETE_BUY_HISTORY, itemId });
-  dispatch({ type: ActionTypes.BUY_ITEM });
+  dispatch({
+    type: ActionTypes.BUY_ITEM,
+    buyerId: userId,
+    buyerNickname: userNickname
+  });
 };

@@ -44,6 +44,7 @@ const item = (state = initialItemState, action = {}) => {
       const { item } = action;
       return {
         ...state,
+        itemId: item.itemId,
         book: item.book,
         createdDate: item.createdDate,
         detail: item.detail,
@@ -69,7 +70,9 @@ const item = (state = initialItemState, action = {}) => {
     case ActionTypes.BUY_ITEM:
       return {
         ...state,
-        status: "SOLD"
+        status: "SOLD",
+        buyerId: action.buyerId,
+        buyerNickname: action.buyerNickname
       };
 
     default:
