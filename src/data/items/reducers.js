@@ -12,6 +12,13 @@ const items = (state = initialState, action = {}) => {
         currentItemList: action.items
       };
 
+    case ActionTypes.SHOW_FILTERED_ITEMS:
+      return {
+        currentItemList: action.items.filter((item) =>
+          item.book.title.includes(action.searchInput)
+        )
+      };
+
     default:
       return state;
   }

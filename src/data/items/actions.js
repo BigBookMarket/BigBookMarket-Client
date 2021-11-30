@@ -6,6 +6,11 @@ export const showItems = (categoryName) => async (dispatch) => {
   dispatch({ type: ActionTypes.SHOW_ITEMS, items });
 };
 
+export const filterItems = (searchInput) => async (dispatch) => {
+  const items = await Services.getAllItems();
+  dispatch({ type: ActionTypes.SHOW_FILTERED_ITEMS, items, searchInput });
+};
+
 export const showItemDetail = (itemId) => async (dispatch) => {
   const item = await Services.getItemDetail(itemId);
   dispatch({ type: ActionTypes.SHOW_ITEM_DETAIL, item });
