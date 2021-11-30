@@ -12,6 +12,6 @@ export { default as PostDetail } from "./PostDetail";
 export { default as PostHistory } from "./PostHistory";
 export { default as PostList } from "./PostList";
 export { default as PostWrite } from "./PostWrite";
-export { default as ProductDetail } from "./ProductDetail";
+export { default as ItemDetail } from "./ItemDetail";
 export { default as SellWrite } from "./SellWrite";
 export { default as Signup } from "./Signup";

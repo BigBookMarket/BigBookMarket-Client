@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Navbar } from "../../components";
-import AuthService from "../../services/AuthService";
 import { Wrapper } from "./style";
+import connectStore from "../../hoc/connectStore";
 
-const Login = ({ history }) => {
+const Login = ({ actions }) => {
   const [loginInfo, setLoginInfo] = useState({
     id: "",
     pwd: ""
@@ -21,16 +21,7 @@ const Login = ({ history }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    AuthService.login(loginInfo).then((res) => {
-      console.log(res);
-      localStorage.setItem("userNickname", res.data.nickname);
-      localStorage.setItem("phone", res.data.phone);
-      localStorage.setItem("userId", res.data.id);
-      localStorage.setItem("authenticationToken", res.data.authenticationToken);
-      localStorage.setItem("refreshToken", res.data.refreshToken);
-      localStorage.setItem("expiresAt", res.data.expiresAt);
-      history.push("/");
-    });
+    actions.logIn(loginInfo);
   };
 
   return (
@@ -62,4 +53,4 @@ const Login = ({ history }) => {
   );
 };
 
-export default Login;
+export default connectStore(Login);

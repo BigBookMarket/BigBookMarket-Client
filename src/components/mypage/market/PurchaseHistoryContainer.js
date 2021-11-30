@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { getPurchaseHistory } from "../../../lib/api/user";
+import React, { useEffect } from "react";
 import PurchaseHistoryCard from "./PurchaseHistoryCard";
+import connectStore from "../../../hoc/connectStore";
 
-const PurchaseHistoryContainer = () => {
-  const [purchaseHisory, setPurchaseHistory] = useState([]);
+const PurchaseHistoryContainer = ({ user: { userHistory }, actions }) => {
+  const { myBuys } = userHistory.myDeals;
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    (async () => {
-      const data = await getPurchaseHistory(userId);
-      setPurchaseHistory(data);
-      console.log(data);
-    })();
+    actions.showBuyHistory(userId);
   }, []);
 
-  return purchaseHisory.map((product) => (
-    <PurchaseHistoryCard key={product.itemId} product={product} />
+  return myBuys?.map((item) => (
+    <PurchaseHistoryCard key={item.itemId} item={item} />
   ));
 };
 
-export default PurchaseHistoryContainer;
+export default connectStore(PurchaseHistoryContainer);

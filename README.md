@@ -150,7 +150,7 @@ chore : 그 외 사소한 변경
  ┃ ┣ 📂PostHistory
  ┃ ┣ 📂PostList
  ┃ ┣ 📂PostWrite
- ┃ ┣ 📂ProductDetail
+ ┃ ┣ 📂ItemDetail
  ┃ ┣ 📂SellWrite
  ┃ ┣ 📂Signup
  ┃ ┣ 📜index.js

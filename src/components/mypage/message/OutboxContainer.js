@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { getOutboxMessage } from "../../../lib/api/user";
+import React, { useEffect } from "react";
 import MessageHistoryCard from "./MessageHistoryCard";
+import connectStore from "../../../hoc/connectStore";
 
-const OutboxContainer = () => {
+const OutboxContainer = ({ user: { userHistory }, actions }) => {
+  const { myOutbox } = userHistory.myMessages;
   const userId = localStorage.getItem("userId");
-  const [outboxMessages, setOutboxMessages] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      const data = await getOutboxMessage(userId);
-      setOutboxMessages(data);
-    })();
+    actions.showOutboxHistory(userId);
   }, []);
-  return outboxMessages.map((message) => (
+
+  return myOutbox?.map((message) => (
     <MessageHistoryCard
       key={message.messageId}
       message={message}
@@ -21,4 +19,4 @@ const OutboxContainer = () => {
   ));
 };
 
-export default OutboxContainer;
+export default connectStore(OutboxContainer);

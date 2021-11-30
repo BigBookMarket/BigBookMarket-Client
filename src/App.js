@@ -8,7 +8,7 @@ import {
   Community,
   Market,
   Mypage,
-  ProductDetail,
+  ItemDetail,
   SellWrite,
   Message,
   PostList,
@@ -33,7 +33,7 @@ const App = () => {
           <Route path="/community" exact component={Community} />
           <Route path="/market" exact component={Market} />
           <Route path="/mypage" exact component={Mypage} />
-          <Route path="/product/:productid" component={ProductDetail} />
+          <Route path="/item/:itemId" component={ItemDetail} />
           <Route path="/sell" exact component={SellWrite} />
           <Route path="/message" exact component={Message} />
           <Route path="/post" exact component={PostList} />

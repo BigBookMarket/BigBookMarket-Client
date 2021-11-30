@@ -6,7 +6,7 @@ import { Wrapper } from "./style";
 
 const Mypage = () => {
   const myId = localStorage.getItem("userId");
-  const myNickname = localStorage.getItem("userNickname");
+  const myNickname = localStorage.getItem("nickname");
   const myPhone = localStorage.getItem("phone");
 
   return (

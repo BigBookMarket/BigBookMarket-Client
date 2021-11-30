@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { getInboxMessage } from "../../../lib/api/user";
+import React, { useEffect } from "react";
 import MessageHistoryCard from "./MessageHistoryCard";
+import connectStore from "../../../hoc/connectStore";
 
-const InboxContainer = ({ receiveClicked }) => {
+const InboxContainer = ({ user: { userHistory }, actions }, receiveClicked) => {
+  const { myInbox } = userHistory.myMessages;
+
   const userId = localStorage.getItem("userId");
-  const [inboxMessages, setInboxMessages] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      const data = await getInboxMessage(userId);
-      setInboxMessages(data);
-    })();
+    actions.showInboxHistory(userId);
   }, []);
 
-  return inboxMessages.map((message) => (
+  return myInbox?.map((message) => (
     <MessageHistoryCard
       key={message.messageId}
       message={message}
@@ -23,4 +21,4 @@ const InboxContainer = ({ receiveClicked }) => {
   ));
 };
 
-export default InboxContainer;
+export default connectStore(InboxContainer);

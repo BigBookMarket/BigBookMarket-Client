@@ -1,25 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Sidebar } from "../../components";
-import { ProductCard } from "../../components";
-import { withRouter } from "react-router-dom";
-import axios from "axios";
+import { ItemCard } from "../../components";
+import history from "../../utils/history";
 import { Navbar } from "../../components";
 import { Wrapper } from "./style";
+import connectStore from "../../hoc/connectStore";
 
-const getProductList = async () => {
-  try {
-    const data = await axios.get("https://bigbookmarket.kro.kr/item/list");
-    console.log("[SUCCESS] GET product list data", data.data);
-    return data.data;
-  } catch (e) {
-    console.log("[FAIL] GET product list data");
-    return null;
-  }
-};
-
-const Market = ({ history }) => {
+const Market = ({ items: { items }, actions }) => {
+  const { currentItemList } = items;
   const [searchInput, setSearchInput] = useState("");
-  const [productList, setProductList] = useState([]);
 
   const handleChange = (e) => {
     setSearchInput(e.target.value);
@@ -27,27 +16,18 @@ const Market = ({ history }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    (async () => {
-      const products = await getProductList();
-      const searchedProducts = products.filter((product) =>
-        product.book.title.includes(searchInput)
-      );
-      setProductList(searchedProducts);
-    })();
+    actions.filterItems(searchInput);
     setSearchInput("");
   };
 
   useEffect(() => {
-    (async () => {
-      const data = await getProductList();
-      setProductList(data);
-    })();
+    actions.showItems("");
   }, []);
 
   return (
     <>
       <Navbar />
-      <Sidebar setProductList={setProductList} />
+      <Sidebar />
       <Wrapper>
         <div className="product-search">
           <form onSubmit={handleSubmit}>
@@ -62,12 +42,12 @@ const Market = ({ history }) => {
             판매하기
           </button>
         </div>
-        {productList.map((product) => {
-          return <ProductCard key={product.itemId} product={product} />;
+        {currentItemList?.map((item) => {
+          return <ItemCard key={item.itemId} item={item} />;
         })}
       </Wrapper>
     </>
   );
 };
 
-export default withRouter(Market);
+export default connectStore(Market);

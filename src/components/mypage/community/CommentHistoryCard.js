@@ -1,6 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
-import { deleteComment } from "../../../lib/api/comment";
+import connectStore from "../../../hoc/connectStore";
 
 const CommentCardWrapper = Styled.div`
 width: 850px;
@@ -59,7 +59,7 @@ position: relative;
 }
 `;
 
-const CommentHistoryCard = ({ comment }) => {
+const CommentHistoryCard = ({ actions, comment }) => {
   const showCategory = () => {
     switch (comment.postCategory) {
       case "QUESTION":
@@ -74,10 +74,12 @@ const CommentHistoryCard = ({ comment }) => {
         return;
     }
   };
-  const handleModify = () => null;
+  const handleModify = () => {};
+
   const handleDelete = async () => {
-    await deleteComment(comment.commentId);
+    actions.deleteComment(comment.commentId);
   };
+
   return (
     <CommentCardWrapper>
       <div className="card__info">
@@ -103,4 +105,4 @@ const CommentHistoryCard = ({ comment }) => {
   );
 };
 
-export default CommentHistoryCard;
+export default connectStore(CommentHistoryCard);

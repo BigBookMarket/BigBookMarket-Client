@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { getSellHistory } from "../../../lib/api/user";
+import React, { useEffect } from "react";
 import SellHistoryCard from "./SellHistoryCard";
+import connectStore from "../../../hoc/connectStore";
 
-const SellHistoryContainer = () => {
-  const [sellHisory, setSellHistory] = useState([]);
+const SellHistoryContainer = ({ user: { userHistory }, actions }) => {
+  const { mySells } = userHistory.myDeals;
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    (async () => {
-      const data = await getSellHistory(userId);
-      setSellHistory(data);
-      console.log(data);
-    })();
+    actions.showSellHistory(userId);
   }, []);
 
-  return sellHisory.map((product) => (
-    <SellHistoryCard key={product.itemId} product={product} />
+  return mySells?.map((item) => (
+    <SellHistoryCard key={item.itemId} item={item} />
   ));
 };
 
-export default SellHistoryContainer;
+export default connectStore(SellHistoryContainer);

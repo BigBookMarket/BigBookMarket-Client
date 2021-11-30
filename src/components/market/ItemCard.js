@@ -49,9 +49,9 @@ const ProductWrapper = Styled.div`
   }
 `;
 
-const ProductCard = ({ product }) => {
+const ItemCard = ({ item }) => {
   const showStatus = () => {
-    switch (product.status) {
+    switch (item.status) {
       case "SALE":
         return "판매중";
       case "DEAL":
@@ -63,7 +63,7 @@ const ProductCard = ({ product }) => {
     }
   };
   const showMethod = () => {
-    switch (product.method) {
+    switch (item.method) {
       case "DELIVERY":
         return "택배";
       case "DIRECT":
@@ -79,39 +79,37 @@ const ProductCard = ({ product }) => {
     <Link
       style={{ textDecoration: "none", color: "inherit" }}
       to={{
-        pathname: `/product/${product.itemId}`,
+        pathname: `/item/${item.itemId}`,
         state: {
-          productinfo: product
+          itemInfo: item
         }
       }}
     >
-      <ProductWrapper isSold={product.status === "SOLD"}>
-        <img className="product__img" src={product.book.image} alt="" />
+      <ProductWrapper isSold={item.status === "SOLD"}>
+        <img className="product__img" src={item.book.image} alt="" />
         <div className="product__info">
           <p className="product__info_created-date">
-            작성일: {product.createdDate}
+            작성일: {item.createdDate}
           </p>
           <p className="product__info_title">
-            [{product.book.category}] {product.book.title}
+            [{item.book.category}] {item.book.title}
           </p>
-          <p className="product__info_author">{product.book.author}</p>
+          <p className="product__info_author">{item.book.author}</p>
           <p className="product__info_publisher">
-            {product.book.publisher}, {product.book.pubDate}
+            {item.book.publisher}, {item.book.pubDate}
           </p>
           <p className="product__info_price">
-            <span>{product.book.priceStandard}원</span>
-            <span> &gt; {product.price}원</span>
+            <span>{item.book.priceStandard}원</span>
+            <span> &gt; {item.price}원</span>
           </p>
           <p className="product__info_method">거래방법: {showMethod()}</p>
           <p className="product__info_status">거래상태: {showStatus()}</p>
-          <p className="product__info_date">
-            판매자: {product.sellerNickname}님
-          </p>
+          <p className="product__info_date">판매자: {item.sellerNickname}님</p>
         </div>
-        <div className="product__seller">{product.userId}</div>
+        <div className="product__seller">{item.userId}</div>
       </ProductWrapper>
     </Link>
   );
 };
 
-export default ProductCard;
+export default ItemCard;

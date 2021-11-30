@@ -1,6 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
-import { cancelPurchase, completePurchase } from "../../../lib/api/item";
+import connectStore from "../../../hoc/connectStore";
 
 const PurchaseCardWrapper = Styled.div`
 width: 850px;
@@ -68,10 +68,12 @@ button{
   cursor: pointer;
 }
 `;
-const PurchaseHistoryCard = ({ product }) => {
+const PurchaseHistoryCard = ({ actions, item }) => {
   const userId = localStorage.getItem("userId");
+  const userNickname = localStorage.getItem("nickname");
+
   const showStatus = () => {
-    switch (product.status) {
+    switch (item.status) {
       case "DEAL":
         return "거래중";
       case "SOLD":
@@ -81,7 +83,7 @@ const PurchaseHistoryCard = ({ product }) => {
     }
   };
   const showMethod = () => {
-    switch (product.method) {
+    switch (item.method) {
       case "DELIVERY":
         return "택배";
       case "DIRECT":
@@ -94,31 +96,31 @@ const PurchaseHistoryCard = ({ product }) => {
   };
 
   const handleCancel = async () => {
-    await cancelPurchase(product.itemId, userId);
+    actions.cancelItem(item.itemId, userId);
   };
 
   const handleComplete = async () => {
-    await completePurchase(product.itemId);
+    actions.buyItem(item.itemId, userId, userNickname);
   };
   return (
     <PurchaseCardWrapper>
-      <img className="card__img" src={product.book.image} alt="" />
+      <img className="card__img" src={item.book.image} alt="" />
       <div className="card__info">
-        <p className="card__info_date">{product.createdDate}</p>
+        <p className="card__info_date">{item.createdDate}</p>
         <p className="card__info_title">
-          [{product.book.category}] {product.book.title}
+          [{item.book.category}] {item.book.title}
         </p>
         <p className="card__info_publisher">
-          {product.book.author} / {product.book.publisher}
+          {item.book.author} / {item.book.publisher}
         </p>
         <p className="card__info_listprice">
-          정가: {product.book.priceStandard}원
+          정가: {item.book.priceStandard}원
         </p>
-        <p className="card__info_price">판매가: {product.price}원</p>
+        <p className="card__info_price">판매가: {item.price}원</p>
         <p className="card__info_method">거래방법: {showMethod()}</p>
         <p className="card__info_status">거래상태: {showStatus()}</p>
       </div>
-      {product.status === "SOLD" ? null : (
+      {item.status === "SOLD" ? null : (
         <div>
           <div className="card_modify_btn">
             <p className="btn">쪽지하기</p>
@@ -135,4 +137,4 @@ const PurchaseHistoryCard = ({ product }) => {
   );
 };
 
-export default PurchaseHistoryCard;
+export default connectStore(PurchaseHistoryCard);

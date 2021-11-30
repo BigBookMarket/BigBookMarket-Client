@@ -1,7 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
-import { deletePost } from "../../../lib/api/post";
-import { withRouter } from "react-router-dom";
+import history from "../../../utils/history";
+import connectStore from "../../../hoc/connectStore";
 
 const PostCardWrapper = Styled.div`
 width: 850px;
@@ -61,7 +61,7 @@ position: relative;
 }
 `;
 
-const PostHistoryCard = ({ post, history }) => {
+const PostHistoryCard = ({ actions, post }) => {
   const showCategory = () => {
     switch (post.category) {
       case "QUESTION":
@@ -86,8 +86,8 @@ const PostHistoryCard = ({ post, history }) => {
       }
     });
   };
-  const handleDelete = async () => {
-    await deletePost(post.postId);
+  const handleDelete = () => {
+    actions.deletePost(post.postId);
   };
   return (
     <PostCardWrapper>
@@ -119,4 +119,4 @@ const PostHistoryCard = ({ post, history }) => {
   );
 };
 
-export default withRouter(PostHistoryCard);
+export default connectStore(PostHistoryCard);

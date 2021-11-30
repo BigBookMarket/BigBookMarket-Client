@@ -15,43 +15,6 @@ button {
   cursor: pointer;
 }
 
-.modal__bg {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal {
-  position: relative;
-  background-color: #fff;
-  width: 60%;
-  height: 60%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  border-radius: 0.5rem;
-}
-
-.modal__exit-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.modal__message-btn{
-  width: 150px;
-}
-
 .page-title{
   margin-top: 28px;
   font-weight: bold;
