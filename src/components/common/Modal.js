@@ -50,7 +50,13 @@ const Modal = ({ modal, actions }) => {
   if (!modal.open) return null;
 
   const handleMessageClick = () => {
-    history.push("/message");
+    history.push({
+      pathname: "/message",
+      state: {
+        fromHistory: false
+      }
+    });
+    actions.closeModal();
   };
   const handleExitClick = () => {
     actions.closeModal();
