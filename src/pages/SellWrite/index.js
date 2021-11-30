@@ -6,9 +6,9 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { SearchDropdown } from "../../components";
 import { Navbar } from "../../components";
-import { writeProductSell } from "../../lib/api/item";
-import { getAladinBooks } from "../../lib/api/aladin";
+import * as Services from "../../data/rootServices";
 import { Wrapper } from "./style";
+import connectStore from "../../hoc/connectStore";
 
 const useStyles = makeStyles(() => ({
   formControl: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Sell = ({ history }) => {
+const Sell = ({ actions }) => {
   const classes = useStyles();
   const [searchInput, setSearchInput] = useState("");
   const [options, setOptions] = useState(null);
@@ -62,17 +62,15 @@ const Sell = ({ history }) => {
     setSearchInput(e.target.value);
   };
 
-  const handleSearchButton = (e) => {
+  const handleSearchButton = async (e) => {
     e.preventDefault();
-    (async () => {
-      const bookInfo = await getAladinBooks(searchInput);
-      setOptions(bookInfo.item);
-    })();
+    const bookInfo = await Services.getAladinBooks(searchInput);
+    setOptions(bookInfo.item);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const postData = {
+    const sellData = {
       book: {
         bookId: selectedBook.isbn,
         title: selectedBook.title,
@@ -88,8 +86,7 @@ const Sell = ({ history }) => {
       price: parseInt(inputs.sellPrice),
       id: localStorage.getItem("userId")
     };
-    await writeProductSell(postData);
-    history.push("/market");
+    await Services.sellItem(sellData);
   };
 
   useEffect(() => {
@@ -238,4 +235,4 @@ const Sell = ({ history }) => {
   );
 };
 
-export default Sell;
+export default connectStore(Sell);
