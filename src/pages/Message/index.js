@@ -1,47 +1,49 @@
 import React, { useState } from "react";
-import { Navbar } from "../../components";
-import { writeMessage } from "../../lib/api/message";
+import { Modal, Navbar } from "../../components";
 import { Wrapper } from "./style";
+import connectStore from "../../hoc/connectStore";
+import history from "../../utils/history";
 
-const Message = ({ history, location }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [bookInfo, setBookInfo] = useState(location.state.product.book.title);
-  const [receiverNickname, setReceiverNickname] = useState(
-    location.state.fromHistory
-      ? location.state.product.senderNickname
-      : location.state.product.sellerNickname
-  );
-  const [newReceiverId, setNewReceiverId] = useState(
-    location.state.fromHistory
-      ? location.state.product.senderId
-      : location.state.product.sellerId
-  );
+const Message = ({ actions }) => {
+  const userId = localStorage.getItem("userId");
+  const { path, message } = history.location.state;
+  const [content, setContent] = useState("");
 
-  const [message, setMessage] = useState({
-    itemId: location.state.itemId,
-    content: "",
-    senderId: localStorage.getItem("userId"),
-    receiverId: newReceiverId
-  });
+  const getReceiver = () => {
+    switch (path) {
+      case "message_history":
+        return {
+          nickname: message.senderNickname,
+          id: message.senderId
+        };
 
-  const { itemId, content, senderId, receiverId } = message;
+      case "buy_history":
+      case "market":
+        return {
+          nickname: message.sellerNickname,
+          id: message.sellerId
+        };
 
-  const handleMessageSubmit = async (e) => {
-    setIsModalOpen(true);
-    e.preventDefault();
-    await writeMessage(message);
+      default:
+        break;
+    }
   };
 
-  const handleConfirmClick = () => {
-    history.push("/market");
+  const receiver = getReceiver();
+
+  const handleMessageSubmit = (e) => {
+    e.preventDefault();
+    const messageData = {
+      itemId: message.itemId,
+      content,
+      senderId: userId,
+      receiverId: receiver.id
+    };
+    actions.sendMessage(messageData);
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setMessage({
-      ...message,
-      [name]: value
-    });
+    setContent(e.target.value);
   };
 
   return (
@@ -49,49 +51,37 @@ const Message = ({ history, location }) => {
       <Navbar />
       <Wrapper>
         <div className="page-title">쪽지 보내기</div>
-        {isModalOpen ? (
-          <div className="modal__bg">
-            <div className="modal">
-              <h1>쪽지가 전송되었습니다</h1>
-              <button
-                onClick={handleConfirmClick}
-                className="modal__message-btn"
-              >
-                확인
-              </button>
-            </div>
-          </div>
-        ) : (
-          <form onSubmit={handleMessageSubmit} className="message__form">
-            <div className="message__header">
-              <input
-                name="sellerId"
-                className="message__seller-id"
-                value={`수신자: ${receiverNickname}님`}
-                onChange={handleInputChange}
-                readOnly
-              />
-              <input
-                name="bookInfo"
-                className="message__book-info"
-                placeholder="도서정보"
-                value={bookInfo}
-                onChange={handleInputChange}
-                readOnly
-              />
-            </div>
-            <textarea
-              name="content"
-              className="message__content"
-              value={content}
+
+        <form onSubmit={handleMessageSubmit} className="message__form">
+          <div className="message__header">
+            <input
+              name="sellerId"
+              className="message__seller-id"
+              value={`수신자: ${receiver.nickname}님`}
               onChange={handleInputChange}
+              readOnly
             />
-            <button type="submit">보내기</button>
-          </form>
-        )}
+            <input
+              name="bookInfo"
+              className="message__book-info"
+              placeholder="도서정보"
+              value={message.book.title}
+              onChange={handleInputChange}
+              readOnly
+            />
+          </div>
+          <textarea
+            name="content"
+            className="message__content"
+            value={content}
+            onChange={handleInputChange}
+          />
+          <button type="submit">보내기</button>
+        </form>
       </Wrapper>
+      <Modal />
     </>
   );
 };
 
-export default Message;
+export default connectStore(Message);

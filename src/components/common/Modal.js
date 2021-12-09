@@ -46,21 +46,24 @@ const Wrapper = styled.div`
   }
 `;
 
-const Modal = ({ modal, actions }) => {
+const Modal = ({ items: { item }, modal, actions }) => {
   if (!modal.open) return null;
 
   const handleMessageClick = () => {
     history.push({
       pathname: "/message",
       state: {
-        fromHistory: false
+        message: item,
+        path: "market"
       }
     });
     actions.closeModal();
   };
+
   const handleExitClick = () => {
     actions.closeModal();
   };
+
   return (
     <Wrapper>
       <div className="modal__bg">

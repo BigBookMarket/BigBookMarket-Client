@@ -1,6 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
-import { withRouter } from "react-router-dom";
+import history from "../../../utils/history";
+import connectStore from "../../../hoc/connectStore";
 
 const MessageCardWrapper = Styled.div`
 width: 850px;
@@ -60,14 +61,13 @@ button{
 }
 `;
 
-const MessageHistoryCard = ({ history, message, nickname, receiveClicked }) => {
+const MessageHistoryCard = ({ message, nickname, receiveClicked }) => {
   const handleReply = () => {
     history.push({
       pathname: "/message",
       state: {
-        product: message,
-        itemId: message.itemId,
-        fromHistory: true
+        message,
+        path: "message_history"
       }
     });
   };
@@ -93,4 +93,4 @@ const MessageHistoryCard = ({ history, message, nickname, receiveClicked }) => {
   );
 };
 
-export default withRouter(MessageHistoryCard);
+export default connectStore(MessageHistoryCard);

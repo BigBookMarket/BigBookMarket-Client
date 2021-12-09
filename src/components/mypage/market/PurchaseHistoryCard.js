@@ -1,6 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
 import connectStore from "../../../hoc/connectStore";
+import history from "../../../utils/history";
 
 const PurchaseCardWrapper = Styled.div`
 width: 850px;
@@ -95,13 +96,24 @@ const PurchaseHistoryCard = ({ actions, item }) => {
     }
   };
 
-  const handleCancel = async () => {
+  const handleCancel = () => {
     actions.cancelItem(item.itemId, userId);
   };
 
-  const handleComplete = async () => {
+  const handleComplete = () => {
     actions.buyItem(item.itemId, userId, userNickname);
   };
+
+  const handleMessageClick = () => {
+    history.push({
+      pathname: "/message",
+      state: {
+        message: item,
+        path: "buy_history"
+      }
+    });
+  };
+
   return (
     <PurchaseCardWrapper>
       <img className="card__img" src={item.book.image} alt="" />
@@ -123,7 +135,9 @@ const PurchaseHistoryCard = ({ actions, item }) => {
       {item.status === "SOLD" ? null : (
         <div>
           <div className="card_modify_btn">
-            <p className="btn">쪽지하기</p>
+            <p onClick={handleMessageClick} className="btn">
+              쪽지하기
+            </p>
           </div>
           <button onClick={handleComplete} className="purchase_completed_btn">
             구매완료
